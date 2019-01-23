@@ -1,0 +1,22 @@
+______________________________________________________________________________
+Schema:
+--------------------------------
+{% if section.settings.id_text %}
+<iframe src="https://www.youtube.com/embed/{{section.settings.id_text}}?autohide=1&auto=1&rel=0&autoplay=1&iv_load_policy=3&modestbranding=1&controls=0&showinfo=0" width="640" height="480" frameborder="0" title="Funny Cat Videos For Kids" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" data-ready="true"></iframe>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Youtube Video",
+    "settings": [
+     {
+        "type": "text",
+        "id": "id_text",
+        "label": "ID of Youtube Video",
+        "default": "-WqeFWUr2qA"
+      }
+                ]
+  }
+{% endschema %}
+--------------------------------
+______________________________________________________________________________
