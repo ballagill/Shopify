@@ -20,3 +20,42 @@ Schema:
 {% endschema %}
 --------------------------------
 ______________________________________________________________________________
+Section:- Block schema to add multple blocks and fetch them, very useful code.
+--------------------------------
+{% for block in section.blocks %}
+<h2>{{ block.settings.color_variable }}</h2>
+<img src="{{ block.settings.image_variable | img_url: '800x' }}"/>
+{% endfor %}
+
+{% schema %}
+{
+    "name": "Color Images",
+    "max_blocks": 40,
+    "blocks": [
+ {
+      "type": "image",
+      "name": {
+        "en": "Image & Color"
+      },
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_variable",
+          "label": {
+            "en": "Image"
+          }
+        },
+        {
+          "type": "text",
+          "id": "color_variable",
+          "label": {
+            "en": "Color Name"
+          }
+        }
+               ]
+ }
+         ]
+}
+{% endschema %}
+--------------------------------
+______________________________________________________________________________
