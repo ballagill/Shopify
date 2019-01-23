@@ -1,4 +1,79 @@
+{% include 'snippet-name' %}
+{% include 'site-nav' %}
+{% section 'sectionname-name' %}
+{{ 'custom-style.css' | asset_url | stylesheet_tag }}
+{{ 'image.jpg' | asset_url | img_tag }}
+{{ 'custom.js' | asset_url | script_tag }}
+____________________________________________________
+Shofiy:-
+Shopify provides trial account same as squarespace for 14 days.It is only used for shopping purpose. it provide very simple
+interface for creating online store(shopping pages). It is mostly designed same as woocommerce of wordpress means the person who
+knows the woocommerce can easity handle the settings of shopify.
+
+Addtionaly we can import/export themes and products in it. we can also do a customization in theme files. like we can create
+our own template as in wordpress. To customize the files just go to theme customization. then Go to Theme options on top right side.
+then select 'edit html/css' and then it will show all the files of theme. To create a new template just click on create a new template
+, then it will provide all option like template of page, aritlce, blog etc. then select page and create it. then it will create
+ur template page. then Add a new page in dashbaord and select the currently created template for it. we can also add our own
+html in newly created template. template code works similariy wordpress.
+
+We can also put the custom css in css.liquid file.
+
+Header and Footer:
+To edit Header and footer. we will need to customize the theme.liquid file.
+
+Note:-
+theme.liquid file is a file that will run for all pages. we will put  header and footer in theme.liquid file and use the {{ content_for_layout }} in body area of page. 
+ {{ content_for_layout }} will fetch the dynamic content of each page. Do'nt forget to add the  {{ content_for_header }} in <head> tag of header. it includes all the 
+dynamic code,links etc.
+
+index.liquid file is a file of Home page. we can customize it to customize the Home page. create template for the other pages.
+
+_______________________________________________________________________________________
+Contact us page:
+Put following hidden input fields in contact form template file of shopify to change the destination email and Subject of email.
+--------------------------------
+<input type="hidden" name="contact[subject]" value"My New subject line" />
+<input type="hidden" name="contact[send-to]" value"ankpro29@gmail.com" />
+--------------------------------
 ______________________________________________________________________________
+Latest blog posts:
+--------------------------------
+<div class="bloghomepage inner">
+<h2>Latest Posts</h2>
+<ul>
+{% for article in blogs.news.articles limit: 5 %}
+<li>
+<h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
+<span><img src="{{ article | img_url: 'large' }}"></span>
+<p>{{ article.content | strip_html | truncatewords: 50 }}</p>
+<p><a href="{{ article.url }}">{{ 'blogs.article.read_more' | t }} &rarr;</a></p>
+</li>
+{% endfor %}
+</ul>
+</div>
+--------------------------------
+________________________________________________________
+Navigation:
+
+If we want to add the sub pages under any page then just create a new page and give the name of page in Menu description under which you want 
+to add the sub pages. Note put the correct slug in "Handle (what's this?)" field otherwise it would not work. Then all pages added in
+that menu will be listed as a sub pages of mentioned page in description.
+________________________________________________________________________________________
+Pages:
+Header and footer is in theme.liquid file
+Home is in index.liquid file
+create new file for css in assets and link it in theme.liquid file using {{ 'style.css' | asset_url | stylesheet_tag }} function.
+collection pages are come from collection.liquid file.
+__________________________________________________________________-
+Search form:
+--------------------------------
+<form method="get" action="/search">
+    <input type="text" name="q" />
+    <input  type="submit" value="Search" />
+</form>
+--------------------------------
+__________________________________________________________________
 Schema:
 --------------------------------
 {% if section.settings.id_text %}
