@@ -28,7 +28,14 @@ theme.liquid file is a file that will run for all pages. we will put  header and
 dynamic code,links etc.
 
 index.liquid file is a file of Home page. we can customize it to customize the Home page. create template for the other pages.
-
+---------------------------
+Schema:- Schema is very Very useful feature of Shopify which is used under each section liquid files. it is used to create dynamic theme settings of pages. we can create custom schema, add more options to existing schema as well. We can create particular schema for each page, just we will have to create section liquid file for that page and need to include that file in page template file. The Schema for particular page will be only shown when we will open that page in "Customize" theme option settings. we can create common setting options for each page by calling schema in header or footer file. 
+-------------------------------
+used Apps:
+Auto Currency Switcher (To add the currency switcher on  website, just follow the setting options it will automatically add the currency switcher dropdown on website)
+Loyalty, rewards and referrals by LoyaltyLion (To show reward coupons)
+Privy - Free email popups with exit intent(Great newsletter popup on website that will be integrated with further to all email CRM like mailchip,icontact,contstantcontact, infusionsoft etc)
+Product Reviews(To show the Customer reviews on product page)
 _______________________________________________________________________________________
 Contact us page:
 Put following hidden input fields in contact form template file of shopify to change the destination email and Subject of email.
