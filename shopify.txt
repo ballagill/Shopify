@@ -1,0 +1,850 @@
+Facebook pixel:
+Shopify App:
+_________________________________________________________________________________
+Schema:- Schema is very Very useful feature of Shopify which is used under each section liquid files. it is used to create dynamic theme settings of pages. we can create custom schema, add more options to existing schema as well. We can create particular schema for each page, just we will have to create section liquid file for that page and need to include that file in page template file. The Schema for particular page will be only shown when we will open that page in "Customize" theme option settings. we can create common setting options for each page by calling schema in header or footer file. 
+
+Fetch products or orders from shopfy:
+-------------------------------
+used Apps:
+
+Auto Currency Switcher (To add the currency switcher on  website, just follow the setting options it will automatically add the currency switcher dropdown on website)
+Loyalty, rewards and referrals by LoyaltyLion (To show reward coupons)
+Privy - Free email popups with exit intent(Great newsletter popup on website that will be integrated with further to all email CRM like mailchip,icontact,contstantcontact, infusionsoft etc)
+Product Reviews(To show the Customer reviews on product page)
+_____________________________________________________________________________________________________________________
+Liquid programming:-https://help.shopify.com/themes/liquid/objects/address
+
+Shopify:- Shopify is an online store cms. that works mostly same as woocommerce of wordpress.The client needs to create a paid account in shopify.com to create its store.
+It also provides trial account for 14 days to understand its working. So we can check its dashboard settings, file structure and working by creating a trial account in it.
+Also its files customization is very simple. its theme structure mostly works as wordpress theme.
+
+
+create trial account in http://shopify.com/
+
+Functions:
+Use {% include 'social-links' %} to access the snippets. social-links is a snippets file named as social-links.liquid.
+use {{ settings.social_instagram_link  }} to access the settings directly without using snippets.
+
+
+Note:- Include function is used to include the snippets. snippets is a block of code that is created for particular section.
+{% include 'social-links' %}
+social-links is a snippets.
+
+ank-pro
+
+https://ank-pro.myshopify.com
+ankpro666
+https://ankpro1.myshopify.com/
+ankpro29@gmail.com
+ankpro29
+Shofiy:-
+Shopify provides trial account same as squarespace for 14 days.It is only used for shopping purpose. it provide very simple
+interface for creating online store(shopping pages). IT is mostly designed same as woocommerce of wordpress means the person who
+knows the woocommerce can easity handle the settings of shopify.
+
+Addtionaly we can import/export themes and products in it. we can also do a customization in theme files. like we can create
+our own template as in wordpress. To customize the files just go to theme customization. then Go to Theme options on top right side.
+then select 'edit html/css' and then it will show all the files of theme. To create a new template just click on create a new template
+, then it will provide all option like template of page, aritlce, blog etc. then select page and create it. then it will create
+ur template page. then Add a new page in dashbaord and select the currently created template for it. we can also add our own
+html in newly created template. template code works similariy wordpress.
+
+We can also put the custom css in css.liquid file.
+
+Header and Footer:
+To edit Header and footer. we will need to customize the theme.liquid file.
+
+Note:-
+theme.liquid file is a file that will run for all pages. we will put  header and footer in theme.liquid file and use the {{ content_for_layout }} in body area of page. 
+ {{ content_for_layout }} will fetch the dynamic content of each page. Do'nt forget to add the  {{ content_for_header }} in <head> tag of header. it includes all the 
+dynamic code,links etc.
+
+index.liquid file is a file of Home page. we can customize it to customize the Home page. create template for the other pages.
+
+if condition in shopify
+---------------------------------------------
+To include navigation menu in file:
+Always use this function to make sure the drop down menu work properly.
+
+{% include 'site-nav' %}
+
+----------------------------------------------
+{% if page.title != 'About us' %}
+
+{% include 'sidebar' %}
+
+{% endif %}
+-----------------------------------------------
+To add custome style.css in shopify.
+
+just upload the style.css file in assets folder of shopify and then  put the following function in head tab of theme.liquid files.
+
+{{ 'style.css' | asset_url | stylesheet_tag }}
+-------------------------------------------------------------------------------------
+Fetch post anywhere:
+
+<h3>Recent Posts</h3>
+<ul>
+{% for article in blogs["news"].articles limit: 5 %}
+  <li>{{ article.title | link_to: article.url }}</li>
+{% endfor %}
+</ul>
+-------------------------------------------------------------------------------------
+How to get the Navigation menu in theme files:
+just update the menu-slug slug with your menu slug.
+
+<ul>
+{% for link in linklists.menu-slug.links %}
+<li><a href= "{{ link.url }}">{{ link.title }}</a></li>
+{% endfor %}
+</ul> 
+-------------------------------------------------------------------------------------
+Search form:
+
+<form method="get" action="/search">
+    <input type="text" name="q" />
+    <input  type="submit" value="Search" />
+</form>
+-------------------------------------------------------------------------------------
+How to give the path of files in theme file:
+
+{{ 'shop.css' | asset_url }}
+{{ 'logo.png' | asset_img_url: '300x' }}
+{{ 'size-chart.pdf' | file_url }}
+{{ 'logo.png' | file_img_url: '1024x768' }}
+------------------------------------------------------------------------------
+login page link creator:
+{{ 'Log in' | customer_login_link }}
+-----------------------------------------------------------------------------------------------------
+if else condition:
+{% if collection.title == 'Acne' %}
+  <img class="collection-title-image" src="https://cdn.shopify.com/s/files/1/0928/3826/files/acne.png?17404852813717864475">
+  {% elsif collection.title == 'Anti-Aging' %}
+<img class="collection-title-image" src="https://cdn.shopify.com/s/files/1/0928/3826/files/anti-agingpng.png?3833846268202339242">
+{% else %}
+ <h1>{{ collection.title }}</h1>
+{% endif %}
+_________________________________________________________________________________________
+ 
+Navigation:
+
+If we want to add the sub pages under any page then just create a new page and give the name of page in Menu description under which you want 
+to add the sub pages. Note put the correct slug in "Handle (what's this?)" field otherwise it would not work. Then all pages added in
+that menu will be listed as a sub pages of mentioned page in description.
+________________________________________________________________________________________
+Pages:
+Header and footer is in theme.liquid file
+Home is in index.liquid file
+create new file for css in assets and link it in theme.liquid file using {{ 'style.css' | asset_url | stylesheet_tag }} function.
+collection pages are come from collection.liquid file.
+____________________________________________________________________________________________
+Newsletter form:
+{% include 'newsletter-form' %}
+__________________________________________________________________
+Very useful to learn the things in shopify.
+
+Just see how social media settings are created in setting_schema.json file to show their field in theme settings.
+Then check the social links snippets file in snippets folder of how they are accessed in <ul> and then check theme.liquid of how
+to access that bundle social links snippets
+
+ {% include 'social-links' %}
+___________________________________________________________________________________________________________________
+Latest blog posts:
+
+<div class="bloghomepage inner">
+<h2>Latest Posts</h2>
+<ul>
+{% for article in blogs.news.articles limit: 5 %}
+<li>
+<h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
+<span><img src="{{ article | img_url: 'large' }}"></span>
+<p>{{ article.content | strip_html | truncatewords: 50 }}</p>
+<p><a href="{{ article.url }}">{{ 'blogs.article.read_more' | t }} &rarr;</a></p>
+</li>
+{% endfor %}
+</ul>
+</div>
+_______________________________________________________________________________________________________________________________________________
+ankpro custom created setting,snippets and including it:
+--------------------------------------------
+add this at the end of setting_schema.liquid 
+,
+{
+    "name": "Ankpro Social media links",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Provide Ankpro Social links"
+      },
+      {
+        "type": "text",
+        "id": "link_facebook",
+        "label": "Link of Facebook"
+      },
+      {
+        "type": "text",
+        "id": "link_twitter",
+        "label": "Link of Twitter"
+      },
+      {
+        "type": "text",
+        "id": "link_linkedin",
+        "label": "Link of linkedin "
+      }
+      
+    ]
+  } 
+---------------------------------------------
+create ankpro snippets file as below:
+
+<div class="social-sharing">
+ 
+  {% if settings.link_facebook %}
+    <a target="_blank" href="{{ settings.link_facebook  }}" class="btn btn--small btn--secondary btn--share share-facebook" title="{{ 'general.social.alt_text.share_on_facebook' | t }}">
+      {% include 'icon-facebook' %}
+      Facebook
+    </a>
+  {% endif %}
+
+  {% if settings.link_twitter %}
+    <a target="_blank" href="{{ settings.link_twitter  }}" class="btn btn--small btn--secondary btn--share share-twitter" title="{{ 'general.social.alt_text.share_on_twitter' | t }}">
+      {% include 'icon-twitter' %}
+      Twitter
+    </a>
+  {% endif %}
+
+  {% if settings.link_linkedin %}
+    <a target="_blank" href="{{ settings.link_linkedin   }}" class="btn btn--small btn--secondary btn--share share-pinterest" title="{{ 'general.social.alt_text.share_on_pinterest' | t }}">
+    {% include 'icon-linkedin' %}
+      Linkedin
+    </a>
+  {% endif %}
+
+</div>
+<style>
+  .main-content {
+   overflow: hidden;
+}</style>
+-----------------------
+include this ankpro snippets in any theme file by using following code.
+{% include 'ankpro' %}
+--------------------------------------------------------------
+ 
+______________________________________________________________________________________________________________________________________________
+Contact us page:
+
+Put following hidden input fields in contact form template file of shopify to change the destination email and Subject of email.
+
+<input type="hidden" name="contact[subject]" value"My New subject line" />
+<input type="hidden" name="contact[send-to]" value"ankpro29@gmail.com" />
+_______________________________________________________________________________________________________________________________________
+
+Fetch products or orders from shopfy:
+How to fetch products/orders from shopify using external php script and create their csv files.
+
+Note:- We need to firstly create api key and password to make the url of following format. 
+URL = https://apikey:password@storebackendaddress/admin/products.json
+To create api key and password, we will have to login into shopify store, then create an app(private app), then grant access to that app for orders, products etc, then when we will save that app, it will provide us api key and password for that app, just copy them and use them for fetching the details of required data as used in following code.
+.............................................
+<?php
+$orderUrl ="https://2c5dd32adc25cd0f61ecddfc2778a67a:01b22451ae9e8c503c321c7341d07864@ankpro291.myshopify.com/admin/products.json";
+
+	// Get cURL resource
+	$curl = curl_init();
+	// Set some options - we are passing in a useragent too here
+	curl_setopt_array($curl, array(
+	CURLOPT_RETURNTRANSFER => 1,
+	CURLOPT_URL => 'https://2c5dd32adc25cd0f61ecddfc2778a67a:01b22451ae9e8c503c321c7341d07864@ankpro291.myshopify.com/admin/products.json',
+	CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+	));
+	// Send the request & save response to $resp
+	$resp = curl_exec($curl);
+
+	$csv = "col1,col2 \n";//Column headers
+	
+	$response = json_decode($resp);
+		$new=array();
+		echo '<pre>';
+		//print_r($response);
+echo '</pre>';
+ foreach($response as $res){
+	 echo '<pre>';
+	//print_r($res);
+	echo '</pre>';
+	 foreach($res as $ress){
+		 echo '<pre>';
+	//print_r($ress);
+	echo '</pre>'; 
+	echo $ress->id;
+	echo $ress->title;
+
+$csv.= $ress->id.','.$ress->title."\n"; //Append data to csv
+$file_name = date('Y-m-d H-i-s').'-orders.csv';
+$csv_handler = fopen ($file_name,'w');
+fwrite ($csv_handler,$csv);
+fclose ($csv_handler);
+echo 'Data saved to csv file';
+	}
+	
+ }
+	exit;
+	
+	
+
+?>
+ 
+ 
+.............................................................................
+another example:
+........................................................  
+<?php
+//Fetching shopify orders
+
+$from_unix_time = mktime(0, 0, 0, $month, $day, $year);
+$day_before = strtotime("yesterday", $from_unix_time);
+$formatted = $days_ago = date('Y-m-d', strtotime('-1 days'));
+
+
+
+    /*API Call to Shopify*/
+	
+	$orderUrl ="https://ec372090f95c658ae56265a357318e5c :f343f8b4471f13189c142b6d6577ff20@cycologyclothing-com.myshopify.com/admin/orders.json?created_at_min=".$formatted;
+
+	// Get cURL resource
+	$curl = curl_init();
+	// Set some options - we are passing in a useragent too here
+	curl_setopt_array($curl, array(
+	CURLOPT_RETURNTRANSFER => 1,
+	CURLOPT_URL => 'https://ec372090f95c658ae56265a357318e5c :f343f8b4471f13189c142b6d6577ff20@cycologyclothing-com.myshopify.com/admin/orders.json?created_at_min='.$formatted,
+	CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+	));
+	// Send the request & save response to $resp
+	$resp = curl_exec($curl);
+
+$csv = "Email,Name,Date,Description,Order Ref,Product Search Code,Customer Ref,Amount,Currency,Tags,Merchant Identifier \n";//Column headers
+	
+	$response = json_decode($resp);
+		$new=array();
+		echo '<pre>';
+	//print_r($response);
+echo '</pre>';
+ foreach($response as $res){
+	echo '<pre>';
+	print_r($res);
+	echo '</pre>';
+	 foreach($res as $ress){
+	 
+	
+	
+
+/* echo "<pre>";
+print_r($ress->line_items);
+echo "</pre>";
+*/
+$newarr=$ress->line_items;
+
+ foreach($ress as $resss){
+	
+
+
+	
+ $customer_id = $resss->id;
+ $customer_name = $resss->first_name.' '.$resss->last_name;
+ 
+
+
+
+ }
+
+/*echo "<pre>";
+print_r($newarr);
+echo "</pre>";
+*/
+$a=array();
+foreach($newarr as $newrr){
+	array_push($a,$newrr->title);
+	//echo $tgs.=$newrr->title;	
+	//$get_tags .= implode(",",$newrr->title);
+	
+}
+
+echo $comma_separated = implode(" ", $a);
+$val="lorem lorem";
+
+"Email,Name,Date,Description,Order Ref,Product Search Code,Customer Ref,Amount,Currency,Tags,Merchant Identifier \n";
+if($ress->shipping_address->country=="United States"){
+$csv.= $ress->email.','.$customer_name.','.$ress->created_at.','.$comma_separated.','.$ress->name.','.$comma_separated.','.$customer_id.','.$ress->total_price.','.$ress->currency.','.$ress->tags.','."cycology-clothing-usa"."\n";
+}
+ //Append data to csv
+$file_name = date('m-d-Y').'-orders.csv';
+
+$csv_handler = fopen ($file_name,'w');
+fwrite ($csv_handler,$csv);
+fclose ($csv_handler);
+ }
+	
+ }
+ echo 'Data saved to csvfile.csv';
+	exit;
+?>
+________________________________________________________________________________________________________________________
+script to create products on Shopify by reading csv file from any ftp account:
+its a running script just need to update accordingly.
+...............................................................................................
+<?php
+//read the file from ftp fttp://username:password@host/next-path-of-file-from-ftp-path
+$filename = "ftp://dev@inetechnologies.com:K88_ev^+(Z$=@dev.inetechnologies.com/testit/test.csv";
+
+$row = 1;
+if (($handle = fopen($filename, "r")) !== FALSE) {
+    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+////loop start for each product///////// 	
+        $num = count($data);
+		//print_r($data);
+        echo "<p> $num fields in line $row: <br /></p>\n";
+        $row++;
+        /*for ($c=0; $c < $num; $c++) {
+            echo $data[$c] . "<br />\n";
+        }*/
+		echo $data[1] . "<br />\n";
+ /// update values dynamically as required
+$products_array = array(
+    "product"=> array(
+        "title"=> $data[1],
+        "body_html"=> "<strong>Good snowboard!</strong>",
+        "vendor"=> "Burton",
+        "product_type"=>"Snowboard",
+        "variants"=> array(
+            array(
+                "option1"=> "First",
+                "price"=> "10.00",
+                "sku"=> "123",
+                "inventory_quantity"=> 100,
+                "images"=>array( array ("src"=>'http://clarks.scene7.com/is/image/clarks/26103666_A')),    
+            ),
+            array(
+                "option1"=> "Second",
+                "price"=> "20.00",
+                "sku"=> "124",
+                "inventory_quantity"=> 200,
+                "images"=>array( array ("src"=>'http://clarks.scene7.com/is/image/clarks/26103666_A')),    
+            )
+        )
+    ),
+	
+);
+echo json_encode($products_array);
+echo "<br />";
+$url = "https://e1f3ee9b25f28c7ef115e3aac533491b:4be5cfdbbf8a2dd6ba7a4a36eb8665b6@ankpro2911.myshopify.com/admin/products.json";
+
+$curl = curl_init();
+curl_setopt($curl, CURLOPT_URL, $url);
+curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8'));
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_VERBOSE, 0);
+curl_setopt($curl, CURLOPT_HEADER, 1);
+curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($products_array));
+curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+$response = curl_exec ($curl);
+curl_close ($curl);
+   
+   
+   
+////loop end for each product///////// 
+   }
+    fclose($handle);
+}
+
+echo "<pre>";
+print_r($response); 
+?>
+...............................................................................................
+_____________________________________________________________________________________________________________________
+creating mini cart with ajax:
+Put following code in theme.js
+create UL tag with class "cartupdating"
+......................................................................................................................
+ $.getJSON('/cart.js', function(cart) {
+    // Update cart count
+    theme.cache.$cartCount.text(cart.item_count);
+   // $('.cart-count').text(cart.item_count);
+  $('.totalmoneyis').text(cart.total_price);
+    
+  $(".cartupdating").empty();
+ 
+ $.each(cart.items, function(index, cartItem) {
+   $(".cartupdating").append('<li><a href="'+cartItem.url+'" class="dropdown-product-image"><img src="'+cartItem.image+'" alt="product image"/></a><p class="restrain-width"><a href="'+cartItem.url+'" class="small">'+cartItem.title+'</a><span class="money">'+(Shopify.formatMoney(cartItem.line_price, "{{ shop.money_format | remove: "'" | remove: '"' }}"))+'</span ><span class="quty">'+cartItem.quantity+' Qty</span></p></li>');
+});});
+......................................................................................................................
+________________________________________________________________________________________
+Narrative theme: How to show all variant images with product image and make them to change the variant automatically on clicking. And show variant images in slider format for mobile view in place of product image.
+
+Product page code:-
+..................................
+{% comment %}
+  The contents of the product.liquid template can be found in /sections/product-template/
+{% endcomment %}
+<div class="desktopview">
+{% for image in product.images %}
+    {% for variant in image.variants %}
+<img alt="{{ variant.title }}" src="{{ image | img_url: "small" }}" class="desktopimages"/>
+
+      {% endfor %}
+{% endfor %}
+</div> 
+
+{% section 'product-template' %}
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+ var onloading = $('.single-option-selector').val();
+ $("#"+onloading).css('background','red');
+ $(".dots").click(function(){
+    var dotid = $(this).attr("id");
+   $('.single-option-selector').val(dotid).trigger('change');
+ });
+$('.single-option-selector').on('change', function() {
+ $('.dots').css('background','white');
+     $("#"+this.value).css('background','red');
+});
+  
+  $(".desktopimages").click(function(){
+     var alttext = $(this).attr("alt");
+     $('.single-option-selector').val(alttext).trigger('change');
+});
+
+
+   $(".nextis").click(function(){
+     var last = $('.dots:last-child').text();
+    var currenttext = $('.single-option-selector').val()
+     var checknext = $('.single-option-selector>option:selected').next().val();
+     if(currenttext==last){}else{ 
+       $('.single-option-selector').val(checknext).trigger('change');
+     }
+});
+  
+  
+ $(".previousis").click(function(){
+   var first = $('.dots:first-child').text();
+    var currenttext = $('.single-option-selector').val()
+     var previousis = $('.single-option-selector>option:selected').prev().val();
+    if(currenttext==first){}else{ 
+     $('.single-option-selector').val(previousis).trigger('change');
+       }
+});  
+  
+
+  });
+
+</script>
+<style>
+.mydotsare {
+    text-align: center;
+}
+  .dots {
+    padding: 5px!important;
+    cursor:pointer;
+   }
+.desktopimages{
+   cursor:pointer;
+   }
+</style>
+......................................................
+product-template:- Add this code under featured image code: this code will show dots under image under slider that will be work like a slider in mobile view.
+
+
+<span class="previousis" id="previousis">Previous</span> 
+ {% unless product.variants.size == 1 and product.options.size == 1 and product.options.first == 'Title' and product.variants.first.title == 'Default Title' %}
+    {% for option in product.options_with_values %}
+      <div class="mydotsare">
+ {% for value in option.values %}
+            {% assign safeValue = value | replace: '"', '&quot;' %}
+            <span class="dots" id="{{value}}">{{ value }}</span>
+          {% endfor %}
+        
+      </div>
+    {% endfor %}
+  {% endunless %}  
+<span class="nextis" id="nextis">Next</span>
+  
+  
+   
+.........................................
+_______________________________________________________________________________
+Facebook pixel:
+How to install facebook pixel code on shopify website to track events.
+
+..............................................
+Put following code in theme.liquid file.
+
+<!-- Facebook Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1011503245618105');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1011507825618105&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+......................................................
+
+Put following code in product page.
+<script>
+  fbq('track', 'ViewContent');
+</script>
+
+...................................................
+Put following code in cart page.
+<script>
+  fbq('track', 'AddToCart');
+</script>
+.........................................................
+Put following script in Dashboard Setting->checkout->order-processing->Additional Script
+
+<!-- Facebook Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1011507825613333');
+  fbq('track', 'PageView');
+  fbq('track', 'Purchase', {
+    value: '{{ total_price | money_without_currency }}',
+    currency: 'USD',
+  });
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1011507825618105&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+.............................................................................
+To check whether pixel code is running fine, just install the "Facebook Pixel Helper" addon in chrome and browse the Home page, product page and cart page of website. When we will open a page, just see teh </> icon in top right sidebar of chrome, just click on it, it will show all facebook pixel installed on that page and tell whether they are running or not (green marked). 
+_____________________________________________________________________________________
+Shopify App: follow this url:-  https://www.shopify.in/partners/blog/17056443-how-to-generate-a-shopify-api-token
+
+
+
+Public App:- Shopify public apps are the apps that are hosted in any other cpanel(Not on shopify). They interact with shopify store, create access token and then use that access token to pull and push data. we can create shopify public app on our localhost. 
+
+Following are the steps to create publci app.
+
+Create account in shopify partner website.
+Create a new app there, give any name to app and add url of our localhost install file suppose to be http://localhost/app/newapp/install.php
+Then add http://localhost/app/newapp/generate_token.php url to Whitelisted redirection URL(s) fields, this url will generate access token.
+Then download and paste the sample code of app from above url and paste it in newapp folder of localhost.
+Then we need to copy the API key and Secret key of new created app and use them in install and generate_token.php file.
+
+Then go to app in app listing store(make sure the partner account is logged in, otherwise the app will not be listed as it is not published for all), press get, then add shopify store url, then install it, then it will generate access token on http://localhost/app/newapp/generate_token.php page. That is the actual requirement of app. once we got it then We will use this access token to pull and push data to shopify from our localhost.
+That's all in shopify app, 
+_____________________________________________________________________________________________________________
+<style>
+  .dropdown-image {
+    float: left;
+    width: 100%;
+}
+</style>
+
+<div class="dropdown-image"><img id="myimage" name="img_option-di_481-558" width="200" src="https://www.beautygenic.com/assets/images/colours/SOPDKPU.jpg"></div>
+
+
+<script>
+function myFunction() {
+ 
+  var getvalue = document.getElementById("SingleOptionSelector-0").value;
+
+  
+  if (getvalue == "BLUESILVER"){
+    document.getElementById("myimage").src="https://www.beautygenic.com/assets/images/colours/1B.jpg";
+  }
+  
+  else if (getvalue == "GXAUBURN"){
+    document.getElementById("myimage").src="https://www.beautygenic.com/assets/images/GXAUBURN.jpg";
+  } 
+  
+  else if (getvalue == "GXAURORA"){
+    document.getElementById("myimage").src="https://cdn.shopify.com/s/files/1/0067/7442/3622/t/1/assets/GXAURORA.jpg?935122575841478554";
+  } 
+  
+
+ }
+
+</script>
+__________________________________________
+Section:- Block schema to add multple blocks and fetch them, very useful code.
+.......................
+
+{% for block in section.blocks %}
+<h2>{{ block.settings.color_variable }}</h2>
+<img src="{{ block.settings.image_variable | img_url: '800x' }}"/>
+{% endfor %}
+{% schema %}
+{
+    "name": "Color Images",
+    "max_blocks": 40,
+    "blocks": [
+ {
+      "type": "image",
+      "name": {
+        "en": "Image & Color"
+      },
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_variable",
+          "label": {
+            "en": "Image"
+          }
+        },
+        {
+          "type": "text",
+          "id": "color_variable",
+          "label": {
+            "en": "Color Name"
+          }
+        }
+               ]
+ }
+         ]
+}
+{% endschema %}
+______________________________________________________________________________
+Another example of custom Section and its Schema with multiple blocks
+
+{% comment %}
+This section will show a theme settings with name "Color Images". We will upload the images and color on it. the color name should be same as that of variants put in product editor. then the "myimage" id image will be changes according to color selected on variants. 
+Just put the following html tag on product page where to show the color images
+
+<div class="dropdown-image"><img id="myimage" src=""></div>
+
+{% endcomment %}
+
+
+
+<style>
+  .dropdown-image {
+    float: left;
+    width: 100%;
+}
+   #myimage {
+    display:none;
+}
+</style>
+
+<script>
+  
+ var defaultvalue = document.getElementById("SingleOptionSelector-0").value; 
+  {% for block in section.blocks %} 
+  if (defaultvalue == "{{ block.settings.color_variable }}"){
+   document.getElementById("myimage").style.display = "block";    
+   document.getElementById("myimage").src="{{ block.settings.image_variable | img_url: '800x' }}";
+  }  
+  {% endfor %}   
+  
+
+  
+  function myFunction() {
+  var getvalue = document.getElementById("SingleOptionSelector-0").value;    
+  //alert(getvalue);
+    
+    
+    
+//"notselected" will work when we will use "select an option" value as first value of drop down.
+   if (getvalue == "notselected"){
+   document.getElementById("myimage").style.display = "none";  
+  }
+  
+    
+//change the image of "myimage" id tag according to the value of "SingleOptionSelector-0" id select box of variants
+{% for block in section.blocks %}
+
+ else if (getvalue == "{{ block.settings.color_variable }}"){
+     document.getElementById("myimage").style.display = "block";      
+    document.getElementById("myimage").src="{{ block.settings.image_variable | img_url: '800x' }}";
+  } 
+
+{% endfor %}
+
+ }
+
+ 
+ 
+ 
+ 
+</script>
+
+ 
+
+
+
+
+{% schema %}
+  {
+    "name": "Color Images",
+    "max_blocks": 40,
+    "blocks": [
+{
+      "type": "image",
+      "name": {
+        "en": "Image & Color"
+      },
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_variable",
+          "label": {
+            "en": "Image"
+          }
+        },
+        {
+          "type": "text",
+          "id": "color_variable",
+          "label": {
+            "en": "Color Name"
+          }
+        }
+      ]
+}
+    ]
+  }
+{% endschema %}
+______________________________________________________________
+Schema:
+
+{% if section.settings.id_text %}
+<iframe src="https://www.youtube.com/embed/{{section.settings.id_text}}?autohide=1&auto=1&rel=0&autoplay=1&iv_load_policy=3&modestbranding=1&controls=0&showinfo=0" width="640" height="480" frameborder="0" title="Funny Cat Videos For Kids" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" data-ready="true"></iframe>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Youtube Video",
+    "settings": [
+     {
+        "type": "text",
+        "id": "id_text",
+        "label": "ID of Youtube Video",
+        "default": "-WqeFWUr2qA"
+      }
+
+]
+  }
+{% endschema %}
+
+______________________________________________________________________________
+
