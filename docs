@@ -446,3 +446,103 @@ fclose ($csv_handler);
 ?>
 ------------------------------------------------------
 ______________________________________________________________________________________________
+Youtube Video
+........
+<script type="text/javascript">
+  var tag = document.createElement('script');
+  tag.id = 'iframe-demo';
+  tag.src = 'https://www.youtube.com/iframe_api';
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('existing-iframe-example', {
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+    });
+  }
+  function onPlayerReady(event) {
+    document.getElementById('existing-iframe-example').style.borderColor = '#FF6D00';
+  }
+  function changeBorderColor(playerStatus) {
+    var color;
+	var display;
+	var opacity;
+    if (playerStatus == -1) {
+      color = "#37474F"; // unstarted = gray
+    } else if (playerStatus == 0) {
+      color = "#FFFF00"; // ended = yellow
+	  display = "none";
+	  opacity = "0";
+    } else if (playerStatus == 1) {
+      color = "#33691E"; // playing = green
+	  display = "block";
+	  opacity = "1";
+    } else if (playerStatus == 2) {
+      color = "#DD2C00"; // paused = red
+    } else if (playerStatus == 3) {
+      color = "#AA00FF"; // buffering = purple
+      opacity = "0";
+    } else if (playerStatus == 5) {
+      color = "#FF6DOO"; // video cued = orange
+    }
+    if (color) {
+      document.getElementById('existing-iframe-example').style.borderColor = color;
+	   //document.getElementById('existing-iframe-example').style.display = display;
+      
+	   document.getElementById('its').style.opacity = opacity;
+    }
+  }
+  function onPlayerStateChange(event) {
+    changeBorderColor(event.data);
+  }
+</script>
+
+
+
+<style>
+.top iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.wrapper {
+    position: relative;
+    padding-bottom: 200%;
+    transform: translateY(-35.95%);
+}
+.video_banner {
+    position: relative;
+    background-image: url(https://img.youtube.com/vi/-WqeFWUr2qA/sddefault.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.top {
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    position: relative;
+}
+</style>
+<div class="video_banner">
+<div class="top" id="its" style="opacity:0">
+    <div class="wrapper">
+        <iframe id="existing-iframe-example"
+        width="640" height="480"
+        src="https://www.youtube.com/embed/-WqeFWUr2qA?enablejsapi=1&loop=1&playlist=-WqeFWUr2qA&autoplay=1&mute=1"
+        frameborder="0"
+        style="border: solid 4px #37474F"
+></iframe>
+    </div>
+</div>   
+   
+</div>
+.............
+______________________________________________________________________________________________________________
