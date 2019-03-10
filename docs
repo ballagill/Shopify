@@ -5,6 +5,14 @@
 {{ 'image.jpg' | asset_url | img_tag }}
 {{ 'custom.js' | asset_url | script_tag }}
 ____________________________________________________
+To add custom font:
+Download ttf file i.e from https://www.wfonts.com/font/verdana
+then genrate fontface by upload ttf file to https://transfonter.org/
+Then download font zip file from https://transfonter.org/
+Then upload its files on website and link the stylesheet.css in header of website.
+Then use font family as suggested in demo.
+
+_____________________________________________________________________________________
 Shofiy:-
 Shopify provides trial account same as squarespace for 14 days.It is only used for shopping purpose. it provide very simple
 interface for creating online store(shopping pages). It is mostly designed same as woocommerce of wordpress means the person who
