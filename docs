@@ -147,7 +147,21 @@ Section:- Block schema to add multple blocks and fetch them, very useful code.
          ]
 }
 {% endschema %}
---------------------------------
+-----------------------------------------------------------------------------
+To get page content by schema setting use following mehtod:
+
+
+  {% if section.settings.product_tab3 %}
+    <div class="dt-sc-tabs-content slideInDown">
+      <p>{{ pages[section.settings.product_tab3_page].content }}</p>
+    </div>
+    {% endif %}
+ 
+     {
+        "type": "page",
+        "id": "product_tab3_page",
+        "label": "Select shipping info page"
+      }
 ______________________________________________________________________________
 Narrative theme: How to show all variant images with product image and make them to change the variant automatically on clicking. And show variant images in slider format for mobile view in place of product image.
 
