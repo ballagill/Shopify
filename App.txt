@@ -1,0 +1,264 @@
+Reference url:- https://www.shopify.in/partners/blog/17056443-how-to-generate-a-shopify-api-token
+
+#Create account and Login to https://www.shopify.in/partners website.
+
+#Create a new App and give it a name as "Create Page App" and put the App URL as "http://localhost/shopify/app/install.php".
+
+#Then add a "http://localhost/shopify/app/generate_token.php" url in "Whitelisted redirection URL(s)" field.
+
+#Then upload a unique icon for APP. just upload and save, it will automatically resize it to 512×512px.
+
+#Then Create listing of our App on App store by clicking on "Create App Store listing" button. Then "Edit app submission form" button. it just needs to fill some details of app (optional). Then just press save button. Then press on "view app listing" button, it will show our app listed on App store.just copy its url(Note this app will only be shown if partner account is logged in on browser because it is not publically published yet.)
+
+#Then next step is generate Access token of shopify to exchange its data with APP. Access token is used by APP for get and post data to shopify store. 
+
+#Now we need to use Shop name(where to install the app), Our API and Secret key to generate token.
+
+#just copy and extract the app.zip folder in http://localhost/shopify/app folder.
+
+#Copy the API key of our app and update $api_key on install.php file, also update the $redirect_uri to http://localhost/shopify/app/generate_token.php.
+
+#Then open generate_token.php file and update its api key and secret key with our app keys.
+
+#Then just go to app url and press Get button, then add the shop name as "ankpro29000000.myshopify.com" and then press login and install the app. 
+
+#Once the App will be installed, then it will be redirected to http://localhost/shopify/app/generate_token.php page where it will show a Access token. This is the main access token that we will be used to exchange all data with shopify store from our app. We need to store this access token in database or session and keep using for all data exchange. if we will not store this Access token anywhere, then our api would not work if we will refresh the app page. it will show invalid token as it will try to create another token. we only have to create Access token once and then save it somewhere and keep using for all api calls.
+
+Once Access token is generated, then keep Access token and Shop name somewhere(Most probably in session) and use them for API calls. 
+
+#That's all. 
+
+
+Note:- We will have to update the scope variable in install.php file according to the data that we want to exchange with shopify store.
+Example:- $scopes = "read_orders,write_products";
+
+if we want to load all app page's on shopify without redirecting to our localhost then we can enable "Your app is set up to load inside of Shopify admin using the Embedded App SDK." option in app setting. it will embed our localhost page in iframe on shopify.
+
+The app.zip has a function file in which shopify_call(); function is created, we only need to pass the values as required in this function to use.Following are the functions that we can use on generate_token.php file after creating access token. _________________________________________________________________________________________________________
+Function to modify product title:
+
+// Set variables for our request
+$shop = $shop_name;
+$token = $access_token;
+$query = array(
+	"Content-type" => "application/json" // Tell Shopify that we're expecting a response in JSON format
+);
+// Modify product data
+$modify_data = array(
+	"product" => array(
+		"id" => $product_id,
+		"title" => "My New Title"
+	)
+);
+
+// Run API call to modify the product
+$modified_product = shopify_call($token, $shop, "/admin/products/" . $product_id . ".json", $modify_data, 'PUT');
+
+// Storage response
+$modified_product_response = $modified_product['response'];
+print_r($modified_product_response);
+____________________________________________________________________________________________________
+Function to modify page title:
+
+$modify_data = array(
+	"page" => array(
+		"id" => '6108381235',
+		"title" => "My New Title"
+	)
+);
+$modified_page = shopify_call($token, $shop, "/admin/pages/6108381235.json", $modify_data, 'PUT');
+$modified_product_response = $modified_page['response'];
+print_r($modified_page_response);
+__________________________________________________________________________________________________________
+Function to get all products:
+
+// Set variables for our request
+$shop = $shop_name;
+$token = $access_token;
+$query = array(
+	"Content-type" => "application/json" // Tell Shopify that we're expecting a response in JSON format
+);
+
+// Run API call to get all products
+$products = shopify_call($token, $shop, "/admin/products.json", array(), 'GET');
+
+// Get response
+$products = $products['response'];
+print_r($products);
+_________________________________________________________________________________________________ 
+Function to create new page: 
+Note:- json_encode(); function is required if we are using array to generate page attributes.
+
+$shop = $shop_name;
+$token = $access_token;
+$query = array(
+	"Content-type" => "application/json" // Tell Shopify that we're expecting a response in JSON format
+);
+$createpage = array(
+	"page" => array(
+		"title" => "Warranty information",
+		"body_html" => "<h1>Warranty</h1>\n<p><strong>Forget it</strong>, we aint giving you nothing</p>"
+	)
+);
+echo json_encode($createpage); //we need to convert the array into json format to post data
+$functioncalled = shopify_call($token, $shop, "/admin/pages.json", $createpage, 'POST');
+$functioncalled_response = $functioncalled['response'];
+print_r($functioncalled_response); 
+_________________________________________________________________________________________________________________ 
+Function to udpate the code of liquid file in theme:  Note:- The App should have "write_themes" permission allowed. 
+
+$shop = $shop_name;
+$token = $access_token;
+$query = array(
+	"Content-type" => "application/json" // Tell Shopify that we're expecting a response in JSON format
+);
+$update_code = array(
+	"asset" => array(
+		"key"=>"templates/index.liquid",
+		"value" => "<img src='backsoon-postit.png'><p>We are busy updating the store for you and will be back within the hour.</p>"
+	)
+);
+
+json_encode($update_code);
+$functioncalled = shopify_call($token, $shop, "/admin/themes/9376432159/assets.json", $update_code, 'PUT');
+$functioncalled_response = $functioncalled['response'];
+print_r($functioncalled_response); ________________________________________________________________________________________________
+_________________________________________________________________________________________________________________ 
+Function to create new template liquid file in theme:  Note:- The App should have "write_themes" permission allowed. 
+
+$shop = $shop_name;
+$token = $access_token;
+$query = array(
+	"Content-type" => "application/json" // Tell Shopify that we're expecting a response in JSON format
+);
+$update_code = array(
+	"asset" => array(
+		"key"=>"templates/mycustomfile.liquid",
+		"value" => "<img src='backsoon-postit.png'><p>We are busy updating the store for you and will be back within the hour.</p>"
+	)
+);
+
+json_encode($update_code);
+$functioncalled = shopify_call($token, $shop, "/admin/themes/9376432159/assets.json", $update_code, 'PUT');
+$functioncalled_response = $functioncalled['response'];
+print_r($functioncalled_response); ________________________________________________________________________________________________
+Function to create new section liquid file in theme:  Note:- The App should have "write_themes" permission allowed. 
+
+$shop = $shop_name;
+$token = $access_token;
+$query = array(
+	"Content-type" => "application/json" // Tell Shopify that we're expecting a response in JSON format
+);
+$update_code = array(
+	"asset" => array(
+		"key"=>"sections/mycustomfile.liquid",
+		"value" => "<img src='backsoon-postit.png'><p>We are busy updating the store for you and will be back within the hour.</p>"
+	)
+);
+
+json_encode($update_code);
+$functioncalled = shopify_call($token, $shop, "/admin/themes/9376432159/assets.json", $update_code, 'PUT');
+$functioncalled_response = $functioncalled['response'];
+print_r($functioncalled_response); ________________________________________________________________________________________________
+Function to get the liquid code of any file:
+
+$shop = $shop_name;
+$token = $access_token;
+$query = array(
+	"Content-type" => "application/json" 
+);
+$get_code = array(
+	"asset" => array(
+		"key"=>"assets/popup.liquid"
+	)
+);
+json_encode($get_code);
+$get_functioncalled = shopify_call($token, $shop, "/admin/themes/9376432159/assets.json", $get_code, 'GET');
+$get_functioncalled_response = $get_functioncalled['response'];
+print_r($get_functioncalled_response); // All values
+echo '</br>';
+$get_functioncalled_responsed = json_decode($get_functioncalled_response);
+foreach($get_functioncalled_responsed as $printit){
+	echo $printit->value; //only liquid code
+}
+_______________________________________________________________________
+Function to create popup liquid file in theme snippets folder: Then just need to use shortcode {% include 'popup' %} to show the popup anywhere on theme.
+
+$shop = $shop_name;
+$token = $access_token;
+$query = array(
+	"Content-type" => "application/json" 
+);
+$create_popup = array(
+	"asset" => array(
+		"key"=>"snippets/popup.liquid",
+		"value" =>'<style>
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+}
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
+</style>
+<h2>Popup</h2>
+<div class="popup" onclick="myFunction()">Click me to toggle the popup!
+  <span class="popuptext" id="myPopup">A Simple Popup!</span>
+</div>
+<script>
+function myFunction() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+}
+</script>'
+	)
+);
+
+json_encode($create_popup);
+$functioncalled = shopify_call($token, $shop, "/admin/themes/9376432159/assets.json", $create_popup, 'PUT');
+$functioncalled_response = $functioncalled['response'];
+print_r($functioncalled_response); 
+
+__________________________________________________________________________________________
+Theme edit using Shopify API
+https://ankpro2900000000.myshopify.com/admin/themes/9376432159/assets.json?asset[key]=templates/cart.liquid&theme_id=9376432159
