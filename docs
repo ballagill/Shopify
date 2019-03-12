@@ -1,9 +1,12 @@
+{% comment %} {% endcomment %}
 {% include 'snippet-name' %}
-{% include 'site-nav' %}
 {% section 'sectionname-name' %}
 {{ 'custom-style.css' | asset_url | stylesheet_tag }}
 {{ 'image.jpg' | asset_url | img_tag }}
 {{ 'custom.js' | asset_url | script_tag }}
+
+{% assign foo = 'pageslug' %}
+{{ pages[foo].content }}
 ____________________________________________________
 To add custom font:
 Download ttf file i.e from https://www.wfonts.com/font/verdana
