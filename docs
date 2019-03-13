@@ -151,6 +151,51 @@ Section:- Block schema to add multple blocks and fetch them, very useful code.
 }
 {% endschema %}
 -----------------------------------------------------------------------------
+{% for block in section.blocks %}
+{% assign product_item = all_products[block.settings.productid] %}
+
+   <div class="trending-block">
+	<h4> {{ product_item.title }}</small></h4>
+	<ul class="star">
+		<li><i class="fas fa-star"></i></li>
+		<li><i class="fas fa-star"></i></li>
+		<li><i class="fas fa-star"></i></li>
+		<li><i class="fas fa-star"></i></li>
+		<li><i class="fas fa-star"></i></li>
+	</ul>
+	<img src="{{ product_item | img_url: 'master' }}">
+	<span>${{ product_item.price }}</span>
+	<a href="{{ product_item.url }}">Shop Now</a>
+	</div>
+
+
+{% endfor %}
+
+
+{% schema %}
+{
+    "name": "Home page products",
+    "max_blocks": 3,
+    "blocks": [
+ {
+      "type": "product",
+      "name": {
+        "en": "Products"
+      },
+      "settings": [
+        {
+          "type": "product",
+          "id": "productid",
+          "label": {
+            "en": "product"
+          }
+        }
+               ]
+ }
+         ]
+}
+{% endschema %}
+-------------------------------------------------------------------------------------------------------------------
 To get page content by schema setting use following mehtod:
 
 
