@@ -1,3 +1,6 @@
+//We need to create a webhook in shopify backend under notification settings, Webhooks should be "Order Creation" with Json format.
+//Then place this file anywhere in server and put its browser link in Webhook, Now whenever any order will be created on shopify, it will
+//send its json data to that link and webhook.php file will read that data and put it in webhook.txt file that will be furhter used as required.
 <?php
 $handle = fopen("webhook.txt",'r');
 $contents = file_get_contents("webhook.txt");
