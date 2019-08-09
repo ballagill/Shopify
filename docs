@@ -617,7 +617,7 @@ Youtube Video
 .............
 ______________________________________________________________________________________________________________
 We can add custom cart fields as well such as delivery date and time as follows on cart template in <form> tag. there values will be automatically shown on placed orders at backend in additional details section.
-
+We can add as many custom fields as we need using name attribute as 'name="attributes[date]"' for cart fields.
  <ul><li>
     <label for="date">Pick a delivery date:</label>
     <input class="datepick" type="text" name="attributes[date]" placeholder="MM/DD/YYYY" value="{{ cart.attributes.date }}" />
@@ -632,3 +632,8 @@ We can add custom cart fields as well such as delivery date and time as follows 
 	</select>   
    </li> </ul>
 __________________________________________________________________________________________________________________________________
+we can also add cusotm fields on product page in add to cart <form> tag as follow: main thing is name of field, we can add as many custom fields as we need by using name as 'name="properties[Phone no]"' for product fields.
+<input type="hidden" name="properties[Phone no]" class="tb_property_val">
+_________________________________________________________________________________________________________________________________
+
+
