@@ -616,3 +616,19 @@ Youtube Video
 </div>
 .............
 ______________________________________________________________________________________________________________
+We can add custom cart fields as well such as delivery date and time as follows on cart template in <form> tag. there values will be automatically shown on placed orders at backend in additional details section.
+
+ <ul><li>
+    <label for="date">Pick a delivery date:</label>
+    <input class="datepick" type="text" name="attributes[date]" placeholder="MM/DD/YYYY" value="{{ cart.attributes.date }}" />
+   </li><li>
+    <label for="date">Pick a delivery time:</label>
+  <select id="delivery-time" name="attributes[Delivery-Time]" readonly="readonly">
+	<option id="time_option_label" value="10-12pm">10-12pm</option>
+    <option id="time_option_label" value="12-2pm">12-2pm</option>
+    <option id="time_option_label" value="2-4pm">2-4pm</option>
+    <option id="time_option_label" value="4-6pm">4-6pm</option>
+    <option id="time_option_label" value="6-8pm">6-8pm</option>
+	</select>   
+   </li> </ul>
+__________________________________________________________________________________________________________________________________
