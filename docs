@@ -635,5 +635,7 @@ ________________________________________________________________________________
 we can also add cusotm fields on product page in add to cart <form> tag as follow: main thing is name of field, we can add as many custom fields as we need by using name as 'name="properties[Phone no]"' for product fields.
 <input type="hidden" name="properties[Phone no]" class="tb_property_val">
 _________________________________________________________________________________________________________________________________
+To create a ajax "Add to cart" to add products in cart without refreshing the page or redirecting to cart. follow the following link, I have tested this code, and it worked fine.
 
-
+https://help.shopify.com/en/themes/customization/products/add-to-cart/stay-on-product-page-when-items-added-to-cart
+_____________________________________________________________________________________________________________________________
