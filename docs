@@ -642,4 +642,185 @@ ________________________________________________________________________________
 Create custom quick view on collection page.
 https://www.huratips.com/tech-tips/how-to-create-a-simple-quick-view-without-app-usage-to-your-shopify-store.html
 _______________________________________________________________________________________________________________________
+Schema markup: just create a snippet of it and call in in theme head tag.
+-----------------
+<script type="application/ld+json">
+{%- if template == 'index' -%}
+{
+  "@context": "http://schema.org",
+  "@type": "WebSite",
+  "name": "{{ shop.name }}",
+  "alternateName": "{{ shop.description }}",
+  "url": "{{ shop.url }}"
+}
+{%- elsif template == 'product' %}
+{
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": "{{ product.title | strip_html | escape }}",
+  "url": "{{ shop.url }}{{ product.url }}",
+  {% if product.first_available_variant.sku != blank %}
+    "sku": "{{ product.first_available_variant.sku }}",
+  {% else %}
+    "sku": "{{ product.first_available_variant.id }}",
+  {% endif %}
+  {% if product.first_available_variant.barcode.size == 12 %}
+    "gtin12": {{ product.first_available_variant.barcode }},
+  {% endif %}
+  {% if product.first_available_variant.barcode.size == 13 %}
+    "gtin13": {{ product.first_available_variant.barcode }},
+  {% endif %}
+  {% if product.first_available_variant.barcode.size == 14 %}
+    "gtin14": {{ product.first_available_variant.barcode }},
+  {% endif %}
+  "brand": {
+    "@type": "Thing",
+    "name": "{{ product.vendor | escape }}"
+  },
+  "description": "{{ product.description | strip_html | escape | strip_newlines }}",
+  "image": "https:{{ product.featured_image.src | img_url: 'grande' }}",
+  {% if product.variants %}
+    "offers": {% if product.variants.size > 1 %}[{% endif %}
+      {
+        "@type" : "Offer",
+        "priceCurrency": "{{ shop.currency }}",
+        "price": "{{ product.price | money_without_currency }}",
+        "priceValidUntil" : "10-10-2020",
+        "itemCondition" : "http://schema.org/NewCondition",
+        "availability" : "http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+        "url" : "{{ shop.url }}{{ fa_current_variant.url }}",
+        "itemOffered" :
+        {
+            "@type" : "Product",
+            {% if fa_current_variant.image %}
+              {% assign variant_image_size = fa_current_variant.image.width | append: 'x' %}
+              "image": "http:{{ fa_current_variant.image.src | img_url: variant_image_size }}",
+            {% endif %}
+            {% if fa_current_variant.title != blank %}
+              "name" : "{{ fa_current_variant.title | escape }}",
+            {% endif %}
+            {% if fa_current_variant.barcode.size == 12 %}
+              "gtin12": {{ fa_current_variant.barcode }},
+            {% endif %}
+            {% if fa_current_variant.barcode.size == 13 %}
+              "gtin13": {{ fa_current_variant.barcode }},
+            {% endif %}
+            {% if fa_current_variant.barcode.size == 14 %}
+              "gtin14": {{ fa_current_variant.barcode }},
+            {% endif %}
+            {% if fa_current_variant.sku != blank %}
+              "sku": "{{ fa_current_variant.sku }}",
+            {% else %}
+              "sku": "{{ fa_current_variant.id }}",
+            {% endif %}
+            "url": "{{ shop.url }}{{ fa_current_variant.url }}"
+        }
+      }{% if product.variants.size > 1 %},{% endif %}
 
+      {% for variant in product.variants %}
+
+      {% if variant != product.selected_or_first_available_variant %}
+        {
+          "@type" : "Offer",
+          "priceCurrency": "{{ shop.currency }}",
+          "price": "{{ variant.price | money_without_currency  | strip_html | remove: ',' }}",
+          "itemCondition" : "http://schema.org/NewCondition",
+          "availability" : "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+          "url" : "{{ shop.url }}{{ variant.url }}",
+          "itemOffered" :
+          {
+              "@type" : "Product",
+              {% if variant.image %}
+                {% assign variant_image_size = variant.image.width | append: 'x' %}
+                "image": "http:{{ variant.image.src | img_url: variant_image_size }}",
+              {% endif %}
+              {% if variant.title != blank %}
+                "name" : "{{ variant.title | escape }}",
+              {% endif %}
+              {% if variant.barcode.size == 12 %}
+                "gtin12": {{ variant.barcode }},
+              {% endif %}
+              {% if variant.barcode.size == 13 %}
+                "gtin13": {{ variant.barcode }},
+              {% endif %}
+              {% if variant.barcode.size == 14 %}
+                "gtin14": {{ variant.barcode }},
+              {% endif %}
+              {% if variant.sku != blank %}
+                "sku": "{{ variant.sku }}",
+              {% else %}
+                "sku": "{{ variant.id }}",
+              {% endif %}
+              "url": "{{ shop.url }}{{ variant.url }}"
+          }
+        }
+        {% unless forloop.last %},{% endunless %}
+        {% endif %}
+      {% endfor %}
+    ,"review": [
+    {
+      "@type": "Review",
+      "author": "Sonja",
+      "datePublished": "Jul 03, 2019",
+      "description": "The 'frombelo family' creates - I can´t say it in a different way - real litte masterpieces! The fabric they produce in the most sustainable way is soft and beautiful. The bags are manufactured in best craftsmanship - every single seam is worked out in detail. Especially in this handwoven CIDA BAG, you can see how much love has been put into during the manufacturing process. Maria and Char were so lovely and generous to give me this model as a gift as I won an instagram competition (thank you so much again!!!) and it has been an appreciated companion ever since. Not only was it the perfect picnic and swimming bag during my latest holidays, but it´s also a stylish and practical working bag, that radiates my social and environmental values. It makes me always happy to carry it!",
+      "name": "AMAZING FABRIC AND CRAFTSMANSHIP",
+      "reviewRating": {
+        "@type": "Rating",
+        "bestRating": "5",
+        "ratingValue": "5",
+        "worstRating": "0"
+      }
+    }  ]
+    {% if product.variants.size > 1 %}]{% endif %}
+
+    {% if product.metafields.spr.reviews %}
+    ,"aggregateRating": {
+     "@type": "AggregateRating",
+     "ratingValue": {{ product.metafields.spr.reviews | split: 'ratingValue" content="' | last | split: '"' | first | plus: 0 }},
+     "ratingCount": {{ product.metafields.spr.reviews | split: 'reviewCount" content="' | last | split: '"' | first | plus: 0 }}
+    }
+  
+    {% endif %}
+  {% endif %}
+  ,
+  "gtin8": "wetiohwer"
+}
+}
+{%- elsif template == 'article' %}
+{
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "image": {
+    "@type": "imageObject",
+    "url": "https:{{ article.image.src | img_url: 'original' }}",
+    "width": "1024px",
+    "height": "1024px"
+  },
+  "keywords": "{%- for tag in article.tags -%}{{ tag }}{%- unless forloop.last -%}, {%- endunless -%}{%- endfor -%}",
+  "url": "{{ shop.url | append: article.url }}",
+  "description": "{{ article.content | truncatewords: 100 | strip_html }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://google.com/article"
+  },
+  "headline": "{{ article.title }}",
+  "datePublished": "{{ article.published_at }}",
+  "dateModified": "{{ article.published_at }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ article.author }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ shop.name }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ shop.url }}"
+    }
+  },
+  "commentCount": "{{ article.comments_count }}"
+}
+{%- endif %}
+</script>
+----------------------------
+__________________________________________________________________________________________________________________
