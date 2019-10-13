@@ -8,6 +8,14 @@
 {% assign foo = 'pageslug' %}
 {{ pages[foo].content }}
 ____________________________________________________
+Navigation dropdown css:
+.dropdown ul.submenu {
+    display: none;
+}
+.dropdown:hover .submenu {
+    display: block;
+}
+_________________________________________________________________
 To add custom font:
 Download ttf file i.e from https://www.wfonts.com/font/verdana
 then genrate fontface by upload ttf file to https://transfonter.org/
