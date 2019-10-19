@@ -7,6 +7,25 @@
 
 {% assign foo = 'pageslug' %}
 {{ pages[foo].content }}
+
+______________________________________________
+ <div>
+  <ul class="tabs">
+    <li><a href="#tab-1">Info</a></li>
+    <li><a href="#tab-2">Shipping</a></li>
+    <li><a href="#tab-3">Returns</a></li>
+  </ul>
+  <div id="tab-1">
+  {{ product.description }}
+  </div>
+  <div id="tab-2">
+  {{ pages.shipping.content }}
+  </div>
+  <div id="tab-3">
+  {{ pages.returns.content }}
+  </div>
+          
+</div>
 ____________________________________________________
 Navigation dropdown css:
 .dropdown ul.submenu {
