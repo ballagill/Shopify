@@ -1,3 +1,4 @@
+SEO:
 Fix duplicate content issue of product page url due to being same product in different collection and collection page pagination issue in SEO that comes on Google search console. (Google search console is also know as Google webmaster)
 https://community.shopify.com/c/Shopify-Discussion/Duplicate-Content-Same-Page-with-different-url/td-p/392224
 https://gist.github.com/willbroderick/b38852d7c87762cc4804cbef0cbdf45b
@@ -10,6 +11,11 @@ https://community.shopify.com/c/Shopify-Discussion/noindex-issues-with-tags-and-
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="{{ canonical_url }}" />
 {% endif %}
+--------------------------
+<link rel="alternate" hreflang ="es" href="{{ canonical_url }}" />
+{% if current_page > 1 %}
+<meta name="robots" content="noindex">
+{% endif %} 
 _______________________________________________________
 {% comment %} {% endcomment %}
 {% include 'snippet-name' %}
