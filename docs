@@ -891,4 +891,160 @@ Youtube video responsive without black bars on side for all media devices:
 }
 </style>
 __________________________________________________________________________________________________________________________
+Mobile side nav humburg menu idea:
+
+----------
+<style>
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  z-index:9999;
+  color:#000000;
+}
+ul.secondul {
+    float: left;
+    width: 100%;
+    padding: 0px 1px 15px 15px;
+    display: none;
+}  
+.submenu .icon {
+    width: 20%;
+    float: revert;
+    color: #ffffff;
+    margin-top: 10px;
+}
+.submenu {
+    width: 100%;
+    float: left;
+}
+.submenu a {
+    float: left;
+    width: 80%;
+}
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  display: block;
+  transition: 0.3s;
+}
+.firstula {
+    font-size: 16px!important;
+    color: #ffffff;
+}
+.secondula {
+    font-size: 14px!important;
+    color: #ffffff;
+}
+.thirdula a {
+    font-size: 12px!important;
+    color: #ffffff;
+}
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+.cross .icon{transform: rotate(45deg);}
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $(".iconplus").click(function(){
+    if($(this).hasClass('cross')){
+    $(this).closest('li').children('ul').hide();
+    $(this).removeClass('cross');
+    }else{
+    $(this).addClass('cross'); 
+    $(this).closest('li').children('ul').show();
+    }
+  });  
+});
+</script>
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+<ul class="firstul">
+        {% for link in linklists[section.settings.main_linklist].links %}
+          {%- assign outerLoopIndex = forloop.index -%}
+
+          <li class="firstulli">
+            {% if link.links != blank %}
+              {% capture child_list_handle %}{{ link.handle }}-{{ outerLoopIndex }}{% endcapture %}
+              <div class="submenu"> <a class="firstula" href="{{ link.url }}"
+               {% if link.current %} aria-current="page"{% endif %}>
+                              <span>{{ link.title | escape }}</span>
+                            </a>
+                <div class="iconplus">{% include 'icon-plus' %}</div></div>
+              <ul class="secondul" data-parent="{{ child_list_handle }}" data-level="2">
+                {% for childlink in link.links %}
+                  <li class="secondulli">
+                    {% if childlink.links != blank %}
+                      {% capture grandchild_list_handle %}{{ childlink.handle }}-{{ outerLoopIndex }}-{{ forloop.index }}{% endcapture %}
+                      <a class="secondula submenu" href="{{ link.url }}"
+                {% if childlink.current %} aria-current="page"{% endif %}>
+                              <span>{{ childlink.title | escape }}</span>
+                            </a>
+                      <ul class="thirdul" data-parent="{{ grandchild_list_handle }}" data-level="3">
+                       
+                        {% for grandchildlink in childlink.links %}
+                          <li class="thirdulli">
+                            <a class="thirdula" href="{{ grandchildlink.url }}"
+                              {% if grandchildlink.current %} aria-current="page"{% endif %}
+                            >
+                              <span>{{ grandchildlink.title | escape }}</span>
+                            </a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    {% else %}
+                      <a class="secondula nosubmenu" href="{{ childlink.url }}"
+                        {% if childlink.current %} aria-current="page"{% endif %}
+                      >
+                        <span >{{ childlink.title | escape }}</span>
+                      </a>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <a class="firstula nosubmenu" href="{{ link.url }}"
+                {% if link.current %} aria-current="page"{% endif %}
+              >
+                <span>{{ link.title | escape }}</span>
+              </a>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+</div>
+
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+--------------------
+_________________________________________________________________________________________________________________
 
