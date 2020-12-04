@@ -1045,6 +1045,16 @@ function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
 </script>
---------------------
+----------------------------------------------------------------------------------------------------------------
+To add animation on any page, just use following library and initiate javascript function. reference link https://github.com/michalsnik/aos and http://michalsnik.github.io/aos/
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+AOS.init();
+</script>
+
+Then just add its attributes to div as follows to trigger animation.
+<div data-aos="fade-in" data-aos-id="super-duper"></div>
 _________________________________________________________________________________________________________________
 
