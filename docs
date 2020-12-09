@@ -1057,4 +1057,25 @@ AOS.init();
 Then just add its attributes to div as follows to trigger animation.
 <div data-aos="fade-in" data-aos-id="super-duper"></div>
 _________________________________________________________________________________________________________________
-
+split,remove,string,trim string
+Here is how I have put two values in vendor field (rodrigomsdeus@hotmail.com,Rodrigo) of Product editor and used them in frontend code by spliting them using comma to show different name with email link and display photo. This is very use
+<div style="min-height: 37px;" class="vendordata">
+{% assign vendoremail = product.vendor | split: "," %}
+{% for getvendordata in vendoremail %}
+{% if forloop.first %}
+{% assign vendoremail = getvendordata %}  
+  {% endif %}  
+{% if forloop.last %}
+{% assign vendorname = getvendordata %}  
+  {% endif %}
+{% endfor %}
+  
+{% assign username = vendoremail | split: "@" %}
+{% for getusername in username %}  
+{% if forloop.first %}
+{% assign imagename = getusername| append: ".jpg"  %}  
+  {% endif %}
+{% endfor %}  
+  {{ imagename | asset_url | img_tag }}
+<p class="vendorname"><a href="mailto:{{ vendoremail }}">{{ vendorname }}</a><p></div>
+_____________________________________________________________________________________________
