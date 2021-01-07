@@ -242,7 +242,7 @@ Section:- Block schema to add multple blocks and fetch them, very useful code.
 }
 {% endschema %}
 -----------------------------------------------------------------------------------------------------------------
-Section to show dynamic offer text on different product page. just create empty div such as <span class="offerbox"></span> where to show this offer on product page and include this section on product page.
+Section to show dynamic offer text on different product page. just create empty div such as <span id="offerbox" class="offerbox"></span> where to show this offer on product page and include this section on product page.
 .....................................
 {% for block in section.blocks %}
 {% assign product_item = all_products[block.settings.productofferid] %}
@@ -250,7 +250,9 @@ Section to show dynamic offer text on different product page. just create empty 
 {% if block.settings.offertext != blank %}
 <script>
 $(document).ready(function(){
-$(".offerbox").addClass("offerboxcss").html("{{ block.settings.offertext }}");
+var offerbox = document.getElementById("offerbox");
+  offerbox.classList.add("offerboxcss");
+  offerbox.innerHTML = "{{ block.settings.offertext }}";
 });
 </script>
 {% endif %}
@@ -305,23 +307,23 @@ A complete section to have dynamic content for each product page.
 {% for block in section.blocks %}
 {% assign product_item = all_products[block.settings.productid] %}
 {% if product_item.id == product.id %}
-<div class="whatweget" style="display:none">
+<div id="whatweget" class="whatweget" style="display:none">
 <h3>What You Get</h3>
 <ul>
-{% if block.settings.firsticon != blank %}<li>{{ block.settings.firsticon | asset_url | img_tag }}<span>{{ block.settings.firsticontext }}</span></li>{% endif %}
-{% if block.settings.secondicon != blank %}<li>{{ block.settings.secondicon | asset_url | img_tag }}<span>{{ block.settings.secondicontext }}</span></li>{% endif %}
-{% if block.settings.thirdicon != blank %}<li>{{ block.settings.thirdicon | asset_url | img_tag }}<span>{{ block.settings.thirdicontext }}</span></li>{% endif %}
-{% if block.settings.fourthicon != blank %}<li>{{ block.settings.fourthicon | asset_url | img_tag }}<span>{{ block.settings.fourthicontext }}</span></li>{% endif %}
-{% if block.settings.fifthicon != blank %}<li>{{ block.settings.fifthicon | asset_url | img_tag }}<span>{{ block.settings.fifthicontext }}</span></li>{% endif %}
-{% if block.settings.sixthicon != blank %}<li>{{ block.settings.sixthicon | asset_url | img_tag }}<span>{{ block.settings.sixthicontext }}</span></li>{% endif %}
+{% if block.settings.firsticon != blank %}<li>{{ block.settings.firsticon | asset_url | img_tag }}<span><b>{{ block.settings.firsticontext }}</b></span><span>{{ block.settings.firsticontext1 }}</span></li>{% endif %}
+{% if block.settings.secondicon != blank %}<li>{{ block.settings.secondicon | asset_url | img_tag }}<span><b>{{ block.settings.secondicontext }}</b></span><span>{{ block.settings.secondicontext1 }}</span></li>{% endif %}
+{% if block.settings.thirdicon != blank %}<li>{{ block.settings.thirdicon | asset_url | img_tag }}<span><b>{{ block.settings.thirdicontext }}</b></span><span>{{ block.settings.thirdicontext1 }}</span></li>{% endif %}
+{% if block.settings.fourthicon != blank %}<li>{{ block.settings.fourthicon | asset_url | img_tag }}<span><b>{{ block.settings.fourthicontext }}</b></span><span>{{ block.settings.fourthicontext1 }}</span></li>{% endif %}
+{% if block.settings.fifthicon != blank %}<li>{{ block.settings.fifthicon | asset_url | img_tag }}<span><b>{{ block.settings.fifthicontext }}</b></span><span>{{ block.settings.fifthicontext1 }}</span></li>{% endif %}
+{% if block.settings.sixthicon != blank %}<li>{{ block.settings.sixthicon | asset_url | img_tag }}<span><b>{{ block.settings.sixthicontext }}</b></span><span>{{ block.settings.sixthicontext1 }}</span></li>{% endif %}
 </ul>
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-$(".whatweget").appendTo(".whatwegetparent");
-});
+var d = document.getElementById('whatweget');
+var p = document.getElementById('whatwegetparent');
+p.appendChild(d); 
+}); 
 </script>
 
 <style>
@@ -390,7 +392,12 @@ $(".whatweget").appendTo(".whatwegetparent");
            {
           "type": "text",
           "id": "firsticontext",
-          "label": "First Icon Text"
+          "label": "First Icon Top Text"
+          },
+          {
+          "type": "text",
+          "id": "firsticontext1",
+          "label": "First Icon Bottom Text"
           },
           {
           "type": "select",
@@ -431,7 +438,12 @@ $(".whatweget").appendTo(".whatwegetparent");
            {
           "type": "text",
           "id": "secondicontext",
-          "label": "Second Icon Text"
+          "label": "Second Icon Top Text"
+          },
+          {
+          "type": "text",
+          "id": "secondicontext1",
+          "label": "Second Icon Bottom Text"
           },
           {
           "type": "select",
@@ -472,8 +484,13 @@ $(".whatweget").appendTo(".whatwegetparent");
            {
           "type": "text",
           "id": "thirdicontext",
-          "label": "Third Icon Text"
-           },
+          "label": "Third Icon Top Text"
+          },
+          {
+          "type": "text",
+          "id": "thirdicontext1",
+          "label": "Third Icon Bottom Text"
+          },
           {
           "type": "select",
           "id": "fourthicon",
@@ -513,8 +530,13 @@ $(".whatweget").appendTo(".whatwegetparent");
            {
           "type": "text",
           "id": "fourthicontext",
-          "label": "Fourth Icon Text"
-           },
+          "label": "Fourth Icon Top Text"
+          },
+          {
+          "type": "text",
+          "id": "fourthicontext1",
+          "label": "Fourth Icon Bottom Text"
+          },
           {
           "type": "select",
           "id": "fifthicon",
@@ -554,8 +576,13 @@ $(".whatweget").appendTo(".whatwegetparent");
            {
           "type": "text",
           "id": "fifthicontext",
-          "label": "Fifth Icon Text"
-           },
+          "label": "Fifth Icon Top Text"
+          },
+          {
+          "type": "text",
+          "id": "fifthicontext1",
+          "label": "Fifth Icon Bottom Text"
+          },
           {
           "type": "select",
           "id": "sixthicon",
@@ -595,14 +622,18 @@ $(".whatweget").appendTo(".whatwegetparent");
            {
           "type": "text",
           "id": "sixthicontext",
-          "label": "Sixth Icon Text"
-           }
+          "label": "Sixth Icon Top Text"
+          },
+          {
+          "type": "text",
+          "id": "sixthicontext1",
+          "label": "Sixth Icon Bottom Text"
+          }
 ]
  }
 ]
 }
 {% endschema %}
-
 -------------------------------------------------------------------------------------------------------------------
 To get page content by schema setting use following mehtod:
 
