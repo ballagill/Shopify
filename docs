@@ -241,6 +241,310 @@ Section:- Block schema to add multple blocks and fetch them, very useful code.
          ]
 }
 {% endschema %}
+------------------------------------------------------------------------------------------------------------------
+A complete section to have dynamic content for each product page.
+.................
+{% for block in section.blocks %}
+{% assign product_item = all_products[block.settings.productid] %}
+{% if product_item.id == product.id %}
+<div class="whatweget" style="display:none">
+<h3>What You Get</h3>
+<ul>
+{% if block.settings.firsticon != blank %}<li>{{ block.settings.firsticon | asset_url | img_tag }}<span>{{ block.settings.firsticontext }}</span></li>{% endif %}
+{% if block.settings.secondicon != blank %}<li>{{ block.settings.secondicon | asset_url | img_tag }}<span>{{ block.settings.secondicontext }}</span></li>{% endif %}
+{% if block.settings.thirdicon != blank %}<li>{{ block.settings.thirdicon | asset_url | img_tag }}<span>{{ block.settings.thirdicontext }}</span></li>{% endif %}
+{% if block.settings.fourthicon != blank %}<li>{{ block.settings.fourthicon | asset_url | img_tag }}<span>{{ block.settings.fourthicontext }}</span></li>{% endif %}
+{% if block.settings.fifthicon != blank %}<li>{{ block.settings.fifthicon | asset_url | img_tag }}<span>{{ block.settings.fifthicontext }}</span></li>{% endif %}
+{% if block.settings.sixthicon != blank %}<li>{{ block.settings.sixthicon | asset_url | img_tag }}<span>{{ block.settings.sixthicontext }}</span></li>{% endif %}
+</ul>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+$(".whatweget").appendTo(".whatwegetparent");
+});
+</script>
+
+<style>
+.whatwegetparent .whatweget {
+    display: block!important;
+}
+</style>
+
+{% endif %}
+{% endfor %}
+
+
+
+{% schema %}
+{
+    "name": "What You Get",
+    "max_blocks": 100,
+    "blocks": [
+ {
+      "type": "product",
+      "name": {
+        "en": "Products"
+      },
+      "settings": [
+          {
+          "type": "product",
+          "id": "productid",
+          "label": "Select Product"
+          },
+          {
+          "type": "select",
+          "id": "firsticon",
+          "label": "Select First Icon",
+          "options": [
+           {
+          "value": "",
+          "label": "Select"
+           },
+           {
+          "value": "checkenleggrey.png",
+          "label": "Chicken Leg Grey"
+           },
+           {
+          "value": "checkenlegred.png",
+          "label": "Chicken Leg Red"
+           },
+           {
+          "value": "meatgrey.png",
+          "label": "Meat Grey"
+           },
+           {
+          "value": "meatred.png",
+          "label": "Meat Red"
+           },
+           {
+          "value": "meatgrey1.png",
+          "label": "Meat Grey 1"
+           },
+           {
+          "value": "meatred1.png",
+          "label": "Meat Red 1"
+           }
+           ],
+          "default": ""
+           },
+           {
+          "type": "text",
+          "id": "firsticontext",
+          "label": "First Icon Text"
+          },
+          {
+          "type": "select",
+          "id": "secondicon",
+          "label": "Select Second Icon",
+          "options": [
+           {
+          "value": "",
+          "label": "Select"
+           },
+           {
+          "value": "checkenleggrey.png",
+          "label": "Chicken Leg Grey"
+           },
+           {
+          "value": "checkenlegred.png",
+          "label": "Chicken Leg Red"
+           },
+           {
+          "value": "meatgrey.png",
+          "label": "Meat Grey"
+           },
+           {
+          "value": "meatred.png",
+          "label": "Meat Red"
+           },
+           {
+          "value": "meatgrey1.png",
+          "label": "Meat Grey 1"
+           },
+           {
+          "value": "meatred1.png",
+          "label": "Meat Red 1"
+           }
+           ],
+          "default": ""
+           },
+           {
+          "type": "text",
+          "id": "secondicontext",
+          "label": "Second Icon Text"
+          },
+          {
+          "type": "select",
+          "id": "thirdicon",
+          "label": "Select Third Icon",
+          "options": [
+           {
+          "value": "",
+          "label": "Select"
+           },
+           {
+          "value": "checkenleggrey.png",
+          "label": "Chicken Leg Grey"
+           },
+           {
+          "value": "checkenlegred.png",
+          "label": "Chicken Leg Red"
+           },
+           {
+          "value": "meatgrey.png",
+          "label": "Meat Grey"
+           },
+           {
+          "value": "meatred.png",
+          "label": "Meat Red"
+           },
+           {
+          "value": "meatgrey1.png",
+          "label": "Meat Grey 1"
+           },
+           {
+          "value": "meatred1.png",
+          "label": "Meat Red 1"
+           }
+           ],
+          "default": ""
+           },
+           {
+          "type": "text",
+          "id": "thirdicontext",
+          "label": "Third Icon Text"
+           },
+          {
+          "type": "select",
+          "id": "fourthicon",
+          "label": "Select Fourth Icon",
+          "options": [
+           {
+          "value": "",
+          "label": "Select"
+           },
+           {
+          "value": "checkenleggrey.png",
+          "label": "Chicken Leg Grey"
+           },
+           {
+          "value": "checkenlegred.png",
+          "label": "Chicken Leg Red"
+           },
+           {
+          "value": "meatgrey.png",
+          "label": "Meat Grey"
+           },
+           {
+          "value": "meatred.png",
+          "label": "Meat Red"
+           },
+           {
+          "value": "meatgrey1.png",
+          "label": "Meat Grey 1"
+           },
+           {
+          "value": "meatred1.png",
+          "label": "Meat Red 1"
+           }
+           ],
+          "default": ""
+           },
+           {
+          "type": "text",
+          "id": "fourthicontext",
+          "label": "Fourth Icon Text"
+           },
+          {
+          "type": "select",
+          "id": "fifthicon",
+          "label": "Select Fifth Icon",
+          "options": [
+           {
+          "value": "",
+          "label": "Select"
+           },
+           {
+          "value": "checkenleggrey.png",
+          "label": "Chicken Leg Grey"
+           },
+           {
+          "value": "checkenlegred.png",
+          "label": "Chicken Leg Red"
+           },
+           {
+          "value": "meatgrey.png",
+          "label": "Meat Grey"
+           },
+           {
+          "value": "meatred.png",
+          "label": "Meat Red"
+           },
+           {
+          "value": "meatgrey1.png",
+          "label": "Meat Grey 1"
+           },
+           {
+          "value": "meatred1.png",
+          "label": "Meat Red 1"
+           }
+           ],
+          "default": ""
+           },
+           {
+          "type": "text",
+          "id": "fifthicontext",
+          "label": "Fifth Icon Text"
+           },
+          {
+          "type": "select",
+          "id": "sixthicon",
+          "label": "Select Sixth Icon",
+          "options": [
+           {
+          "value": "",
+          "label": "Select"
+           },
+           {
+          "value": "checkenleggrey.png",
+          "label": "Chicken Leg Grey"
+           },
+           {
+          "value": "checkenlegred.png",
+          "label": "Chicken Leg Red"
+           },
+           {
+          "value": "meatgrey.png",
+          "label": "Meat Grey"
+           },
+           {
+          "value": "meatred.png",
+          "label": "Meat Red"
+           },
+           {
+          "value": "meatgrey1.png",
+          "label": "Meat Grey 1"
+           },
+           {
+          "value": "meatred1.png",
+          "label": "Meat Red 1"
+           }
+           ],
+          "default": ""
+           },
+           {
+          "type": "text",
+          "id": "sixthicontext",
+          "label": "Sixth Icon Text"
+           }
+]
+ }
+]
+}
+{% endschema %}
+
 -------------------------------------------------------------------------------------------------------------------
 To get page content by schema setting use following mehtod:
 
