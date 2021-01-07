@@ -241,6 +241,64 @@ Section:- Block schema to add multple blocks and fetch them, very useful code.
          ]
 }
 {% endschema %}
+-----------------------------------------------------------------------------------------------------------------
+Section to show dynamic offer text on different product page. just create empty div such as <span class="offerbox"></span> where to show this offer on product page and include this section on product page.
+.....................................
+{% for block in section.blocks %}
+{% assign product_item = all_products[block.settings.productofferid] %}
+{% if product_item.id == product.id %}
+{% if block.settings.offertext != blank %}
+<script>
+$(document).ready(function(){
+$(".offerbox").addClass("offerboxcss").html("{{ block.settings.offertext }}");
+});
+</script>
+{% endif %}
+{% endif %}
+{% endfor %}
+<style>
+.offerboxcss {
+    background: red;
+    border-radius: .1875rem;
+    font-size: .75em;
+    font-weight: 600;
+    line-height: 1em;
+    margin-bottom: .625rem;
+    padding: .5em .75em;
+    text-transform: uppercase;
+    color: #ffffff;
+    vertical-align: top;
+    display: inline-block;
+}
+</style>
+
+
+{% schema %}
+{
+    "name": "Display Offer on Products",
+    "max_blocks": 100,
+    "blocks": [
+ {
+      "type": "product",
+      "name": {
+        "en": "Products"
+      },
+      "settings": [
+          {
+          "type": "product",
+          "id": "productofferid",
+          "label": "Select Product to Show offer"
+          },
+          {
+          "type": "text",
+          "id": "offertext",
+          "label": "Offer Text for this Product"
+          }
+]
+ }
+]
+}
+{% endschema %}
 ------------------------------------------------------------------------------------------------------------------
 A complete section to have dynamic content for each product page.
 .................
