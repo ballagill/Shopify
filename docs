@@ -198,7 +198,7 @@ Section:- Block schema to add multple blocks and fetch them, very useful code.
 {% endschema %}
 -----------------------------------------------------------------------------
 {% for block in section.blocks %}
-{% assign product_item = all_products[block.settings.productid] %}
+{% if product.handle == block.settings.productid %}
 
    <div class="trending-block">
 	<h4> {{ product_item.title }}</small></h4>
@@ -243,10 +243,12 @@ Section:- Block schema to add multple blocks and fetch them, very useful code.
 {% endschema %}
 -----------------------------------------------------------------------------------------------------------------
 Section to show dynamic offer text on different product page. just create empty div such as <span id="offerbox" class="offerbox"></span> where to show this offer on product page and include this section on product page.
+Don't use following method (all_products[block.settings.productid]) to fetch product id as it has limit to fetch only 20 products.
+{% assign product_item = all_products[block.settings.productid] %}
+{% if product_item.id == product.id %}
 .....................................
 {% for block in section.blocks %}
-{% assign product_item = all_products[block.settings.productofferid] %}
-{% if product_item.id == product.id %}
+{% if product.handle == block.settings.productofferid %}
 {% if block.settings.offertext != blank %}
 <script>
 $(document).ready(function(){
@@ -305,8 +307,7 @@ var offerbox = document.getElementById("offerbox");
 A complete section to have dynamic content for each product page.
 .................
 {% for block in section.blocks %}
-{% assign product_item = all_products[block.settings.productid] %}
-{% if product_item.id == product.id %}
+{% if product.handle == block.settings.productid %}
 <div id="whatweget" class="whatweget" style="display:none">
 <h3>What You Get</h3>
 <ul>
