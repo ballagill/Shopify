@@ -26,7 +26,20 @@ _______________________________________________________
 
 {% assign foo = 'pageslug' %}
 {{ pages[foo].content }}
+___________________________________________________________
+Here is how to apply different templates according to tags on product.liquid page.
+{% assign ispaused = false %}
+{% for tag in product.tags %}
+{% if tag contains 'pauseanorder' or tag contains 'Pauseanorder' %}
+{% assign ispaused = true %}
+{% endif %}
+{% endfor %}
 
+{% if ispaused == true %}
+{% section 'product-template-pause-for-order' %} 
+{% else %}
+{% section 'product-template' %} 
+{% endif %}
 ______________________________________________
  <div>
   <ul class="tabs">
