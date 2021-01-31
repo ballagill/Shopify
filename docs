@@ -317,6 +317,82 @@ var offerbox = document.getElementById("offerbox");
 }
 {% endschema %}
 ------------------------------------------------------------------------------------------------------------------
+Other way if needs to use for multiple products at once such as on collecton pages. then use this way:
+
+{% for block in section.blocks %}
+{% if block.settings.offertext != blank %}
+<script>
+$(document).ready(function(){
+var offerbox = document.getElementById("{{ block.settings.productofferid | append: "-offer"}}");
+  offerbox.classList.add("offerboxcss");
+  offerbox.innerHTML = "{{ block.settings.offertext }}";
+});
+    
+</script>
+{% endif %}
+{% endfor %}
+<style>
+.offerboxcss {
+    background: red;
+    border-radius: .1875rem;
+    font-size: .75em;
+    font-weight: 600;
+    line-height: 1em;
+    margin-bottom: .625rem;
+    padding: .5em .75em;
+    text-transform: uppercase;
+    color: #ffffff;
+    vertical-align: top;
+    display: inline-block;
+}
+.fixedoffer {
+    position: absolute;
+    top: 8px;
+    left: 5px;
+    z-index: 99999;
+}
+.collection-product {
+    position: relative;
+}
+@media only screen and (max-width: 450px) {
+.offerboxcss {
+    font-size: 8px;
+    top: 6px;
+}
+.collection-product .badge.sale-sticker {
+    font-size: 8px;
+}  
+}  
+</style>
+
+
+{% schema %}
+{
+    "name": "Display Offer on Products",
+    "max_blocks": 100,
+    "blocks": [
+ {
+      "type": "product",
+      "name": {
+        "en": "Products"
+      },
+      "settings": [
+          {
+          "type": "product",
+          "id": "productofferid",
+          "label": "Select Product to Show offer"
+          },
+          {
+          "type": "text",
+          "id": "offertext",
+          "label": "Offer Text for this Product"
+          }
+]
+ }
+]
+}
+{% endschema %}
+------------------------------------------------------------------------------------------------------------------
 A complete section to have dynamic content for each product page.
 .................
 {% for block in section.blocks %}
