@@ -1851,4 +1851,714 @@ Shopify.AjaxifyCart.init();
 }  
 </style>
 -------------------------------------
+____________________________________________________________________________________________________________________________
+Ajaxify script with Cart Drawer: custom coded:very useful.
+----------------------------------------------------
+<script>
+function openNav() {
+    if ($(window).width() < 500) {
+    document.getElementById("mySidebar").style.width = "100%";
+}
+else {
+   document.getElementById("mySidebar").style.width = "450px";
+}
+    //document.getElementById("mySidebar").style.width = "450px";
+    document.getElementById("overlaydiv").style.display = "initial";
+  }
+
+  function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("overlaydiv").style.display = "none";
+  }    
+  window.onload = function() {
+
+
+
+    /**
+ * Module to ajaxify all add to cart forms on the page.
+ *
+ * Copyright (c) 2015 Caroline Schnapp (11heavens.com)
+ * Dual licensed under the MIT and GPL licenses:
+ * http://www.opensource.org/licenses/mit-license.php
+ * http://www.gnu.org/licenses/gpl.html
+ *
+ */
+    Shopify.AjaxifyCart = (function($) {
+
+      // Some configuration options.
+      // I have separated what you will never need to change from what
+      // you might change.
+
+      var _config = {
+
+        // What you might want to change
+        addToCartBtnLabel:             'Add to cart',
+        addedToCartBtnLabel:           'Thank you!',
+        addingToCartBtnLabel:          'Adding...',
+        soldOutBtnLabel:               'Sold Out',
+        howLongTillBtnReturnsToNormal: 1000, // in milliseconds.
+        cartCountSelector:             '.item-count',
+        cartTotalSelector:             '#cart-price',
+        changeit:             '.changeit',
+        // 'aboveForm' for top of add to cart form, 
+        // 'belowForm' for below the add to cart form, and 
+        // 'nextButton' for next to add to cart button.
+        feedbackPosition:              'nextButton',
+
+        // What you will never need to change
+        addToCartBtnSelector:          '[type="submit"]',
+        addToCartFormSelector:         'form[action="/cart/add"]',
+        shopifyAjaxAddURL:             '/cart/add.js',
+        shopifyAjaxchangeURL:             '/cart/change.js',
+        shopifyAjaxCartURL:            '/cart.js'
+      };
+      // We need some feedback when adding an item to the cart.
+      // Here it is.  
+      var _showFeedback = function(success, html, $addToCartForm) {
+        $('.ajaxified-cart-feedback').remove();
+        var feedback = '<p class="ajaxified-cart-feedback ' + success + '">' + html + '</p>';
+        switch (_config.feedbackPosition) {
+          case 'aboveForm':
+            $addToCartForm.before(feedback);
+            break;
+          case 'belowForm':
+            $addToCartForm.after(feedback);
+            break;
+          case 'nextButton':
+          default:
+            $addToCartForm.find(_config.addToCartBtnSelector).after(feedback);
+            break;   
+        }
+        // If you use animate.css
+        // $('.ajaxified-cart-feedback').addClass('animated bounceInDown');
+        $('.ajaxified-cart-feedback').slideDown();
+      };
+      var _setText = function($button, label) {
+        if ($button.children().length) {
+          $button.children().each(function() {
+            if ($.trim($(this).text()) !== '') {
+              $(this).text(label);
+            }
+          });
+        }
+        else {
+          $button.val(label).text(label);
+        }
+      };
+
+
+      var _init = function() {   
+        $(document).ready(function() { 
+
+      $(".ajaxclick").click(function(e) {   
+        e.preventDefault();
+      openNav();
+      });
+
+          $(document).on('click', _config.changeit, function(e) {
+            $(".minicartheader h4").text("Updating...");
+            var getvariantid = $(this).attr("data-variant-id");
+            if($(this).hasClass('plusit')){
+            var getvariantquantity = parseInt($('.'+getvariantid).val())+1;
+            }else if($(this).hasClass('minusit')){
+            var getvariantquantity = parseInt($('.'+getvariantid).val())-1;
+            }else if($(this).hasClass('removeit')){
+            var getvariantquantity = 0;
+            } 
+            var data = 'quantity='+getvariantquantity+'&id='+getvariantid;
+            $.ajax({
+              url: _config.shopifyAjaxchangeURL,
+              dataType: 'json',
+              type: 'post',
+              data: data,
+              success: function(itemData) { 
+                $.getJSON(_config.shopifyAjaxCartURL, function(cart) {
+                  $(".item-count").html(cart.item_count);
+                  if(cart.item_count > 0){
+                    $(".item-count").removeClass('empty');
+                  }
+                  $(".item-count").html(cart.item_count);
+                  
+                  var getshippingpric = $(".freeshippigbar").attr("id");
+                  var getprogressbarshipping = parseInt(getshippingpric);
+                  var percentage = 100/getprogressbarshipping;
+                  var widthprogressbar = cart.total_price/100*percentage;
+                  if(widthprogressbar>100){
+                  $(".cartprogressbar").css("width","100%");  
+                  }else{
+                   $(".cartprogressbar").css("width",widthprogressbar+"%");
+                  }
+                  
+                  var minimumshippingprice = parseInt(getshippingpric)+'00';
+                  if(cart.total_price == 0000){
+                    $(".freeshippigbar h5").text("FREE SHIPPING FOR ORDERS OVER £70");
+                    $(".progressbartext").text("FREE SHIPPING FOR ORDERS OVER £70");
+                  } else if(cart.total_price < minimumshippingprice){
+                    var moreneeded = minimumshippingprice - cart.total_price;
+                    $(".freeshippigbar h5").html("ONLY <span>£"+moreneeded/100+"</span> AWAY FROM FREE SHIPPING");
+                    $(".progressbartext").html("ONLY <span>£"+moreneeded/100+"</span> AWAY FROM FREE SHIPPING");
+                  }else{
+                    $(".freeshippigbar h5").html("CONGRATULATIONS! YOU'VE GOT FREE SHIPPING");
+                    $(".progressbartext").html("CONGRATULATIONS! YOU'VE GOT FREE SHIPPING");
+                  }
+
+                  $(".carttotal").html("£"+cart.total_price/100+".00"); 
+
+                  $(".minicartul").html('');
+                  if(cart.item_count > 0){
+                  
+                  var row ="";
+                  ref = cart.items;
+
+                  for (index = j = 0, len = ref.length; j < len; index = ++j) { 
+                    item = ref[index];
+                    row = "<li>";
+                    // item.image_url = Shopify.resizeImage(item.image, "400x");
+
+                    row += '<div class="variant-id width--12" data-variant-id=' + item.variant_id + ">";
+                    row += '<div class="imagearea">';
+                    if (item.image_url === null) {
+                      row += '<span class="imagediv"></span>';
+                    } else {
+                      row += '<span class="image imagediv"><a href="' + item.url + '"><img  style="width: 70px;" src="' + item.image + '" alt="' + item.title + '"></a></span>';
+                    }
+                    row += "</div>";
+                    row += '<div class="right-column productinfo">';
+                    row += '<div class="producttitleandprice">';
+                    row += '<span class="title ptitle"><a href="' + item.url + '">' + item.title + "</a></span>";
+                    row += '<span class="price spacing--3 pmoney">£' + item.quantity*item.price/100 + "</span>";
+                    row += "</div>";
+                    row += '<div class="quantitydiv">';
+                    row += '<div class="plusminus">';
+                    row += '<a tabindex="0"  class="changeit minusit updatequantity" data-variant-id="'+ item.variant_id +'">−</a>';
+                    row += '<input type="type" readonly class="currentquantity '+ item.variant_id +'" value="' + item.quantity + '" min="1" pattern="[1-9]*" data-variant-id=' + item.variant_id + ">";
+                    row += '<a tabindex="0" class="changeit plusit updatequantity" data-variant-id="'+ item.variant_id +'">+</a>';
+                    row += "</div>";
+                    row += '<span class="remove spacing--3">';
+                    row += '<a role="button" class="changeit removeit cart--remove-button remove" data-variant-id="'+ item.variant_id +'">Remove</a>';
+                    row += "</span>";
+                    row += "</div>";
+                    row += "</div>";
+                    row += "</div>";
+                    row += "</li>";
+                    $(".minicartul").append(row);
+                  }
+                  $(".minicartheader h4").text("Your Cart is Updated");  
+                    $(".checkouttotal").text("Subtotal: £"+cart.total_price/100+".00"); 
+                    $(".isempty").show();  
+                  }else{
+                  $(".minicart").html("");  
+                  $(".isempty").hide();    
+                  $(".minicartheader h4").text("Your Cart is Empty");
+                  $(".checkouttotal").text("Subtotal: £"+cart.total_price/100+".00");   
+                  
+                  }
+                  
+                  
+
+
+
+
+                });}
+
+            });   
+
+          });    
+
+          $('.ajaxbutton').prop('disabled', false);
+          $('.ajaxbutton').removeClass('disabled');
+          $(_config.addToCartFormSelector).submit(function(e) {
+            e.preventDefault();
+            var $addToCartForm = $(this);
+            var $addToCartBtn = $addToCartForm.find(_config.addToCartBtnSelector);
+            _setText($addToCartBtn, _config.addingToCartBtnLabel);
+            $addToCartBtn.addClass('disabled').prop('disabled', true);
+            // Add to cart.
+            $.ajax({
+              url: _config.shopifyAjaxAddURL,
+              dataType: 'json',
+              type: 'post',
+              data: $addToCartForm.serialize(),
+              success: function(itemData) {
+                // Re-enable add to cart button.
+                $addToCartBtn.addClass('inverted');
+                _setText($addToCartBtn, _config.addedToCartBtnLabel);
+                _showFeedback('success','<i class="fa fa-check"></i> Added to cart! <a href="/cart">View cart</a>.',$addToCartForm);
+                window.setTimeout(function(){
+                  $addToCartBtn.prop('disabled', false).removeClass('disabled').removeClass('inverted');
+                  _setText($addToCartBtn,_config.addToCartBtnLabel);
+                }, _config.howLongTillBtnReturnsToNormal);
+                // Update cart count and show cart link.
+                $.getJSON(_config.shopifyAjaxCartURL, function(cart) {
+                  $(".item-count").html(cart.item_count);
+                  if(cart.item_count > 0){
+                    $(".item-count").removeClass('empty');
+                  }
+                  $(".item-count").html(cart.item_count);
+                  
+                  var getshippingpric = $(".freeshippigbar").attr("id");
+                  var getprogressbarshipping = parseInt(getshippingpric);
+                  var percentage = 100/getprogressbarshipping;
+                  var widthprogressbar = cart.total_price/100*percentage;
+                  if(widthprogressbar>100){
+                  $(".cartprogressbar").css("width","100%");  
+                  }else{
+                   $(".cartprogressbar").css("width",widthprogressbar+"%");
+                  }
+                  
+                  var minimumshippingprice = parseInt(getshippingpric)+'00';
+                  if(cart.total_price == 0000){
+                    $(".freeshippigbar h5").text("FREE SHIPPING FOR ORDERS OVER £70");
+                    $(".progressbartext").text("FREE SHIPPING FOR ORDERS OVER £70");
+                  } else if(cart.total_price < minimumshippingprice){
+                    var moreneeded = minimumshippingprice - cart.total_price;
+                    $(".freeshippigbar h5").html("ONLY <span>£"+moreneeded/100+"</span> AWAY FROM FREE SHIPPING");
+                    $(".progressbartext").html("ONLY <span>£"+moreneeded/100+"</span> AWAY FROM FREE SHIPPING");
+                  }else{
+                    $(".freeshippigbar h5").html("CONGRATULATIONS! YOU'VE GOT FREE SHIPPING");
+                    $(".progressbartext").html("CONGRATULATIONS! YOU'VE GOT FREE SHIPPING");
+                  }
+
+                  $(".carttotal").html("£"+cart.total_price/100+".00");
+                  
+                  
+
+
+                  if(cart.item_count > 0){
+                  $(".minicart").html('<ul class="minicartul"></ul> ');
+                  var row ="";
+                  ref = cart.items;
+
+                  for (index = j = 0, len = ref.length; j < len; index = ++j) { 
+                    item = ref[index];
+                    row = "<li>";
+                    // item.image_url = Shopify.resizeImage(item.image, "400x");
+
+                    row += '<div class="variant-id width--12" data-variant-id=' + item.variant_id + ">";
+                    row += '<div class="imagearea">';
+                    if (item.image_url === null) {
+                      row += '<span class="imagediv"></span>';
+                    } else {
+                      row += '<span class="image imagediv"><a href="' + item.url + '"><img  style="width: 70px;" src="' + item.image + '" alt="' + item.title + '"></a></span>';
+                    }
+                    row += "</div>";
+                    row += '<div class="right-column productinfo">';
+                    row += '<div class="producttitleandprice">';
+                    row += '<span class="title ptitle"><a href="' + item.url + '">' + item.title + "</a></span>";
+                    row += '<span class="price spacing--3 pmoney">£' + item.quantity*item.price/100 + "</span>";
+                    row += "</div>";
+                    row += '<div class="quantitydiv">';
+                    row += '<div class="plusminus">';
+                    row += '<a tabindex="0"  class="changeit minusit updatequantity" data-variant-id="'+ item.variant_id +'">−</a>';
+                    row += '<input type="type" readonly class="currentquantity '+ item.variant_id +'" value="' + item.quantity + '" min="1" pattern="[1-9]*" data-variant-id=' + item.variant_id + ">";
+                    row += '<a tabindex="0" class="changeit plusit updatequantity" data-variant-id="'+ item.variant_id +'">+</a>';
+                    row += "</div>";
+                    row += '<span class="remove spacing--3">';
+                    row += '<a role="button" class="changeit removeit cart--remove-button remove" data-variant-id="'+ item.variant_id +'">Remove</a>';
+                    row += "</span>";
+                    row += "</div>";
+                    row += "</div>";
+                    row += "</div>";
+                    row += "</li>";
+                    $(".minicartul").append(row);
+                  }
+                  $(".minicartheader h4").text("Your Cart");  
+                  $(".checkouttotal").text("Subtotal: £"+cart.total_price/100+".00"); 
+                  $(".isempty").show(); 
+                  }else{
+                  $(".minicart").html("");  
+                  $(".isempty").hide();  
+                  $(".minicartheader h4").text("Your Cart is Empty");
+                  }
+
+                   openNav();
+
+
+
+                  if (_config.cartCountSelector && $(_config.cartCountSelector).length()) {
+                    var value = $(_config.cartCountSelector).html() || '0';
+                    $(_config.cartCountSelector).html(value.replace(/[0-9]+/,cart.item_count)).removeClass('hidden-count');
+                  }
+                  if (_config.cartTotalSelector && $(_config.cartTotalSelector).length()) {
+                    if (typeof Currency !== 'undefined' && typeof Currency.moneyFormats !== 'undefined') {
+                      var newCurrency = '';
+                      if ($('[name="currencies"]').length()) {
+                        newCurrency = $('[name="currencies"]').val();
+                      }
+                      else if ($('#currencies span.selected').length()) {
+                        newCurrency = $('#currencies span.selected').attr('data-currency');
+                      }
+                      if (newCurrency) {
+                        $(_config.cartTotalSelector).html('<span class=money>' + Shopify.formatMoney(Currency.convert(cart.total_price, "{{ shop.currency }}", newCurrency), Currency.money_format[newCurrency]) + '</span>');
+                                                                                                                      } 
+                                                                                                                      else {
+                                                                                                                      $(_config.cartTotalSelector).html(Shopify.formatMoney(cart.total_price, "{{ shop.money_format | remove: "'" | remove: '"' }}"));
+                  }
+                }
+                else {
+                  $(_config.cartTotalSelector).html(Shopify.formatMoney(cart.total_price, "{{ shop.money_format | remove: "'" | remove: '"' }}"));
+                                                                        }
+                                                                        };
+                                                                        });        
+                                                    }, 
+                                                    error: function(XMLHttpRequest) {
+            var response = eval('(' + XMLHttpRequest.responseText + ')');
+                                                                                                     response = response.description;
+                                                                                                     if (response.slice(0,4) === 'All ') {
+                          _showFeedback('error', response.replace('All 1 ', 'All '), $addToCartForm);
+                          $addToCartBtn.prop('disabled', false);
+                          _setText($addToCartBtn, _config.soldOutBtnLabel);
+                          $addToCartBtn.prop('disabled',true);
+                        }
+                        else {
+                          _showFeedback('error', '<i class="fa fa-warning"></i> ' + response, $addToCartForm);
+                          $addToCartBtn.prop('disabled', false).removeClass('disabled');
+                          _setText($addToCartBtn, _config.addToCartBtnLabel);
+                        }
+                      }
+                    });   
+                    return false;    
+                  });
+                });//ready function
+              };
+              return {
+              init: function(params) {
+              // Configuration
+              params = params || {};
+                   // Merging with defaults.
+                   $.extend(_config, params);
+            // Action
+            $(function() {
+              _init();
+            });
+          },    
+                                                  getConfig: function() {
+            return _config;
+          }
+        } 
+
+
+
+
+                          })(jQuery);
+        Shopify.AjaxifyCart.init();
+      }
+</script>
+
+{% comment %}
+If you want to animate your feedback message.
+{% endcomment %}
+
+{% comment %}
+{{ '//cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.0/animate.min.css' | stylesheet_tag }}
+{% endcomment %}
+
+<link data-href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" type="text/css" media="all" />
+
+<style>
+  .ajaxified-cart-feedback {
+    display: block;
+    line-height: 36px;
+    font-size: 90%;
+    vertical-align: middle;
+  }
+  .ajaxified-cart-feedback.success {
+    color: #3D9970;
+    line-height: 20px;
+    margin-top: 5px;
+    font-size: 12px;
+    text-align: center;
+  }
+  .ajaxified-cart-feedback.error {
+    color: #FF4136;
+    line-height: 20px;
+    margin-top: 5px;
+    font-size: 12px;
+    text-align: center;
+  }
+  .ajaxified-cart-feedback a {
+    border-bottom: 1px solid;
+  } 
+  .sidebar2 {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 999999;
+    top: 0;
+    right: 0;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    transition: 0.5s;
+  }
+  .sidebar2 .closebtn {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    color: #ffffff;
+  }
+  .input--number a {
+    color: #ffffff;
+  }
+  .input--number a {
+    color: #ffffff;
+    cursor: pointer;
+  }  
+  .minicart {
+    color: #ffffff;
+  } 
+ ul.minicartul {
+    margin: 0;
+    padding: 10px!important;
+    float: left;
+    width: 100%;
+    list-style: none;
+    height: 350px;
+    overflow-y: scroll;
+    border: 1px solid;
+    padding-bottom: 0px!important;
+    background: #ffffff;
+} 
+  .minicart span.remove.spacing--3 a {
+    color: #000000;
+    font-size: 12px;
+    cursor: pointer;
+}
+  .minicart .title a {
+    color: #000000;
+    font-size: 14px;
+  }
+  .minicart .variant-id.width--12 {
+    display: flex;
+  }
+.minicart li {
+    border-bottom: 1px solid #eee;
+    padding: 15px 0px;
+    padding-bottom: 5px;
+}
+  span.remove.spacing--3 {
+    float: right;
+  }  
+  .imagearea {
+    width: 120px;
+  } 
+  .minicart .currentquantity {
+    width: 30px;
+    text-align: center;
+    padding: 2px 0px;
+    font-size: 14px;
+    border: none;
+  }
+  .producttitleandprice {
+    float: left;
+    width: 100%;
+  }
+  span.price.spacing--3.pmoney {
+    float: right;
+    color: #000000;
+  }  
+  .quantitydiv {
+    float: left;
+    width: 100%;
+  }
+  .updatequantity {
+    padding: 0 10px;
+    line-height: 10px;
+    height: 5px;
+    cursor: pointer;
+    width: 10px;
+    color: #000000;
+    font-size: 15px;
+  }
+  .updatequantity:focus {outline:none;}
+ .plusminus {
+    float: left;
+    background-color: #ffffff;
+    margin-top: 5px;
+    border: 1px solid #000000;
+} 
+  .minicartheader {
+    float: left;
+    width: 100%;
+    display: flex;
+    padding: 12px 0px;
+    background: #c85440;
+    
+  } 
+  .minicartheader h4 {
+    margin: 0 10px;
+    width: 100%;
+    text-align: center;
+    color: #ffffff;
+  } 
+  .right-column.productinfo {
+    width: 100%;
+  }  
+.minicart .h2 {
+    color: #ffffff;
+    text-align: center;
+    margin-top: 20px;
+    float: left;
+    width: 100%;
+}
+.checkoutarea {
+    float: left;
+    width: 100%;
+    text-align: center;
+}
+span.checkouttotal {
+    text-align: center;
+    margin: 25px 0px;
+    float: left;
+    width: 100%;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+} 
+.overlaydiv {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3333;
+    background-color: rgba(0,0,0,0.6);
+} 
+span.progressbartext {
+    font-size: 14px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #ffffff;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+.progressbarparent {
+    float: left;
+    width: 100%;
+    background: rgb(76, 76, 76);
+    margin-bottom: 0px;
+    text-align: center;
+    padding-top: 10px;
+} 
+.progressbardiv {
+    width: 92%;
+    text-align: center;
+    margin: 0 auto;
+} 
+span.cartprogressbar {
+    height: 20px;
+    text-align: center;
+    float: left;
+    background: #c85440;
+    border-radius: 5px;
+    transition: 0.3s;
+}  
+.cartprogressbardiv {
+    float: left;
+    width: 100%;
+    text-align: center;
+    background: #ffffff;
+    margin: 10px 0px 20px 0px;
+    border-radius: 6px;
+} 
+.imagearea img {
+    width: 70px!important;
+    margin: 0px!important;
+} 
+.checkoutbutton {
+    float: left;
+    width: 100%;
+    text-align: center;
+}
+.checkoutbutton .button {
+    width: 200px;
+    margin: 0 auto;
+}   
+  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    //.sidebar2 {padding-top: 0px;}
+    //.sidebar2 a {font-size: 18px;}
+  }
+</style> 
+
+{% comment %} Mini cart Ajaxify html code  {% endcomment %} 
+{% if section.settings.cartdrawer %}
+<div class="overlaydiv" id="overlaydiv"></div>
+<div id="mySidebar" class="sidebar2">
+  <a class="plusit" style="display:none">plusit</a> 
+  <div class="minicartheader">
+    <h4>Your Cart</h4>  
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  </div>
+
+  <div class="progressbarparent">
+{% assign fsc = section.settings.shipping_bar_price | times: 100 %}
+{% if cart.total_price == 0000 %}
+<span class="progressbartext">FREE SHIPPING FOR ORDERS OVER £{{ section.settings.shipping_bar_price }}</span>  
+{% elsif cart.total_price < fsc %}
+<span class="progressbartext">ONLY <span>{{ fsc | minus: cart.total_price | money }}</span> AWAY FROM FREE SHIPPING</span>    
+{% else %}
+<span class="progressbartext">CONGRATULATIONS! YOU'VE GOT FREE SHIPPING</span>    
+{% endif %}
+    
+{% assign percentage = 100.000 | divided_by: section.settings.shipping_bar_price %}
+{% assign widthprogressbar = cart.total_price | divided_by: 100 | times: percentage %}    
+                  
+<div class="progressbardiv">
+{% if widthprogressbar > 100 %}
+<div class="cartprogressbardiv"> <span style="width:100%" class="cartprogressbar"></span></div>
+{% else %}
+<div class="cartprogressbardiv"> <span style="width:{{widthprogressbar}}%" class="cartprogressbar"></span></div>
+{% endif %}
+  </div>
+  </div>  
+  <div class="minicart">
+{% if cart.item_count > 0 %}    
+  <ul class="minicartul"> 
+ {% for item in cart.items %} 
+ <li><div class="variant-id width--12" data-variant-id="{{ item.variant.id }}">
+<div class="imagearea"><span class="image imagediv">
+<a href="{{ item.url }}">
+{% render 'image', image: item.image, image_widths: '70' %}
+</a></span>
+</div>
+<div class="right-column productinfo">
+<div class="producttitleandprice">
+<span class="title ptitle">
+<a href="{{ item.url }}">{{ item.product.title }}</a></span>
+<span class="price spacing--3 pmoney">£{{ item.price | divided_by: 100 }}</span></div>
+<div class="quantitydiv">
+<div class="plusminus"><a tabindex="0" class="changeit minusit updatequantity" data-variant-id="{{ item.variant.id }}">−</a>
+<input type="type" readonly="" class="currentquantity {{ item.variant.id }}" value="{{ item.quantity }}" min="1" pattern="[1-9]*" data-variant-id="33437099425891">
+<a tabindex="0" class="changeit plusit updatequantity" data-variant-id="{{ item.variant.id }}">+</a></div>
+<span class="remove spacing--3">
+<a role="button" class="changeit removeit cart--remove-button remove" data-variant-id="{{ item.variant.id }}">Remove</a></span></div>
+</div></div></li>
+  
+ {% endfor %}   
+ </ul>  
+ {% endif %}   
+ </div> 
+<div class="checkoutarea">
+  <span class="checkouttotal isempty">Subtotal: {{ cart.total_price | money }}</span>
+    <div class="checkoutbutton">
+      <a class="button isempty" href="/checkoutn">Checkout</a>
+  </div>
+  </div>
+</div>
+{% endif %}    
+{% comment %} Mini cart Ajaxify html code  {% endcomment %} 
+
+_____________________________________________________________________________________________________________________________________________________________________________    
+
+
+
+
+
+
+
+
 __________________________________________________________________________________________________________________________________________
