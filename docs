@@ -2545,7 +2545,7 @@ span.cartprogressbar {
 <div class="checkoutarea">
   <span class="checkouttotal isempty">Subtotal: {{ cart.total_price | money }}</span>
     <div class="checkoutbutton">
-      <a class="button isempty" href="/checkoutn">Checkout</a>
+      <a class="button isempty" href="/checkout">Checkout</a>
   </div>
   </div>
 </div>
