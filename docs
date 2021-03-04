@@ -1,3 +1,16 @@
+Very important jquery use:
+Jquery click event does not work if the selector we are clicking on made by previous jquery event. For example, we added a new button using jquery and again we want 
+to run jquery event on clicking button created by previous event. 
+Here normal click function of jquery will not work, 
+$(".newcreatedbutton").click(function(){
+alert();
+});
+
+so to make it work we need to use following way of click function.
+$(document).on('click','.newcreatedbutton', function(e) {    
+     alert();
+});
+_______________________________________________________________________________________________
 SEO:
 Fix duplicate content issue of product page url due to being same product in different collection and collection page pagination issue in SEO that comes on Google search console. (Google search console is also know as Google webmaster)
 https://community.shopify.com/c/Shopify-Discussion/Duplicate-Content-Same-Page-with-different-url/td-p/392224
