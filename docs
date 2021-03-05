@@ -2820,6 +2820,570 @@ Svg badges to add on product page: such as Free shipping, Value for money, Secur
 </ul>
  </div
 __________________________________________________________________________________________________________________________________________
+Bundle App custom Template: Created at fatbutcher.co.uk
+--------------------------------
+Jquery required:
+ $(document).on('click','.bundleappmobilebutton', function(e) {    
+      $(".bundlemain #sidebar").toggle();
+        if ($(".arrowsign").text() === "Click to collapse") {
+            $(".arrowsign").text("Click to Expand");
+            } else {
+           $(".arrowsign").text("Click to collapse");
+          }
+        
+      });     
+      
+      $(window).scroll(function() { 
+      var scroll = $(window).scrollTop();
+        var documentheight = $(document).height()-1300;
+        if (scroll >= 140 && scroll < documentheight) {
+          //$("#sidebar").addClass("fixedclass");
+          $("body").addClass("scrolled");
+         }else if (scroll >= documentheight) {
+           //$("#sidebar").removeClass("fixedclass");
+           $("body").removeClass("scrolled");
+        }else{
+           //$("#sidebar").removeClass("fixedclass");
+           $("body").removeClass("scrolled");
+        }
+        
+       });
+
+..................................
+Template code:
+
+<style type="text/css">
+.fixedclass {
+    position: fixed;
+    top: 110px;
+}
+.buttondisabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+.buttondisabled:hover{
+   background: #c85440!important;
+}  
+#sidebar li span {
+    font-size: 17px;
+    font-weight: 700;
+    background: #ffffff;
+    color: #000000;
+    float: left;
+    margin-bottom: 5px;
+} 
+form.bundle-builder--add-to-cart-form {
+    text-align: center;
+}
+.bundle-builder--add-to-cart-form button {
+    background: #c85440;
+    color: #ffffff;
+    padding: 15px;
+    font-weight: 600;
+    border: none;
+    text-align: center;
+}  
+.bundleappmobilebutton.transparentbutton {
+    background: transparent;
+    padding: 48px;
+}  
+form.bundle-builder--remove-from-bundle-form {
+    float: right;
+    margin-right: 10px;
+}
+p.price {
+    margin-left: 15px;
+}
+ul.ulone {
+    height: 275px;
+    overflow-y: auto;
+    padding: 10px!important;
+    border: 1px solid #f1f1f1;
+}  
+.ulone p.title, .ulone p.price{
+    font-size: 14px;
+}  
+.ulone li {
+    margin-bottom: 0px;
+}  
+#sidebar h2 {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+ul.ultwo {
+    margin: 15px auto!important;
+    padding: 0!important;
+    margin: 0 auto;
+}
+p.title {
+    min-width: 300px;
+}  
+.productdata li {
+    width: 100%;
+    float: left;
+}  
+.bundle-content table {
+    text-align: left;
+    width: 100%;
+}
+.bundle-content {
+    float: left;
+    width: 100%;
+} 
+.ultwo p {
+    font-size: 18px;
+    font-weight: 600;
+}
+p.dprice {
+    float: right!important;
+    font-size: 16px!important;
+    color: #c85440!important;
+} 
+p.dhead {
+    font-size: 16px!important;
+    color: #c85440!important;
+}   
+p.tprice {
+    float: right!important;
+}  
+#sidebar ul {
+    list-style: none;
+    margin: 0;
+    text-align: left;
+    width: 100%;
+    float: left;
+}
+.product-list {
+    width: 65%;
+    float: left;
+}
+#stamped-main-widget {
+    width: 60%;
+    margin: 0!important;
+    padding: 40px;
+}  
+.scrolled div#sidebar {
+    top: 110px!important;
+    position: fixed;
+} 
+form.bundle-builder--change-quantity-form {
+    color: #ffffff;
+}
+.changebutton {
+    float: left;
+    width: 100%;
+    padding: 0px 0px;
+    font-size: .875rem;
+    border-radius: 3px;
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    max-height: 50px;
+}
+.product form {
+    min-height: 80px;
+}  
+.changebutton button {
+    margin: 0px;
+    padding: 10px 15px;
+    font-size: 25px;
+    border: none;
+    width: 100%;
+    border: 1px solid #c85440;
+}
+span.productaddd {
+    padding: 12px 15px;
+    background: #c85440;
+    width: 100%;
+    min-width: 85px;
+}
+ #sidebar {
+    float: right;
+    width: 33%;
+    padding-right: 20px;
+    right: 0;
+    border: 1px solid #000000;
+    min-height: 500px;
+    color: #ffffff;
+    padding: 20px;
+    margin-top: 25px;
+    height: 510px;
+    position: relative;
+    margin-right: 20px;
+} 
+.bundle-builder--remove-from-bundle-form button {
+    font-size: 10px;
+    color: #c85440;
+    padding: 2px 5px;
+    background: #ffffff;
+    border: none;
+    font-weight: 600;
+    margin-bottom: 8px;
+} 
+div#bundle-builder-app--bundle--root {
+    background: #ffffff!important;
+    float: left;
+}
+span.variant-price {
+    margin-bottom: 5px;
+    font-weight: 600;
+}  
+.product {
+    width: 33%;
+    float: left;
+    padding-top: 0;
+    padding: 1%;
+    min-height: 450px;
+}
+.product h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 3px 0;
+}
+span.stamped-product-reviews-badge.stamped-main-badge {
+    width: 100%;
+    text-align: center;
+}
+.stamped-fa::before {
+    font-size: 14px!important;
+}
+span.stamped-badge-caption {
+    font-size: 12px;
+}
+.product span.variant-price {
+    width: 100%;
+    float: left;
+    text-align: center;
+    color: #000;
+}
+.bbutton {
+    width: 100%;
+    font-size: .875rem;
+    line-height: 1.125em;
+    background-color: #c85440;
+    border-color: #c85440;
+    color: #ffffff;
+    transition: color .1s,background .1s,border .1s;
+    border-radius: .1875rem;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: none;
+    display: inline-block;
+    margin: 0 auto;
+    outline: 0;
+    padding: 14px 26px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+} 
+ .showonbundlepage{
+   display:block!important;
+  }  
+.productdata p {
+    color: #000000;
+    float: left;
+    margin-bottom: 0;
+}
+p.headtext {
+    color: #c85440;
+    font-weight: 600;
+    font-size: 20px;
+}  
+
+.product .pformbutton:last-child {
+    display: block!important;
+}  
+@media only screen and (max-width: 1000px) {
+.product-list {
+    width: 100%;
+}
+#stamped-main-widget {
+    width: 100%;
+}  
+.bundleappmobilebutton {
+    display: block!important;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    font-size: 25px;
+    background: #c85440;
+    padding: 10px 20px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    width: 100%;
+    z-index: 999999;
+    text-align:center;
+}  
+.changebutton button {
+    padding: 10px 0px;
+}  
+#sidebar {
+    width: 100%;
+    position: fixed;
+    border: 1px solid #000;
+    margin: 0 auto;
+    height: 100vh;
+    background:#ffffff;
+    display: none;
+    padding-right: 0px;
+    padding: 0px;
+    top: 0;
+    z-index: 999;
+    border: none;
+}
+.product {
+    width: 33%;
+    padding: 3%;
+    min-height: auto;
+    max-height: auto;
+}
+.bundleappmobilebutton p.tprice {
+    float:none!important;
+    margin-bottom: 5px;
+}
+span.arrowsign {
+    font-size: 14px;
+}  
+span.variant-price {
+    margin-bottom: 5px;
+}  
+.scrolled div#sidebar {
+    top: 0px!important;
+    position: fixed;
+    padding: 10px;
+}
+span.productaddd {
+    padding: 13px 0px;
+} 
+} 
+@media only screen and (max-width: 750px) { 
+.product {
+    width: 50%;
+    min-height: auto;
+}  
+.product h2 {
+    min-height: 50px;
+}  
+p.title {
+    min-width: 190px;
+}
+#stamped-main-widget {
+    padding: 5px;
+}    
+}   
+</style>
+
+<script type="text/javascript">
+const selectedVariants = new Map();
+
+function setAddDisabled(form) {
+    const variantId = form.querySelector('[name="variant"]').value;
+    const sectionId = form.querySelector('[name="section"]').value;
+    const canAdd = window.BundleBuilder.canAddVariant(variantId, sectionId);
+    form.querySelector('[type="submit"]').disabled = !canAdd;
+}
+RE
+
+/* Change variant price after variant change */
+Array.prototype.forEach.call(
+    document.querySelectorAll('.bundle-builder--add-to-bundle-form select[name="variant"]'),
+    function (select) {
+        select.addEventListener('change', function (e) {
+            const variantId = e.target.value;
+            selectedVariants.set(e.target.id, variantId);
+            const price = e.target.querySelector('option[value="' + variantId + '"]').dataset.price;
+            e.target.parentNode.querySelector('.variant-price').textContent = price;
+
+           const form = e.target.parentElement;
+           setAddDisabled(form);
+        });
+    }
+);
+
+
+function render() {
+    selectedVariants.forEach(function (variantId, selectId) {
+        const select = document.getElementById(selectId);
+        if (select) {
+            select.value = variantId;
+        }
+    });
+    Array.prototype.forEach.call(
+        document.querySelectorAll('.bundle-builder--add-to-bundle-form'),
+        setAddDisabled,
+    );
+}
+/* Change variant to what was selected last */
+document.body.addEventListener('bundlebuilder:render', render);
+render()
+</script>
+
+
+{% if bundle.published %}
+<div class="bundlemain">
+<div class="product-list">
+    <h1>{{ bundle.current_section.name }}</h1>
+	
+    <div class="product-box">
+        {% for product in bundle.current_section.products %}
+            <div class="product">
+             <img class="bpimage" src="{{ product.image.src }}" />
+                <h2>{{ product.title }}</h2> 
+              <div style="display:none" class="pformbutton">
+{% add_to_bundle_form bundle.current_section %}
+                    {% if product.available_variants.size > 1 %}
+                        <select name="variant" id="select-{{ bundle.current_section.index }}-{{ product.id }}">
+                            {% for variant in product.available_variants %}
+                                <option value="{{ variant.id }}" data-price={{ variant.price | money }}>
+                                    {{ variant.title }}{% if variant.available_count %} (available: {{ variant.available_count }}){% endif %}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        <input type="hidden" name="variant" value="{{ product.available_variants[0].id }}" />
+                    {% endif %}
+                   
+                    <span class="variant-price">{{ product.available_variants[0].price | money }}</span>
+                   <button style="display:none" class="bbutton pformbutton" id="bbutton{{ product.id }}" type="submit">Add</button>
+                {% end_add_to_bundle_form %}
+              </div>
+                {% for variant in product.variants_in_bundle %}
+              <div style="display:none" class="pformbutton">
+                {% change_quantity_form %}
+                      <input type="hidden" name="variant" value="{{ variant.id }}" />
+                      <input type="hidden" name="section" value="{{ bundle.current_section.index }}" />
+                <span class="variant-price">{{ product.available_variants[0].price | money }}</span>
+                      <div class="changebutton"><button type="submit" name="remove">-</button>
+                        <span class="productaddd"> Added {{ variant.count }}</span>
+                        <button type="submit" name="add">+</button></div>
+                    {% end_change_quantity_form %}
+              </div>
+               {% endfor %}
+            </div>
+      {% endfor %}
+    </div>
+   </div>
+   <div id="sidebar">
+     <h2>Your Bundle</h2>
+    {% if bundle.has_next_section %}
+        {% section_switch_form %}
+            <input type="hidden" name="section" value="{{ bundle.current_section.index | plus: 1 }}" />
+            <button type="submit">Next</button>
+        {% end_section_switch_form %}
+    {% endif %}
+
+    {% if bundle.has_prev_section %}
+        {% section_switch_form %}
+            <input type="hidden" name="section" value="{{ bundle.current_section.index | plus: -1 }}" />
+            <button type="submit">Previous</button>
+        {% end_section_switch_form %}
+    {% endif %}
+
+    {% if bundle.errors.size > 0 %}
+        <ul>
+            {% for error in bundle.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="bundle-content">
+        {% if bundle.content.items.size == 0 %}
+            <span>Your bundle is empty</span>
+        {% else %}
+<div class="productdata">
+<ul class="ulone">
+<li>
+<p class="headtext title">Products</p>
+<p class="headtext price">Price</p> 
+</li>  
+{% for item in bundle.content.items %}
+<li>
+<p class="title">{{ item.variant.product.title }}</p>
+<p class="price">{{ item.variant.price | money }}</p> 
+{% unless item.is_required %}
+{% remove_from_bundle_form item %}
+<button type="submit">X</button>{% end_remove_from_bundle_form %}
+{% endunless %}
+</li>
+{% endfor %}
+</ul>
+<ul class="ultwo">
+{% if bundle.content.price < bundle.content.compare_at_price %}
+<li>
+<p class="dhead">Discount</p>
+<p class="dprice">{{ bundle.content.price | minus: bundle.content.compare_at_price | money }}</p>
+</li>
+  {% endif %}
+<li>
+<p class="thead">Total</p>
+<p class="tprice">{{ bundle.content.price | money }}</p>
+</li>
+</ul>
+</div>
+
+            {% if settings.note_enabled %}
+                <div class="note-field--container">
+                    <label>{{ settings.note_label }}{% if settings.note_required %} (required){% endif %}</label>
+                    {% note_field %}{{ settings.note_text }}{% end_note_field %}
+                </div>
+                {% if settings.note_prompt_visible %}
+                    <div class="note-field--error-message">
+                        <p>Note required before adding to cart.</p>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            {% add_to_cart_form %}
+                {% if bundle.subscription_type == 'optional' and bundle.subscription_frequencies.size > 0 %}
+                    <label>
+                        <input type="radio" name="subscription-enabled" value="0" />
+                        One-time purchase
+                    </label>
+                    <label>
+                        <input type="radio" name="subscription-enabled" value="1" />
+                        Subscribe
+                    </label>
+                {% endif %}
+                {% if bundle.subscription_type == 'required' or bundle.subscription_enabled %}
+                    {% for frequency in bundle.subscription_frequencies %}
+                        <ul>
+                            <li>
+                                <label>
+                                    <input type="radio" name="subscription-frequency" value="{{ frequency.id }}" />
+                                    {{ frequency.frequency }} {{ frequency.unit }}
+                                </label>
+                            </li>
+                        </ul>
+                    {% endfor %}
+                    Email: <input type="email" required name="subscription-email" value="{{ settings.subscription_email }}" />
+                {% endif %}
+                <button class="button {% unless bundle.can_add_to_cart %}buttondisabled{% endunless %}" type="submit"{% unless bundle.can_add_to_cart %} disabled="disabled"{% endunless %}>
+                    {% if bundle.adding_to_cart %}
+                        Processing...
+                    {% else %}
+                        Add bundle to cart
+                    {% endif %}
+                </button>
+            {% end_add_to_cart_form %}
+        {% endif %}
+    </div>
+{% else %}
+    <p>Sorry, this bundle is currently unavailable.</p>
+{% endif %}
+ </div>
+   <div class="bundleappmobilebutton" style="display:none">
+   <span class="arrowsign">Click to Expand</span>
+   <p class="tprice">Your Bundle: {{ bundle.content.price | money }}
+   </p></div>   
+
+  </div>
 
 
 
