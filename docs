@@ -3384,8 +3384,156 @@ render()
    </p></div>   
 
   </div>
+________________________________________________________________________________________________________________________________________________
+Very important Ruby code: Shopify plus plan: we can make changes in checkout page functionality using Ruby code as well such as Shipping, Discounts etc.
+Here is link of examples of script code https://help.shopify.com/en/manual/checkout-settings/script-editor/examples/shipping-scripts
+Note: These scripts only run in Shopify plus account and it needs to install Script Editor "Scripts and the Script Editor " app on store in which we can create new scripts according to use.
+
+Here is an example of code that I customized to restrict the shipping for certain postcodes using this Ruby code. and it works very well. When we fill the address and postcode in shipping address at checkout. The output of this script is shown at next step when we contine to select shipping method.
+we can also edit the message that shows like "Currently shipping is not available at your location." by going to Themes>select the developing theme>Action>Edit language
+----------------------------------------------------------------------------------------------------------
+# ================================ Customizable Settings ================================
+# ================================================================
+# Hide Rate(s) for Zip/Province/Country
+#
+# If the cart's shipping address country/province/zip match the
+# entered settings, the entered rate(s) are hidden.
+#
+#   - 'country_code' is a 2-character abbreviation for the
+#     applicable country or region
+#   - 'province_code' is a list of 2-character abbreviations for
+#     the applicable provinces or states
+#   - 'zip_code_match_type' determines whether the below strings
+#     should be an exact or partial match. Can be:
+#       - ':exact' for an exact match
+#       - ':partial' for a partial match
+#   - 'zip_codes' is a list of strings to identify zip codes
+#   - 'rate_match_type' determines whether the below strings
+#     should be an exact or partial match. Can be:
+#       - ':exact' for an exact match
+#       - ':partial' for a partial match
+#       - ':all' for all rates
+#   - 'rate_names' is a list of strings to identify rates
+#     - if using ':all' above, this can be set to 'nil'
+# ================================================================
+HIDE_RATES_FOR_ZIP_PROVINCE_COUNTRY = [
+  {
+    country_code: "GB",
+    province_code_match_type: :all,
+    zip_code_match_type: :partial,
+    zip_codes: ["SW1W 0NY"],
+    rate_match_type: :partial,
+    rate_names: ["BT","IM","PO30","PO31","PO32","PO33","PO34","PO35","PO36","PO37","PO38","PO39","PO40","PO41","TR21","AB31","AB32","AB33","AB34","AB35","AB41","AB42","AB43","AB44","AB45","AB46","AB47","AB48","AB49","AB51","AB52","AB53","AB54","AB36","AB37","AB38","AB55","AB56","FK17","FK18","FK19","FK20","FK21","GY9","GY10","HS1","HS2","HS3","HS4","HS5","HS6","HS7","HS8","HS9","IV1","IV2","IV3","IV4","IV5","IV6","IV7","IV8","IV9","IV10","IV11","IV12","IV13","IV14","IV15","IV16","IV17","IV18","IV19","IV20","IV21","IV22","IV23","IV24","IV25","IV26","IV27","IV28","IV29","IV30","IV31","IV32","IV33","IV34","IV35","IV36","IV37","IV38","IV39","IV40","IV41","IV42","IV43","IV44","IV45","IV46","IV47","IV48","IV49","IV50","IV51","IV52","IV53","IV54","IV55","IV56","IV57","IV58","IV59","IV60","IV61","IV62","IV63","KA27","KA28","KW0","KW1","KW2","KW3","KW4","KW5","KW6","KW7","KW8","KW9","KW10","KW11","KW12","KW13","KW14","KW15","KW16","KW17","PA20","PA21","PA22","PA23","PA24","PA25","PA26","PA27","PA28","PA29","PA30","PA31","PA32","PA33","PA34","PA35","PA36","PA37","PA38","PA39","PA40","PA41","PA42","PA43","PA44","PA45","PA46","PA47","PA48","PA49","PA50","PA51","PA52","PA53","PA54","PA55","PA56","PA57","PA58","PA59","PA60","PA61","PA62","PA63","PA64","PA65","PA66","PA67","PA68","PA69","PA70","PA71","PA72","PA73","PA74","PA75","PA76","PA77","PA78","PH15","PH16","PH17","PH18","PH19","PH20","PH21","PH22","PH23","PH24","PH25","PH26","PH27","PH28","PH29","PH32","PH33","PH45","PH46","PH47","PH48","PH30","PH31","PH34","PH35","PH36","PH37","PH38","PH39","PH40","PH41","PH42","PH43","PH44","PH49","PH50","ZE1","ZE2","ZE3"],
+  },
+]
+# ================================ Script Code (do not edit) ===============================
+# ================================================================
+# ProvinceSelector
+#
+# Finds whether the supplied province code matches the entered
+# strings.
+# ================================================================
+class ProvinceSelector
+  def initialize(match_type, provinces)
+    @match_type = match_type
+    @provinces = provinces.map { |province| province.upcase.strip }
+  end
+
+  def match?(province_code)
+    if @match_type == :all
+      true
+    else
+      (@match_type == :include) == @provinces.any? { |province| province_code.upcase.strip == province }
+    end
+  end
+end
+# ================================ Script Code (do not edit) ================================
+# ================================================================
+# ZipCodeSelector
+#
+# Finds whether the supplied zip code matches any of the entered
+# strings.
+# ================================================================
+class ZipCodeSelector
+  def initialize(match_type, zip_codes)
+    @comparator = match_type == :exact ? '==' : 'include?'
+    @zip_codes = zip_codes.map { |zip_code| zip_code.upcase.strip }
+  end
+
+  def match?(zip_code)
+    @zip_codes.any? { |zip| zip_code.to_s.upcase.strip.send(@comparator, zip) }
+  end
+end
+
+# ================================================================
+# RateNameSelector
+#
+# Finds whether the supplied rate name matches any of the entered
+# names.
+# ================================================================
+class RateNameSelector
+  def initialize(match_type, rate_names)
+    @match_type = match_type
+    @comparator = match_type == :exact ? '==' : 'include?'
+    @rate_names = rate_names&.map { |rate_name| rate_name.downcase.strip }
+  end
+
+  def match?(shipping_rate)
+    if @match_type == :all
+      true
+    else
+      @rate_names.any? { |name| shipping_rate.name.downcase.send(@comparator, name) }
+    end
+  end
+end
+
+# ================================================================
+# HideRatesForZipProvinceCountryCampaign
+#
+# If the cart's shipping address zip/province/country match the
+# entered settings, the entered rate(s) are hidden.
+# ================================================================
+class HideRatesForZipProvinceCountryCampaign
+  def initialize(campaigns)
+    @campaigns = campaigns
+  end
+
+  def run(cart, shipping_rates)
+    address = cart.shipping_address
+
+    return if address.nil?
+
+    @campaigns.each do |campaign|
+      zip_code_selector = ZipCodeSelector.new(campaign[:zip_code_match_type], campaign[:zip_codes])
+
+      country_match =  address.country_code.upcase.strip == campaign[:country_code].upcase.strip
+      zip_match = zip_code_selector.match?(address.zip)
+
+      next unless zip_match
+
+      rate_name_selector = RateNameSelector.new(campaign[:rate_match_type], campaign[:rate_names])
+
+      shipping_rates.delete_if do |shipping_rate|
+        rate_name_selector.match?(shipping_rate)
+      end
+    end
+  end
+end
+
+CAMPAIGNS = [
+  HideRatesForZipProvinceCountryCampaign.new(HIDE_RATES_FOR_ZIP_PROVINCE_COUNTRY),
+]
+
+CAMPAIGNS.each do |campaign|
+  campaign.run(Input.cart, Input.shipping_rates)
+end
+
+Output.shipping_rates = Input.shipping_rates
+-----------------------------------------------------------------------------
 
 
 
 
 __________________________________________________________________________________________________________________________________________
+
+
