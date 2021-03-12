@@ -1552,6 +1552,129 @@ AOS.init();
 
 Then just add its attributes to div as follows to trigger animation.
 <div data-aos="fade-in" data-aos-id="super-duper"></div>
+--------------------------------------------------------------------------
+Following is an example of created section to show collection products at home page.
+-----------
+{{ 'aos.css' | asset_url | stylesheet_tag }}
+{{ 'aos.js' | asset_url | script_tag }}
+<script>
+  AOS.init({once: true});
+</script>
+<script>
+$(document).ready(function(){
+var windowWidth = $(window).width();
+if( windowWidth > 767 ){
+$('.slideattribute').attr("data-aos","");
+}else
+{
+$('.fadeattribute').attr("data-aos","");
+$('.ihp2').remove();  
+}
+});
+
+<div class="page-width">
+  <div class="section-homeproducts">
+    {% assign collection = collections[section.settings.collection] %}
+    {% assign rows = section.settings.rows %}
+{% assign product_limit = rows | times: 4 %}
+{% assign mobile_product_limit = false %}
+ {% case rows %}
+        {% when 1 %}
+          {% assign product_index_hide_on_mobile = 4 %}
+        {% when 3 %}
+          {% assign product_index_hide_on_mobile = 14 %}
+      {% endcase %}
+      <h2 class="collection_title" style="text-align: center">
+          {{ section.settings.heading }}
+        </h2>
+      <div class="grid grid--no-gutters grid--uniform collection slideattribute" data-aos="slide-left" data-aos-offset="200" data-aos-delay="30" data-aos-duration="2000">
+        {% assign count = 0 %}
+        {% for product in collection.products limit: product_limit %}
+          <div data-aos="fade" 
+    data-aos-offset="100"
+    data-aos-delay="{{ 50 | times: count }}"
+    data-aos-duration="500" style="width:25%" class=" fadeattribute grid__item small--one-half medium-up--one-fourth{% if forloop.index == 1 %} collection__card--first{% endif %} {% if mobile_product_limit and forloop.index > 3 %}small--hide{% elsif rows == 1 or rows == 3 %}{% if forloop.index == product_index_hide_on_mobile %}small--hide{% endif %}{% endif %}">
+            {% include 'product-card-homepage', product: product, collection: collection %}
+          </div>
+        {% assign count = count | plus: 2 %}
+        {% endfor %}
+      </div>
+    <div class="allplink"><a class="btn" style="padding: 10px 30px;" href=" {% if section.settings.viewalllink != blank  %}{{ section.settings.viewalllink }}{% else %}{{ collection.url }}{% endif %}">View All</a></div>
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": {
+    "de": "Featured Kategorie",
+    "en": "Featured collection",
+    "es": "Colección destacada",
+    "fr": "Collection en vedette",
+    "it": "Collezione in evidenza",
+    "ja": "特集コレクション",
+    "pt-BR": "Coleção em destaque"
+  },
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": {
+        "en": "Heading Text"
+      }
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": {
+        "de": "Kategorie",
+        "en": "Collection",
+        "es": "Colección",
+        "fr": "Collection",
+        "it": "Collezione",
+        "ja": "コレクション",
+        "pt-BR": "Coleção"
+      }
+    },
+    {
+      "type": "range",
+      "id": "rows",
+      "label": {
+        "en": "Products to show (4X)"
+      },
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default":2
+    },
+    {
+      "type": "text",
+      "label": "Custom link",
+      "info": "Leave it blank to use default collection link",
+      "id": "viewalllink"
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "en": "Home Products"
+      },
+      "category": {
+        "de": "Kategorie",
+        "en": "Collection",
+        "es": "Colección",
+        "fr": "Collection",
+        "it": "Collezione",
+        "ja": "コレクション",
+        "pt-BR": "Coleção"
+      }
+    }
+  ]
+}
+{% endschema %}
+
 _________________________________________________________________________________________________________________
 split,remove,string,trim string
 Here is how I have put two values in vendor field (rodrigomsdeus@hotmail.com,Rodrigo) of Product editor and used them in frontend code by spliting them using comma to show different name with email link and display photo. This is very use
