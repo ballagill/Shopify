@@ -2790,11 +2790,25 @@ span.timer-block__num {
   var countDown = new Date('{{- end_date -}}').getTime(),
       x = setInterval(function() {
       var now = new Date().getTime(),
-          distance = countDown - now;
-      document.querySelector('.js-timer-days').innerText = Math.floor(distance / (day)),
-        document.querySelector('.js-timer-hours').innerText = Math.floor((distance % (day)) / (hour)),
-      document.querySelector('.js-timer-minutes').innerText = Math.floor((distance % (hour)) / (minute)),
-      document.querySelector('.js-timer-seconds').innerText = Math.floor((distance % (minute)) / second);
+      distance = countDown - now;
+      var td = Math.floor(distance / (day));
+      var th =  Math.floor((distance % (day)) / (hour));
+      if(th<10){
+      var th = "0"+th;
+      }
+      var tm = Math.floor((distance % (hour)) / (minute));
+      if(tm<10){
+      var tm = "0"+tm;
+      }
+      var ts =  Math.floor((distance % (minute)) / second);
+      if(ts<10){
+      var ts = "0"+ts;
+      }
+    
+      document.querySelector('.js-timer-days').innerText = td,
+      document.querySelector('.js-timer-hours').innerText = th,
+      document.querySelector('.js-timer-minutes').innerText = tm,
+      document.querySelector('.js-timer-seconds').innerText = ts;
     }, second)
 </script>
 {% endif %}
