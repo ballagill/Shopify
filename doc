@@ -10,6 +10,16 @@ so to make it work we need to use following way of click function.
 $(document).on('click','.newcreatedbutton', function(e) {    
      alert();
 });
+________________________________________________________________________________________________
+Refresh cart icon and cart drawer values (Ajax values) automatically after 3 seconds. 
+it is usable when we use any app that changes total price and total items in cart without refreshing page. such as Discount app and upsell app.
+-----------------------------
+setInterval(function(){ 
+$.getJSON('/cart.js', function(cart) {
+$(".item-count").html(cart.item_count);
+}  
+$(".carttotal").html("£"+cart.total_price/100+".00");   
+})}, 3000);
 _______________________________________________________________________________________________
 SEO:
 Fix duplicate content issue of product page url due to being same product in different collection and collection page pagination issue in SEO that comes on Google search console. (Google search console is also know as Google webmaster)
