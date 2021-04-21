@@ -361,6 +361,16 @@ var offerbox = document.getElementById("offerbox");
 ]
 }
 {% endschema %}
+--------------------------------------------------------------------------------------------------------
+we can use this function instead of document ready if we don't want to add jquery link.
+<script>
+document.addEventListener('DOMContentLoaded', function(event) {
+var discountdiv = document.getElementById('discountdiv');
+var discounttext = document.getElementById('discounttextline');
+discountdiv.appendChild(discounttext);
+discounttext.classList.remove("hidit");
+});
+</script>
 ------------------------------------------------------------------------------------------------------------------
 Other way if needs to use for multiple products at once such as on collecton pages. then use this way:
 
