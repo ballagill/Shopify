@@ -973,7 +973,63 @@ curl_close ($curl);
 echo "<pre>";
 print_r($response); 
 ?>
-...............................................................................................
+..............................................................................................
+We don't need to setup cron job for this script, just create a new "Order Creation" webhook and place the script url there. it will auotmatically refresh the page once any new order will be created.
+______________________________________________________________________________________________
+<?php
+//Fetching shopify orders
+$formatted = $days_ago = date('Y-m-d', strtotime('-1 days'));
+ /*API Call to Shopify*/
+$orderUrl ="https://XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX@storename.myshopify.com/admin/orders.json?limit=250&created_at_min=".$formatted;
+  // Get cURL resource
+	$curl = curl_init();
+	// Set some options - we are passing in a useragent too here
+	curl_setopt_array($curl, array(
+	CURLOPT_RETURNTRANSFER => 1,
+	CURLOPT_URL => 'https://XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX@storename.myshopify.com/admin/orders.json?limit=250&created_at_min='.$formatted,
+	CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+	));
+	// Send the request & save response to $defaultresponse
+	$defaultresponse = curl_exec($curl);
+$csv = "Date,Customer Name,Customer Email,Customer Phone,Products,Order ID,Amount,Currency\n";//Column headers
+
+    
+	$jsondecodedresponse = json_decode($defaultresponse);
+	$new=array();
+    foreach($jsondecodedresponse as $usableresponse){
+    echo"<pre>";
+	//print_r($usableresponse);
+	echo"</pre>";
+	foreach($usableresponse as $firstlevel){
+	echo"<pre>";
+	//print_r($firstlevel);
+	echo"</pre>";
+    $line_items=$firstlevel->line_items;
+    $product_titles=array();
+foreach($line_items as $line_items_data){
+	array_push($product_titles,$line_items_data->title);
+}
+    $producttitles = implode("-", $product_titles);
+    $customer=$firstlevel->customer;	
+	foreach($customer as $customerdata){
+	$customer_id = $customerdata->customer_id; 
+	$customer_phone = $customerdata->phone; 
+    $customer_name = $customerdata->first_name.' '.$customerdata->last_name;
+}
+$csv.= $firstlevel->created_at.','.$customer_name.','.$firstlevel->email.','.$customer_phone.','.$producttitles.','.$firstlevel->name.','.$firstlevel->total_price.','.$firstlevel->currency."\n";
+
+ //Append data to csv
+$file_name = date('m-d-Y').'-orders.csv';
+$csv_handler = fopen ($file_name,'w');
+fwrite ($csv_handler,$csv);
+fclose ($csv_handler);
+	 
+		
+	}
+ }
+ echo 'Done';
+	exit;
+?>
 _______________________________________________________________________________________________________
 Fetch products or orders from shopfy:
 How to fetch products/orders from shopify using external php script and create their csv files.
