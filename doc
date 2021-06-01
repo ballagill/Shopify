@@ -1,29 +1,3 @@
-Shopiyf orders to Googlesheet:
-We can put orders directly to Googlesheet by creating custom script in Googlesheet. To do so, we need to create web page with script to create a CSV file of each day orders on any hosting server and make it trigger with Shopify Webhook.
-Then we will import orders files each day using following script. we can automate importing by creating timer trigger in script editor of googlesheet. script editor can be find under tools menu in googlesheet.
-------------------------------------------------------
-function importCSVFromWeb(url) {
-var dateY = new Date ();
-dateY. setDate (dateY. getDate ()-1);
-var yesterday = Utilities. formatDate (dateY, "GMT-1", "dd-MM-yyyy");
-  var csvUrl = "https://37degs.com/fborders/data/"+yesterday+".csv";
-  var csvContent = UrlFetchApp.fetch(csvUrl).getContentText();
-  Logger.log(csvContent); // log for debugging, if used interactively
-  var csvData = Utilities.parseCsv(csvContent);
-  if (!csvData || !(csvData.length)) {
-      MailApp.sendEmail('you', 'error report', 'could not parse data ' + csvContent); 
-  }   // emailing bug report  
-  var sheet = SpreadsheetApp.getActive();
- // var sheet = SpreadsheetApp.getActiveSheet().getSheetByName('Fatbutcher-orders-sheet');
- 
- var ss = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
- var LR = ss.getLastRow();
- var rows = csvData.length;
- var columns = csvData[0].length;
-ss.getRange(2, 1, rows, columns).insertCells(SpreadsheetApp.Dimension.ROWS).setValues(csvData);
-}
-
-___________________________________________________________________________________________
 Very important jquery use:
 Jquery click event does not work if the selector we are clicking on made by previous jquery event. For example, we added a new button using jquery and again we want 
 to run jquery event on clicking button created by previous event. 
@@ -3902,5 +3876,87 @@ $("#ProductSelect-product-template").varianttitle(combineoptons).change();
 
 
 __________________________________________________________________________________________________________________________________________
+Shopiyf orders to Googlesheet: Note, once one url of csv fetched, google creates cache of it, so Always try to fetch new url.
+We can put orders directly to Googlesheet by creating custom script in Googlesheet. To do so, we need to create web page with script to create a CSV file of each day orders on any hosting server and make it trigger with Shopify Webhook.
+Then we will import orders files each day using following script. we can automate importing by creating timer trigger in script editor of googlesheet. script editor can be find under tools menu in googlesheet.
+------------------------------------------------------
+function importCSVFromWeb(url) {
+var dateY = new Date ();
+dateY. setDate (dateY. getDate ()-1);
+var yesterday = Utilities. formatDate (dateY, "GMT-1", "dd-MM-yyyy");
+  var csvUrl = "https://37degs.com/fborders/data/"+yesterday+".csv";
+  var csvContent = UrlFetchApp.fetch(csvUrl).getContentText();
+  Logger.log(csvContent); // log for debugging, if used interactively
+  var csvData = Utilities.parseCsv(csvContent);
+  if (!csvData || !(csvData.length)) {
+      MailApp.sendEmail('you', 'error report', 'could not parse data ' + csvContent); 
+  }   // emailing bug report  
+  var sheet = SpreadsheetApp.getActive();
+ // var sheet = SpreadsheetApp.getActiveSheet().getSheetByName('Fatbutcher-orders-sheet');
+ 
+ var ss = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+ var LR = ss.getLastRow();
+ var rows = csvData.length;
+ var columns = csvData[0].length;
+ss.getRange(2, 1, rows, columns).insertCells(SpreadsheetApp.Dimension.ROWS).setValues(csvData);
+}
+----------------------------------------------------------------------------------------------------------------------------
+Script for webpage to create csv file of each day in "data" folder:
 
+<?php
+//Fetching shopify orders
+$upto  = date('Y-m-d', strtotime('+1 days'));
+$formatted = $days_ago = date('Y-m-d');
+ /*API Call to Shopify*/
+$orderUrl ="https://375faddcf47a47244d21c517f306e87a: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@the-fat-butcher-delivery.myshopify.com/admin/orders.json?limit=250&created_at_min=".$formatted;
+  // Get cURL resource
+	$curl = curl_init();
+	// Set some options - we are passing in a useragent too here
+	curl_setopt_array($curl, array(
+	CURLOPT_RETURNTRANSFER => 1,
+	CURLOPT_URL => 'https://375faddcf47a47244d21c517f306e87a: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@the-fat-butcher-delivery.myshopify.com/admin/orders.json?limit=250&created_at_min='.$formatted,
+	CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+	));
+	// Send the request & save response to $defaultresponse
+	$defaultresponse = curl_exec($curl);
+//$csv = "Order ID,Date,Customer Name,Customer Email,Customer Phone,Products,Amount,Remark1,Remark2,Remark3,Remark4\n";//Column headers
+
+    
+	$jsondecodedresponse = json_decode($defaultresponse);
+	$new=array();
+    foreach($jsondecodedresponse as $usableresponse){
+    echo"<pre>";
+	//print_r($usableresponse);
+	echo"</pre>";
+	foreach($usableresponse as $firstlevel){
+	echo"<pre>";
+	print_r($firstlevel);
+	echo"</pre>";
+    $line_items=$firstlevel->line_items;
+    $product_titles=array();
+foreach($line_items as $line_items_data){
+	array_push($product_titles,$line_items_data->title);
+}
+    $producttitles = implode("-", $product_titles);
+    $customer=$firstlevel->customer;	
+	foreach($customer as $customerdata){
+	$customer_id = $customerdata->customer_id; 
+	$customer_phone = $customerdata->phone; 
+    $customer_name = $customerdata->first_name.' '.$customerdata->last_name;
+}
+$csv.= $firstlevel->name.','.$firstlevel->created_at.','.$customer_name.','.$firstlevel->email.','.$customer_phone.','.$producttitles.','.$firstlevel->total_price.",,,,\n";
+
+ //Append data to csv
+$file_name = 'data/'.date('d-m-Y').'.csv';
+$csv_handler = fopen ($file_name,'w');
+fwrite ($csv_handler,$csv);
+fclose ($csv_handler);
+	 
+		
+	}
+ }
+exit;
+?>
+
+___________________________________________________________________________________________
 
