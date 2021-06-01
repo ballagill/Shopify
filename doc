@@ -1,3 +1,29 @@
+Shopiyf orders to Googlesheet:
+We can put orders directly to Googlesheet by creating custom script in Googlesheet. To do so, we need to create web page with script to create a CSV file of each day orders on any hosting server and make it trigger with Shopify Webhook.
+Then we will import orders files each day using following script. we can automate importing by creating timer trigger in script editor of googlesheet. script editor can be find under tools menu in googlesheet.
+------------------------------------------------------
+function importCSVFromWeb(url) {
+var dateY = new Date ();
+dateY. setDate (dateY. getDate ()-1);
+var yesterday = Utilities. formatDate (dateY, "GMT-1", "dd-MM-yyyy");
+  var csvUrl = "https://37degs.com/fborders/data/"+yesterday+".csv";
+  var csvContent = UrlFetchApp.fetch(csvUrl).getContentText();
+  Logger.log(csvContent); // log for debugging, if used interactively
+  var csvData = Utilities.parseCsv(csvContent);
+  if (!csvData || !(csvData.length)) {
+      MailApp.sendEmail('you', 'error report', 'could not parse data ' + csvContent); 
+  }   // emailing bug report  
+  var sheet = SpreadsheetApp.getActive();
+ // var sheet = SpreadsheetApp.getActiveSheet().getSheetByName('Fatbutcher-orders-sheet');
+ 
+ var ss = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+ var LR = ss.getLastRow();
+ var rows = csvData.length;
+ var columns = csvData[0].length;
+ss.getRange(2, 1, rows, columns).insertCells(SpreadsheetApp.Dimension.ROWS).setValues(csvData);
+}
+
+___________________________________________________________________________________________
 Very important jquery use:
 Jquery click event does not work if the selector we are clicking on made by previous jquery event. For example, we added a new button using jquery and again we want 
 to run jquery event on clicking button created by previous event. 
