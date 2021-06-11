@@ -3959,4 +3959,23 @@ exit;
 ?>
 
 ___________________________________________________________________________________________
+Vimeo video embed code: Without any controls, we can play sound by making "muted:0" but it will not then auto play in iphone. we can use background image to display untill video not loads.
+
+<div class="innerwidth">
+<div class="vimeowrapper">
+<iframe src="https://player.vimeo.com/video/554551894?autoplay=1&loop=1&color=f47920&title=0&byline=0&portrait=0&background=1&muted=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></div>
+<script src="https://player.vimeo.com/api/player.js"></script>
+<style>
+.vimeowrapper {
+    padding: 56.25% 0 0 0;
+    position: relative;
+    float: left;
+    width: 100%;
+    margin-top: 30px;
+    background-image: url(https://cdn.shopify.com/s/files/1/0505/0145/1925/files/ecoxgear.jpg?v=1623401332);
+    background-position: center center;
+    background-size: contain;
+}
+</style>
+__________________________________________________________________________________________________________________
 
