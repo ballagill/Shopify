@@ -1,3 +1,26 @@
+Increase loading speed:
+Just go in theme.liquid file and replace {{content_for_header}} with following code:
+
+<!-- replace all below code with "{ {content_for_header} }" variable to restore back to default-->
+{% comment %}
+  Need to output content_for_header here as theme.liquid wont save without it
+  {{ content_for_header }}
+{% endcomment %}
+ <script>
+  $(document).ready(function() {
+    // Store result in a string
+    var content_for_header = "{{ content_for_header | replace: '/', '\/' | replace: '"', '\"'| strip_newlines }}";
+    // Output content to the head, and add newlines where required
+    $('head').append(content_for_header
+      .replace(/}        /g, "}        \n")
+      .replace(/\/\/<!\[CDATA\[/g, "//<![CDATA[\n")
+      .replace(/\/\/]]>/g, "//]]>\n")
+    );
+  })
+  </script>
+<!-- replace all above code with "{ {content_for_header} }" variable to restore back to default-->
+
+_____________________________________________________________________________________________________________________
 Very important jquery use:
 Jquery click event does not work if the selector we are clicking on made by previous jquery event. For example, we added a new button using jquery and again we want 
 to run jquery event on clicking button created by previous event. 
