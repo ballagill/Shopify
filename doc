@@ -1,7 +1,7 @@
 Increase loading speed:
 Just go in theme.liquid file and replace {{content_for_header}} with following code:
 
-<!-- replace all below code with "{ {content_for_header} }" variable to restore back to default-->
+{% comment %} replace all below code with "{ {content_for_header} }" variable to restore back to default{% endcomment %}  
 {% comment %}
   Need to output content_for_header here as theme.liquid wont save without it
   {{ content_for_header }}
@@ -18,7 +18,7 @@ Just go in theme.liquid file and replace {{content_for_header}} with following c
     );
   })
   </script>
-<!-- replace all above code with "{ {content_for_header} }" variable to restore back to default-->
+{% comment %} replace all above code with "{ {content_for_header} }" variable to restore back to default{% endcomment %}  
 
 _____________________________________________________________________________________________________________________
 Very important jquery use:
