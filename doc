@@ -35,6 +35,22 @@ so to make it work we need to use following way of click function.
 $(document).on('click','.newcreatedbutton', function(e) {    
      alert();
 });
+____________________________________________________________
+Cookie code to display popup only once in one day, hour etc. here it is set to once in one hour.
+-----------
+//Cookie code to display popup only once in one hour
+if (document.cookie.indexOf("popup_is_displayed") > -1 ) {
+   //alert( "popup_is_on Text found" );
+}else{
+   //alert( "not found" );
+getMobileOperatingSystem(); 
+var now = new Date();
+var time = now.getTime();
+var value = "popup_is_displayed";  
+time += 3600 * 1000;
+now.setTime(time);
+document.cookie = 'checkpopup=' + value + '; expires=' + now.toUTCString() + '; path=/';
+}
 ________________________________________________________________________________________________
 How to pass the section values to snippet by using variables:
 {% include 'product-template-snippet',
@@ -4003,4 +4019,91 @@ Vimeo video embed code: Without any controls, we can play sound by making "muted
 }
 </style>
 __________________________________________________________________________________________________________________
+Custom popup to display iphone app download link for iphone and android app download link on android phone. 
+Also jquery is added to show it once in one hour. cookie's expiry date is set to one hour.
+section code:
+-----------
+<script>
+$(document).ready(function () {
+$('.close-popup').click(function(){
+    $('#popupcontainer').hide();
+}); 
+/**
+ * Determine the mobile operating system.
+ * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'unknown'.
+ *
+ * @returns {String}
+ */
+function getMobileOperatingSystem() {
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    if (/android/i.test(userAgent)) {
+      $('.androidapp').show();
+      $('#popupcontainer').show();
+    }
+
+    // iOS detection from: http://stackoverflow.com/a/9039885/177710
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        $('.iphoneapp').show();
+        $('#popupcontainer').show();
+    }
+
+    return "unknown";
+} 
+//Cookie code to display popup only once in one hour
+if (document.cookie.indexOf("popup_is_displayed") > -1 ) {
+   //alert( "popup_is_on Text found" );
+}else{
+   //alert( "not found" );
+getMobileOperatingSystem(); 
+var now = new Date();
+var time = now.getTime();
+var value = "popup_is_displayed";  
+time += 3600 * 1000;
+now.setTime(time);
+document.cookie = 'checkpopup=' + value + '; expires=' + now.toUTCString() + '; path=/';
+}          
+});
+<script>
+<style>
+#popupcontainer{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:320px;z-index:999;text-align:center;color:#fff}.crosssign{position:absolute;top:20px;right:15px;color:#c85440;cursor:pointer;background:#fff;width:30px;border-radius:20px;height:30px;font-size:25px;line-height:27px}.bottompopup{position:relative}.box{background:#fff;width:220px;height:120px;margin:0 auto;position:absolute;top:0;left:50%;transform:translate(-50%,-50%);box-shadow:rgb(14 30 37 / 12%) 0 2px 4px 0,rgb(14 30 37 / 32%) 0 2px 16px 0;border-radius:5px}p.text3{bottom:105px;position:absolute;font-size:12px;line-height:18px;font-weight:700;left:0;right:0;margin:0 10px}p.toptext{margin:0;font-size:18px;width:275px;text-align:left;text-transform:uppercase;font-weight:700}.box img{width:90px;margin-top:10px}.upperpopup{background-image:url(https://cdn.shopify.com/s/files/1/0299/3350/2563/files/popupimage.jpg?v=1625295677);height:300px;background-size:contain;background-position:bottom;position:relative;background-repeat:no-repeat;padding:20px}.bottompopup{position:relative;color:#c85440;height:100px;padding:10px;background:rgba(0,0,0,.7)}p.centertext{position:absolute;bottom:102px;text-align:center;width:86%;background:#fff;color:#c85440;left:0;right:0;margin:auto;font-weight:700;font-size:14px}img.bottomimg{width:160px;position:absolute;bottom:45px;left:0;right:0;margin:auto}p.nothanks{position:absolute;bottom:10px;left:0;right:0;margin:auto;font-size:10px;font-weight:700;cursor:pointer}.halfis{width:50%;float:left}p.available{font-size:12px;margin-top:10px}  
+</style>
+{% if section.settings.ispopup %}
+<div id="popupcontainer" style="display:none">
+<div id="exampleModal" class="reveal-modal">
+<div class="upperpopup">
+<p class="toptext">Want more seamless experience</p>  
+<p class="centertext">THE APP-EXCLUSIVE OFFERS</p>   
+  </div>
+<div class="bottompopup">
+<div class="box"><img src="https://cdn.shopify.com/s/files/1/0299/3350/2563/files/fatbutcherlogo_47fc8ae5-9343-4630-bbae-1dc15ce199c6.png?v=1625295694">
+<div class="innerbox">
+  <p class="available halfis">AVAILABLE ON</p>
+<a href="https://play.google.com/store/apps/details?id=co.shopney.thefatbutcher" style="display:none" class="androidapp"><img class="boximg halfis" src="https://cdn.shopify.com/s/files/1/0299/3350/2563/files/Layer_4.png?v=1625301289"></a> 
+<a href="https://apps.apple.com/gb/app/the-fat-butcher/id1573780515" style="display:none" class="iphoneapp"><img class="boximg halfis" src="https://cdn.shopify.com/s/files/1/0299/3350/2563/files/Layer_2.png?v=1625306088"></a> 
+  </div>  
+   </div> 
+ </div>
+<span class="crosssign close-popup">×</span>
+</div>
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Download Mobile App",
+    "settings": [
+{
+"type": "checkbox",
+"id": "ispopup",
+"label": "Display Popup",
+"default": false
+}
+]
+  }
+{% endschema %}
+----------------------
+__________________________________________________________________________________________________________________________________________________________________________
+
+
+
 
