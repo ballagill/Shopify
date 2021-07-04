@@ -36,20 +36,19 @@ $(document).on('click','.newcreatedbutton', function(e) {
      alert();
 });
 ____________________________________________________________
-Cookie code to display popup only once in one day, hour etc. here it is set to once in one hour.
+Cookie code to display popup only once in one day, hour etc. here is code to set popup to display once in one hour.
 -----------
-//Cookie code to display popup only once in one hour
-if (document.cookie.indexOf("popup_is_displayed") > -1 ) {
-   //alert( "popup_is_on Text found" );
+if (document.cookie.indexOf("popup_has_displayed") > -1 ) {
+   //alert( "popup_has_displayed Text found" );
 }else{
    //alert( "not found" );
 getMobileOperatingSystem(); 
+var value = "popup_has_displayed";   
 var now = new Date();
-var time = now.getTime();
-var value = "popup_is_displayed";  
-time += 3600 * 1000;
+var time = now.getTime(); 
+time += 3600 * 1000;//one hour
 now.setTime(time);
-document.cookie = 'checkpopup=' + value + '; expires=' + now.toUTCString() + '; path=/';
+document.cookie = 'checkingpopup=' + value + '; expires=' + now.toUTCString() + '; path=/';
 }
 ________________________________________________________________________________________________
 How to pass the section values to snippet by using variables:
