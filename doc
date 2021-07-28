@@ -4102,6 +4102,13 @@ document.cookie = 'checkpopup=' + value + '; expires=' + now.toUTCString() + '; 
 {% endschema %}
 ----------------------
 __________________________________________________________________________________________________________________________________________________________________________
+SSL:
+To add SSL, we need it to purchase from server such as from Godaddy, SSL are purchased either single domain only or for multiple domains. once we purchased SSL, A SSL option will start displaying under My products option of Godaddy.
+Then we will have to click on it, then next, we need to select the domain for which we want to generate SSL certificate, then generate the certificate. After that we will have to go to cpanel of hosting, where we will need to open SSL/TLS setttings. Then under these setting we will have connect the certificate (Already genrated certificate will show there) with that hosting domain. thats all.
+Actually we will have to generate the certificate first and then upload/install it to hosting SSL settings.
+
+__________________________________________________________________________________________________________________________________________________________________________
+
 
 
 
