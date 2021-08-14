@@ -4129,7 +4129,44 @@ Then we will have to click on it, then next, we need to select the domain for wh
 Actually we will have to generate the certificate first and then upload/install it to hosting SSL settings.
 
 __________________________________________________________________________________________________________________________________________________________________________
+Ajax:
+------------
+<div id="form-msg">
+    
+</div>
 
+<script>
+    jQuery('#mySub').click(function() {
+       jQuery.ajax({
+      type: 'POST',
+      url: "https://app.picsflow.com/auth/web_register_account",
+      data: {email:jQuery('#form-field-email').val(),
+	         password:jQuery('#form-field-password').val(),
+			 first_name:jQuery('#form-field-first_name').val(),
+			 last_name:jQuery('#form-field-last_name').val()
+	  
+	  
+	  },
+      dataType: "json",
+      success: function(resultData) {
+       if(resultData.status)
+          {
+             window.location.href  = 'https://picsflow.com/thank-you'
+          }
+          else
+          {
+             var msgColor = (resultData.status)?'green':'red';
+      
+      jQuery('#form-msg').html(resultData.response);
+      jQuery('#form-msg p').css('color',msgColor);  
+          }
+          
+          
+      }
+});  
+    });
+</script>
+__________________________________________________________________________________________________________
 
 
 
