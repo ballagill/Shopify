@@ -4129,7 +4129,7 @@ Then we will have to click on it, then next, we need to select the domain for wh
 Actually we will have to generate the certificate first and then upload/install it to hosting SSL settings.
 
 __________________________________________________________________________________________________________________________________________________________________________
-Ajax:
+Running Ajax code:
 ------------
 <div id="form-msg">
     
