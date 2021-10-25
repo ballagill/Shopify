@@ -1,3 +1,6 @@
+This is how filter url works:
+https://analogcases.com/collections/lightweight-travel-cases/akai+arturia+audient?sort_by=manual
+__________________________________________________________________________________________________________________
 Increase loading speed:
 Just go in theme.liquid file and replace {{content_for_header}} with following code:
 
