@@ -4170,7 +4170,22 @@ Running Ajax code:
     });
 </script>
 __________________________________________________________________________________________________________
+metafields:
 
+{% if product.metafields.my_fields.product_banner_image != blank %}
+<div class="landscapesection">
+<div class="fullwidthimage bottomimage"><img alt="" src="{{ product.metafields.my_fields.product_banner_image | file_url }}"></div>
+</div>
+{% endif %}
+
+{% if product.metafields.my_fields.product_youtube_video_id != blank %}
+<div class="landscapesection">
+<div class="iframecontainer">
+<iframe src="//www.youtube.com/embed/{{ product.metafields.my_fields.product_youtube_video_id }}?rel=0" frameborder="0" allowfullscreen class="video"></iframe>
+</div>
+</div>
+{% endif %}
+__________________________________________________________________________________________________________
 
 
 
