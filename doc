@@ -4205,6 +4205,11 @@ metafields:
 </div>
 {% endif %}
 __________________________________________________________________________________________________________
-
+Use this css to remove the default css styling of iphone devices and browsers to select box.
+.styled-select select {
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+    appearance:none;
+}
 
 
