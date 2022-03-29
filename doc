@@ -4211,5 +4211,26 @@ Use this css to remove the default css styling of iphone devices and browsers to
     -webkit-appearance:none; /* Safari and Chrome */
     appearance:none;
 }
+_________________________________________________________________________________________________________________________
+Sometime when we use float left css. then the below div becomes misplaced. To fix it. just create a blank div under the div we applied float left. that will fix the issue.
+<div style="clear:both;width:100%;display:block;"></div>
+
+_________________________________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
