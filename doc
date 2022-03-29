@@ -4216,7 +4216,16 @@ Sometime when we use float left css. then the below div becomes misplaced. To fi
 <div style="clear:both;width:100%;display:block;"></div>
 
 _________________________________________________________________________________________________________
-
+useful css for collection page images.
+img.snize-item-image {
+    max-height: 145px !important;
+    width: 100% !important;
+    object-fit: fill;
+    object-position: top center;
+    vertical-align: bottom!important;
+    height: auto;
+}
+_________________________________________________________________________________________________________
 
 
 
