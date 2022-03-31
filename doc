@@ -4226,7 +4226,7 @@ img.snize-item-image {
     height: auto;
 }
 _________________________________________________________________________________________________________
-Speed optimization mehtod: Lazyload2 and Critical2. I found this method from a theme that was optimized by other Develper.
+Speed optimization mehtod: Lazyload2 and Critical2. I found this method from a theme that was optimized by other Develper. This method lazy loads all the script files and make the css files to laod differnently for mobile and desktop devices.
 
 In this method we can get speed over 90 easily. All we have to include a wnw-optimization js file at bottom(under </html>) of theme.liquid file. 
 Then we will have to update script and style tags as follows.
