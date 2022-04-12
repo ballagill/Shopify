@@ -1,0 +1,68 @@
+<div class="paragraphs">
+<p style="float:left;margin-bottom:100px;width:100%;">To use method, make sure there is no any parent with overflow hidden above all divs of sticky div</p>
+<p style="float:left;margin-bottom:100px;width:100%;">pargraph</p>
+<p style="float:left;margin-bottom:100px;width:100%;">pargraph</p>
+<p style="float:left;margin-bottom:100px;width:100%;">pargraph</p>
+
+</div>
+<div class="main"  style="display:flex;">
+<div class="productimage half">
+<div class="image">image</div>
+</div>
+<div class="productdetails half">
+<div class="content">
+<p style="float:left;margin-bottom:100px;width:100%;">content</p>
+<p style="float:left;margin-bottom:100px;width:100%;">content</p>
+<p style="float:left;margin-bottom:100px;width:100%;">content</p>
+<p style="float:left;margin-bottom:100px;width:100%;">content</p>
+<p style="float:left;margin-bottom:100px;width:100%;">content</p>
+<p style="float:left;margin-bottom:100px;width:100%;">content</p>
+<p style="float:left;margin-bottom:100px;width:100%;">content</p>
+<p style="float:left;margin-bottom:100px;width:100%;">content</p>
+<p style="float:left;margin-bottom:100px;width:100%;">content</p>
+
+</div>
+</div>
+</div>
+
+<div class="paragraphs">
+<p style="float:left;margin-bottom:100px;width:100%;">pargraph</p>
+<p style="float:left;margin-bottom:100px;width:100%;">pargraph</p>
+<p style="float:left;margin-bottom:100px;width:100%;">pargraph</p>
+<p style="float:left;margin-bottom:100px;width:100%;">pargraph</p>
+<p style="float:left;margin-bottom:100px;width:100%;">pargraph</p>
+<p style="float:left;margin-bottom:100px;width:100%;">pargraph</p>
+<p style="float:left;margin-bottom:100px;width:100%;">pargraph</p>
+<p style="float:left;margin-bottom:100px;width:100%;">pargraph</p>
+<p style="float:left;margin-bottom:100px;width:100%;">pargraph</p>
+
+</div>
+<style>
+.main {
+    width: 100%;
+    float: left;
+}
+.half {
+    width: 100%;
+}
+.productdetails{
+    background: brown;
+    color: white;
+}
+.image {
+    height: 200px;
+    background: green;
+    color: white;
+    text-align: center;
+    font-size: 50px;
+    position: sticky;
+    position: -webkit-sticky;/*for safari browsers*/
+    top: 10px;
+}
+.paragraphs {
+    float: left;
+    width: 100%;
+    background: peru;
+    color: white;
+}
+</style>
