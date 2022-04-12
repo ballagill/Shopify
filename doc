@@ -1,5 +1,10 @@
 This is how filter url works:
 https://xyz.com/collections/lightweight-travel-cases/akai+arturia+audient?sort_by=manual
+_____________________________________________________________________________________________
+To add a link of collection on product page.
+ {% if collection.url %}
+        {{ collection.title | link_to: collection.url }}
+      {% endif %}
 __________________________________________________________________________________________________________________
 Theme layout:
 if want to use different design of any page than website design. then we can create different layout for that page and call that layout in template of that page.
