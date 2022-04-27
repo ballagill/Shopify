@@ -1,4 +1,10 @@
 Toppest z index to be used is:-   z-index: 2147483646
+_________________________________________________________________________________________________
+This is how to trim string in shopify. we can use dividewords[0], dividewords[1] variable to print before and after part of string.
+{% assign producturl = item.url  %}
+{% assign dividewords = producturl | split: '?' %}
+{% assign finalhandle = dividewords[0] | remove: "/products/" %}
+{% assign firstprice = all_products[finalhandle].price %}
 _______________________________________________________________________________________________
 CSS selector tricks: 
 <div class="parent">
