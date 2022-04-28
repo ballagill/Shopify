@@ -1379,6 +1379,19 @@ We can add as many custom fields as we need using name attribute as 'name="attri
 __________________________________________________________________________________________________________________________________
 we can also add cusotm fields on product page in add to cart <form> tag as follow: main thing is name of field, we can add as many custom fields as we need by using name as 'name="properties[Phone no]"' for product fields.
 <input type="hidden" name="properties[Phone no]" class="tb_property_val">
+
+Product page, Include this in add to cart form
+<input type="hidden" name="properties[customdata]" value="customvalue">
+
+Cart page, put this code in cart item li list. (property.first = customdata and property.last = customvalue)
+{% unless item.properties == empty %}
+{% for property in item.properties %}
+{% if property.first == 'customdata' %}
+<p>{{ property.last }}</p>
+{% endif %}
+{% endfor %}
+{% endunless %}
+ 
 _________________________________________________________________________________________________________________________________
 To create a ajax "Add to cart" to add products in cart without refreshing the page or redirecting to cart. follow the following link, I have tested this code, and it worked fine.
 
