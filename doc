@@ -1,4 +1,9 @@
 Toppest z index to be used is:-   z-index: 2147483646
+_______________________________________________________________________________________________
+This is how we can get url data in Shopify liquid programming.
+{% if request.path contains 'anystring' %}
+do the stuff
+{% endif %}
 _________________________________________________________________________________________________
 This is how to trim string in shopify. we can use dividewords[0], dividewords[1] variable to print before and after part of string.
 {% assign producturl = item.url  %}
