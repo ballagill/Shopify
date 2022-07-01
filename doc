@@ -4436,6 +4436,24 @@ var _0x27db89=_0x318f;!function(t,e){for(var n=_0x318f,i=_0x21bd();;)try{if(7236
 ___________________________________________________________________________________________________________________________________________________________
 box-shadow: rgb(99 99 99 / 10%) 0px 0px 10px 2px;
 _____________________________________________________________________________________________________________
+Checkout.liquid file: We can modify the checkout.liquid file using jquery as follows. Reference https://shopify.dev/themes/architecture/layouts/checkout-liquid
+
+<script>
+(function($) {
+  $(document).on("page:load page:change", function() {
+    if (Shopify.Checkout.step === "contact_information" || Shopify.Checkout.step === "shipping_method") {
+      $( ".customerinfo" ).addClass('active');
+    }
+    if (Shopify.Checkout.step === "payment_method") {
+      $( ".progressbar li" ).addClass('active');
+      $("[data-gateway-name=credit_card] .input-radio").prop("checked", true);
+      $(".step__sections > .section").insertAfter(".section--payment-method");
+      $(".section--payment-method").css("padding-top","0px");
+    }
+  });
+})(Checkout.$);
+</script>
+_______________________________________________________________________________________________________________
 
 
 
