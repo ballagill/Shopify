@@ -4280,7 +4280,7 @@ Script tag:
 //code
 </script>
 
-For style we will have to create a snippet such as "theme-style.liquid". Then open the style.css file of theme from frontend of theme by inspecting browser. Then copy all that css and minfiy it using website to minfiy css. Then put all minified css to "theme-style.liquid" snippet and enclose it in style tag with critical2 class. 
+For style we will have to create a snippet such as "theme-style.liquid". Then open the style.css file of theme from frontend of theme by inspecting browser. Don't minify the style.css file by copying it from assets folder of theme as it contains dynamic code that will not be minified properly. Then copy all that css and minfiy it using website to minfiy css. Then put all minified css to "theme-style.liquid" snippet and enclose it in style tag with critical2 class. 
 Example of snippet file code:- <style class="critical2">#shopify-section-static-header a.navmenu-link,#shopify-section-static-header summary.navmenu-link {font-weight: bold!important;}.price--varies span.price--label {display: none;}#shopify-section-static-header .site-navigation .navmenu-depth-2 .navmenu-link {padding: 0.4375rem 1rem 0.4375rem 1.5625rem;}</style>
 
 Note, if style.css file is too long, then shopify will not let us all css in one snippet file as there is a size limit for snippet. To figure it out we can create two snippets and divide the style.css minified code in both.
