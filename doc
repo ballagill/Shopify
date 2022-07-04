@@ -4286,6 +4286,8 @@ Example of snippet file code:- <style class="critical2">#shopify-section-static-
 Note, if style.css file is too long, then shopify will not let us all css in one snippet file as there is a size limit for snippet. To figure it out we can create two snippets and divide the style.css minified code in both.
 Then following is a theme.liquid example of how data will be organised to increase speed. Use lazyload2 type to all App scripts and third party scripts in theme.liquid file.
 
+Note, if you are doing speed optimization on unpublished theme, then don't copy the direct link of preview theme from shopify backend and paste it in google insight. it will not work, infact it will display the result of live theme.
+so to test the duplicate theme, go to front end preview of unpublished theme and copy the share view link from bottom bar. that link will display the result of that unpublished theme.
 ..............................................................
 ==========start of theme.liquid file ========
 <!doctype html>
