@@ -1,4 +1,5 @@
 Toppest z index to be used is:-   z-index: 2147483646
+Fix iphone shaking content issue in div with touch: just add "-webkit-overflow-scrolling: touch;" to parent div 
 _______________________________________________________________________________________________
 This is how we can get url data in Shopify liquid programming.
 {% if request.path contains 'anystring' %}
@@ -4456,9 +4457,26 @@ Checkout.liquid file: We can modify the checkout.liquid file using jquery as fol
 })(Checkout.$);
 </script>
 _______________________________________________________________________________________________________________
+Sticky header or div with scoll:
+$(document).ready(function(){ 
+var initTopPosition= $('.pricecalculatorwrapper').offset().top;   
+$(window).scroll(function(){
+ if($(window).scrollTop() > initTopPosition){
+        $('.product--outer').addClass("stickyaddtocart");
+} else{
+        $('.product--outer').removeClass("stickyaddtocart");
+}
 
-
-
+if($(window).scrollTop() > 75){
+        $('.site-header').addClass("hideitnow");
+} else{
+        $('.site-header').removeClass("hideitnow");
+}
+});
+  
+});
+</script>
+_______________________________________________________________________________________________________________
 
 
 
