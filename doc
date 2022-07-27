@@ -4458,13 +4458,18 @@ Checkout.liquid file: We can modify the checkout.liquid file using jquery as fol
 </script>
 _______________________________________________________________________________________________________________
 Sticky header or div with scoll:
+we can get the height of header using innerHeight(); function to fill the jumping gap when header becomes sticky header.
+
 $(document).ready(function(){ 
 var initTopPosition= $('.pricecalculatorwrapper').offset().top;   
 $(window).scroll(function(){
  if($(window).scrollTop() > initTopPosition){
-        $('.product--outer').addClass("stickyaddtocart");
+        $('body').addClass("stickyaddtocart");
+        var divheight = $('.headerclass').innerHeight();
+        $('body').css("margin-top",divheight+"px");
 } else{
-        $('.product--outer').removeClass("stickyaddtocart");
+        $(body).removeClass("stickyaddtocart");
+        $('body').css("margin-top",divheight+"0");
 }
 
 if($(window).scrollTop() > 75){
@@ -4477,7 +4482,6 @@ if($(window).scrollTop() > 75){
 });
 </script>
 _______________________________________________________________________________________________________________
-
 
 
 
