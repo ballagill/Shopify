@@ -4482,6 +4482,38 @@ if($(window).scrollTop() > 75){
 });
 </script>
 _______________________________________________________________________________________________________________
+Side popup with overlay functionality:
+
+<script>
+$(document).ready(function(){
+$(".openshippingslider").click(function(){ 
+$('.slidingdiv').show().addClass("sliderisopened");
+$('#slidingdivoverlay').show();
+}); 
+$(".closeit,#slidingdivoverlay").click(function(){ 
+$('.slidingdiv').hide().removeClass("sliderisopened"); 
+$('#slidingdivoverlay').hide();
+});
+}); 
+</script>
+<div id="slidingdivoverlay"></div>
+<div class="slidingdiv" style="display:none;">
+<div class="slidingdivinner">
+
+<div class="slidingdivheader"><h3>Free Shipping Details</h3><span class="closeit"><svg class="icon-close " aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">      <path d="M17 1L1 17" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"></path>      <path d="M1 1L17 17" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"></path>    </svg></span></div>
+<ul>
+<li><img src="https://cdn.shopify.com/s/files/1/2698/4416/files/411776_1.png?v=1659464251"><p>Free standard Shipping every day for everything</p></li>
+<li><img src="https://cdn.shopify.com/s/files/1/2698/4416/files/3988259_1.png?v=1659464251"><p>White glove delivery and setup options in your room of choice available on select items</p></li>
+<li><img src="https://cdn.shopify.com/s/files/1/2698/4416/files/600268_1.png?v=1659464252"><p>Free Shipping to the lower 48 states (excludes Alaska and Hawaii)</p></li>
+</ul> 
+<div class="learnmoretab"><a href="/policies/shipping-policy">Learn More</a></div> 
+</div>
+
+</div>
+<style>
+#slidingdivoverlay {position: fixed;display: none;width: 100%;height: 100%;top: 0;left: 0;right: 0;bottom: 0;background-color: #0000007a;z-index: 999;cursor: pointer;}.slidingdivinner ul {list-style: none;margin: 50px 0;float: left;width: 100%;padding-left: 90px;padding-right: 10px;}.slidingdivinner ul li p {margin: 0;font-size: 16px;line-height: 25px;}.slidingdivinner {justify-content: center;text-align: center;position: relative;}.slidingdiv {position: fixed;bottom: 0;right: 0;margin: 0 auto;width: 100%;float: left;top: 0;background: #ffffff!important;z-index: 31474836444;max-width: 400px;box-shadow: rgb(99 99 99 / 20%) 0px 1px 3px 3px;}.slidingdivheader {float: left;width: 100%;display: flex;background: #f8f8f8;padding: 25px;box-shadow: rgb(99 99 99 / 10%) 0px 1px 3px 1px;}.slidingdivheader h3 {margin: 0;width: 100%;text-align: left;font-size: 18px;font-weight: 600;}span.closeit {float: right;width: 30px;cursor: pointer;font-size: 20px;font-weight: 600;}.slidingdivinner ul li {position: relative;padding: 0;float: left;width: 100%;margin-bottom: 50px;text-align: left;line-height: 20px;}.slidingdivinner ul li img {width: 40px;position: absolute;left: -70px;top: 6px;}.learnmoretab a {text-underline-offset: 1px;font-size: 16px;color: #197bbd;}@media only screen and (max-width: 668px) {.slidingdiv {width: 100%;max-width: 100%;float: left;left: 0;margin: 0 auto;height: 380px;top: unset;}.slidingdivinner ul li {margin-bottom: 25px;}.slidingdivinner ul {margin: 25px 0;margin-bottom: 0;}.slidingdivheader {padding: 15px 25px;}}
+</style>
+________________________________________________________________________________________________________________________________
 
 
 
