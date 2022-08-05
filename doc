@@ -1,3 +1,9 @@
+We can get any attribute in after or before and display it as follow.
+<span class="site-header-cart--count visible" data-header-cart-count="1"></span>
+.site-header-cart--count:after {
+    content: attr(data-header-cart-count);
+}
+____________________________________________________________________________________________
 Toppest z index to be used is:-   z-index: 2147483646
 Fix iphone shaking content issue in div with touch: just add "-webkit-overflow-scrolling: touch;" to parent div 
 _______________________________________________________________________________________________
