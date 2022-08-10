@@ -4487,6 +4487,47 @@ if($(window).scrollTop() > 75){
   
 });
 </script>
+---------------------------------------------------------
+css with keyframes for smooth sticky header 
+
+@-webkit-keyframes showCompactHeader {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes showCompactHeader {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@-webkit-keyframes hideCompactHeader {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+@keyframes hideCompactHeader {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.fixedheaderclass {
+    height: 60px!important;
+    -webkit-animation: showCompactHeader .3s ease;
+    animation: showCompactHeader .3s ease;
+}
 _______________________________________________________________________________________________________________
 Side popup with overlay functionality:
 
