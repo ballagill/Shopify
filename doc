@@ -4952,6 +4952,24 @@ create a snippet such as "structured-data" and put following code in it. Then re
 </script>
 ..........................................
 ___________________________________________________________________________________________________________________________________________________
+Script to get all products data of website: Such as to create CSV file.
+
+{% paginate collections["all-products"].products by 1400 %}
+{% for product in collections["all-products"].products %}
+
+{% if product.has_only_default_variant %}
+<p>{{ product.id }},,https://sleepgalleria.com{{ product.url }},{{ product.title  | remove: '"' }},{{ product.featured_image | img_url: "medium" }},{{ product.title | remove: '"' }},All,{{ product.vendor }}</p>
+{% else %}
+<p>{{ product.id }},,https://sleepgalleria.com{{ product.url }},{{ product.title | remove: '"' }},{{ product.featured_image | img_url: "medium" }},{{ product.title | remove: '"' }},All,{{ product.vendor }}</p>
+{% for variant in product.variants %}
+<p>{{ product.id }},{{ variant.id }},https://sleepgalleria.com{{ product.url }},{{ product.title | remove: '"' }},{{ product.featured_image | img_url: "medium" }},{{ product.title | remove: '"' }},All,{{ product.vendor }}</p>
+{% endfor %}
+ {% endif %}
+
+{% endfor %}
+{% endpaginate %}
+
+_______________________________________________________________________________________________________________________________________________________________
 
 
 
