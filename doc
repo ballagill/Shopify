@@ -4953,10 +4953,10 @@ create a snippet such as "structured-data" and put following code in it. Then re
 ..........................................
 ___________________________________________________________________________________________________________________________________________________
 Script to get all products data of website: Such as to create CSV file.
+Note, The shopify pagination has a limit to show maximum 1000 products in one page, so if you have products more than 1000, then put the following condition in collection page section and change its line {% paginate collection.products by paginate_by %} to {% paginate collection.products by 1000 %}. Then copy the first 1000 product data in first page, then copy the rest of products data on second page such as https://sleepgalleria.com/collections/purecare?page=2&grid_list=grid-view 
 
-{% paginate collections["all-products"].products by 1400 %}
+{% paginate collections["all-products"].products by 1000 %}
 {% for product in collections["all-products"].products %}
-
 {% if product.has_only_default_variant %}
 <p>{{ product.id }},,https://sleepgalleria.com{{ product.url }},{{ product.title  | remove: '"' }},{{ product.featured_image | img_url: "medium" }},{{ product.title | remove: '"' }},All,{{ product.vendor }}</p>
 {% else %}
