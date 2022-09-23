@@ -27,6 +27,12 @@ CSS selector tricks:
 Apply css on child2 if parent has other sibling immediately above child2 such as child1 ==> .child1+.child2
 Apply css on child4 if parent has other sibling such as child1 anywhere above child4 ==> .child1 ~ .child4
 ________________________________________________________________________________________________
+Array:
+{% assign productsid = "6939017543762,4857845416018,194539,1721224986667,6948913250386,6816392970322" | split: ','%}
+{% for productid in productsid %}
+{{ productid }}
+{% endfor %}
+_______________________________________________________________________________________________________________
 This is how filter url works:
 https://xyz.com/collections/lightweight-travel-cases/akai+arturia+audient?sort_by=manual
 _____________________________________________________________________________________________
