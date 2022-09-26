@@ -4960,6 +4960,7 @@ create a snippet such as "structured-data" and put following code in it. Then re
 ___________________________________________________________________________________________________________________________________________________
 Script to get all products data of website: Such as to create CSV file.
 Note, The shopify pagination has a limit to show maximum 1000 products in one page, so if you have products more than 1000, then put the following condition in collection page section and change its line {% paginate collection.products by paginate_by %} to {% paginate collection.products by 1000 %}. Then copy the first 1000 product data in first page, then copy the rest of products data on second page such as https://sleepgalleria.com/collections/purecare?page=2&grid_list=grid-view 
+Also note that, this function will only run with theme that has native theme pagination such as 1,2,3..links at bottom of collection pages. this does not work with load more button on collection pages such as load more button added by "Product filter and search" app. so if you want to use this on sleepgalleria, then create a duplicate theme and then go to "Poduct filter and Search" app and uninstall the App code from duplcated theme using App uninstall option. then use this function.
 
 {% paginate collections["all-products"].products by 1000 %}
 {% for product in collections["all-products"].products %}
