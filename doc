@@ -4981,7 +4981,34 @@ Also note that, this function will only run with theme that has native theme pag
 
 _______________________________________________________________________________________________________________________________________________________________
 
+Power Reveiw code for collections pages, working with pagination.
 
+<!-- start_collection_js_code -->
+<script src="https://ui.powerreviews.com/stable/4.1/ui.js" async></script> 
+<script>
+  window.pwr = window.pwr || function () {
+    (pwr.q = pwr.q || []).push(arguments); 
+  };
+  pwr('render', [
+{% paginate collection.products by paginate_by %}
+    {% for product in collection.products limit: product_limit %}
+      {
+        api_key: 'aced7a06-8d80-4c0b-a6b3-b4d70b22b5e6',
+        locale: 'en_US',
+        merchant_group_id: '1411484844',
+        merchant_id: '152597421',
+        page_id: '{{ product.id }}',
+        components: {
+          CategorySnippet: 'snippet-{{ product.id }}'
+        }
+      } {% if forloop.last == false %}, {% endif %}
+    {% endfor %}
+{% endpaginate %}
+  ]);
+</script>
+<!-- end_collection_js_code -->
+
+_______________________________________________________________________________________________________________________________________________________
 
 
 
