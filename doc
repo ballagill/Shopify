@@ -5009,6 +5009,20 @@ Power Reveiw code for collections pages, working with pagination.
 <!-- end_collection_js_code -->
 
 _______________________________________________________________________________________________________________________________________________________
+Apply css to only iphone devices and other IOS devices.
+
+@supports (-webkit-touch-callout: none) {
+span.announcement-text,.mobileinfo span {
+    letter-spacing: 0px!important;
+}
+}
+------------------------------------------------
+Apply css other than iphone devices and other IOS devices.
+
+@supports not (-webkit-touch-callout: none) {
+  /* CSS for other than iOS devices */ 
+}
+____________________________________________________________________________________________________________________________________________________________________
 
 
 
