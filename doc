@@ -5023,6 +5023,16 @@ Apply css other than iphone devices and other IOS devices.
   /* CSS for other than iOS devices */ 
 }
 ____________________________________________________________________________________________________________________________________________________________________
-
-
+localization is an object to display different content respective to each country.
+{% case localization.country_iso_code %}
+ {% when "AU" %}
+ <p>Thank you Australia</p>
+ {% when "US" %}
+ <p>Thank you America</p>
+ {% when "NZ" %}
+ <p>Thank you New Zealand</p>
+ {% when "CA" %}
+ <p>Thank you Canada</p>
+{% endcase %}
+____________________________________________________________________________________________________________________________________________________________________
 
