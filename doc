@@ -5035,4 +5035,13 @@ localization is an object to display different content respective to each countr
  <p>Thank you Canada</p>
 {% endcase %}
 ____________________________________________________________________________________________________________________________________________________________________
+CSS to make the long paragraph to cut in one line and add ... at end just like excerpt.
+
+.paragraph {
+    white-space: nowrap;
+    text-overflow: ellipsis!important;
+    width: 100%;
+    display: inline-block!important;
+}
+______________________________________________________________________________________________________________________________________________________________________
 
