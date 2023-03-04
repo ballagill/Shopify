@@ -242,8 +242,23 @@ To add custom font:
 Download ttf file i.e from https://www.wfonts.com/font/verdana
 then genrate fontface by upload ttf file to https://transfonter.org/
 Then download font zip file from https://transfonter.org/
-Then upload its files on website and link the stylesheet.css in header of website.
-Then use font family as suggested in demo.
+Then upload its woff files on files folder of website and add font face in stylesheet as below having link to the uploaded files. then use font family in css such as below.
+
+Stylesheet.css
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('https://cdn.shopify.com/s/files/1/2698/4416/files/Roboto-Bold.woff2') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/2698/4416/files/Roboto-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+.maincontainer,.maincontainer span,.maincontainer p,.maincontainer h2,.maincontainer li {
+    font-family: 'Roboto'!important;
+    font-weight: bold;
+}
 
 _____________________________________________________________________________________
 Shofiy:-
