@@ -1,0 +1,198 @@
+<div class="customtabs"></div>
+<div class="customtabs">
+{% if product.metafields.custom.description != blank %}
+{% assign description_text = product.metafields.custom.description | metafield_tag | newline_to_br %}
+<div class="productsections">
+<div class="hideshowdescription1 borderbottom">
+<div class="descriptionbar1 sectionbar"><p class="descriptiontitle">Description</p>  <span class="plusclose">
+<svg aria-hidden="true" focusable="false" role="presentation" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path class="icon-chevron-down-left" d="M7 6.75L12.5 1.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"/>
+  <path class="icon-chevron-down-right" d="M7 6.75L1.5 1.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"/>
+</svg></span>
+</div>
+<div class="desborder1">
+<div class="contentdiv rte" style="display:none;">
+<div class="textalignleft" style="text-align: left;">{{ description_text }}</div>
+</div>
+</div>
+</div>  
+ </div>
+{% endif %}
+
+{% if product.metafields.custom.detail != blank %}
+{% assign detail_text = product.metafields.custom.detail | metafield_tag | newline_to_br %}
+<div class="productsections">
+<div class="hideshowdescription2 borderbottom">
+<div class="descriptionbar2 sectionbar"><p class="descriptiontitle">Detail</p>  <span class="plusclose">
+<svg aria-hidden="true" focusable="false" role="presentation" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path class="icon-chevron-down-left" d="M7 6.75L12.5 1.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"/>
+  <path class="icon-chevron-down-right" d="M7 6.75L1.5 1.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"/>
+</svg></span>
+</div>
+<div class="desborder1">
+<div class="contentdiv rte" style="display:none;">
+<div class="textalignleft" style="text-align: left;">{{ detail_text }}</div>
+</div>
+</div>
+</div>  
+ </div>
+{% endif %}
+
+{% if product.metafields.custom.shippingpolicy != blank %}
+{% assign shippingpolicy_text = product.metafields.custom.shippingpolicy | metafield_tag | newline_to_br %}
+<div class="productsections">
+<div class="hideshowdescription3 borderbottom">
+<div class="descriptionbar3 sectionbar"><p class="descriptiontitle">Shipping Policy</p>  <span class="plusclose">
+<svg aria-hidden="true" focusable="false" role="presentation" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path class="icon-chevron-down-left" d="M7 6.75L12.5 1.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"/>
+  <path class="icon-chevron-down-right" d="M7 6.75L1.5 1.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"/>
+</svg></span>
+</div>
+<div class="desborder1">
+<div class="contentdiv rte" style="display:none;">
+<div class="textalignleft" style="text-align: left;">{{ shippingpolicy_text }}</div>
+</div>
+</div>
+</div>  
+ </div>
+{% endif %}
+
+{% if product.metafields.custom.returnsexchange != blank %}
+{% assign returnsexchange_text = product.metafields.custom.returnsexchange | metafield_tag | newline_to_br %}
+<div class="productsections">
+<div class="hideshowdescription4 borderbottom">
+<div class="descriptionbar4 sectionbar"><p class="descriptiontitle">Returns & Exchanges</p>  <span class="plusclose">
+<svg aria-hidden="true" focusable="false" role="presentation" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path class="icon-chevron-down-left" d="M7 6.75L12.5 1.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"/>
+  <path class="icon-chevron-down-right" d="M7 6.75L1.5 1.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"/>
+</svg></span>
+</div>
+<div class="desborder1">
+<div class="contentdiv rte" style="display:none;">
+<div class="textalignleft" style="text-align: left;">{{ returnsexchange_text }}</div>
+</div>
+</div>
+</div>  
+ </div>
+{% endif %}
+
+{% if product.metafields.custom.sizeguidance != blank %}
+{% assign sizeguidance_text = product.metafields.custom.sizeguidance | metafield_tag | newline_to_br %}
+<div class="productsections">
+<div class="hideshowdescription5 borderbottom">
+<div class="descriptionbar5 sectionbar"><p class="descriptiontitle">Sizing Guidance</p>  <span class="plusclose">
+<svg aria-hidden="true" focusable="false" role="presentation" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path class="icon-chevron-down-left" d="M7 6.75L12.5 1.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"/>
+  <path class="icon-chevron-down-right" d="M7 6.75L1.5 1.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"/>
+</svg></span>
+</div>
+<div class="desborder1">
+<div class="contentdiv rte" style="display:none;">
+<div class="textalignleft" style="text-align: left;">{{ sizeguidance_text }}</div>
+</div>
+</div>
+</div>  
+ </div>
+{% endif %}
+</div>
+<style>
+.customtabs:empty {
+    display: none;
+}
+.customtabs {
+    float: left;
+    width: 100%;
+    margin: 15px 0px;
+}
+.productsections {
+    margin: 0px 0px 8px;
+    float: left;
+    width: 100%;
+}
+.borderbottom {
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid rgb(209, 209, 214);
+}
+.sectionbar {
+    padding: 2px 10px;
+    cursor: pointer;
+    position: relative;
+    background: #f1f1f1;
+}  
+p.descriptiontitle {
+    font-weight: bold;
+    font-size: 18px;
+    width: 100%;
+    margin: 6px 0;
+}
+.sectionbar span.plusclose svg {
+    right: 10px;
+}
+.expanded span.plusclose svg {
+    transform: rotate(180deg);
+}
+.expanded .sectionbar {
+    color: #041F7C;
+    background: #f1f1f1;
+}  
+span.plusclose svg {
+    height: 10px;
+    position: absolute;
+    right: 20px;
+    top: 18px;
+    font-weight: bold;
+    width: 20px;
+}  
+.expanded .contentdiv.rte {
+    padding: 10px;
+}
+
+.expanded .product-description, .expanded .contentdiv {
+    display: block!important;
+    padding-top: 0px;
+    float: left;
+    width: 100%;
+}
+</style>
+    
+<script>
+$(document).ready(function(){
+$(document).on("click", ".descriptionbar1", function (t) {
+          $(".hideshowdescription1").toggleClass("expanded");
+          $(".hideshowdescription2").removeClass("expanded");
+          $(".hideshowdescription3").removeClass("expanded");
+          $(".hideshowdescription4").removeClass("expanded");
+          $(".hideshowdescription5").removeClass("expanded");
+        });
+$(document).on("click", ".descriptionbar2", function (t) {
+          $(".hideshowdescription1").removeClass("expanded");
+          $(".hideshowdescription2").toggleClass("expanded");
+          $(".hideshowdescription3").removeClass("expanded");
+          $(".hideshowdescription4").removeClass("expanded");
+          $(".hideshowdescription5").removeClass("expanded");
+        });
+$(document).on("click", ".descriptionbar3", function (t) {
+          $(".hideshowdescription1").removeClass("expanded");
+          $(".hideshowdescription2").removeClass("expanded");
+          $(".hideshowdescription3").toggleClass("expanded");
+          $(".hideshowdescription4").removeClass("expanded");
+          $(".hideshowdescription5").removeClass("expanded");
+        });
+$(document).on("click", ".descriptionbar4", function (t) {
+          $(".hideshowdescription1").removeClass("expanded");
+          $(".hideshowdescription2").removeClass("expanded");
+          $(".hideshowdescription3").removeClass("expanded");
+          $(".hideshowdescription4").toggleClass("expanded");
+          $(".hideshowdescription5").removeClass("expanded");
+        }); 
+$(document).on("click", ".descriptionbar5", function (t) {
+          $(".hideshowdescription1").removeClass("expanded");
+          $(".hideshowdescription2").removeClass("expanded");
+          $(".hideshowdescription3").removeClass("expanded");
+          $(".hideshowdescription4").removeClass("expanded");
+          $(".hideshowdescription5").toggleClass("expanded");
+        });
+});
+</script>
