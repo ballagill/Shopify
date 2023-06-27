@@ -5068,3 +5068,24 @@ $("[aria-required=true]").each(function() {
    $(this).prev('.field__label').text(label);
 });
 _____________________________________________________________________________________________________
+Javascript:
+
+<script>
+window.onload = function(){
+function continuerunner() {
+var econtent=document.getElementById("carttotalamount");
+var allcontent=econtent.innerHTML; //get html of #carttotalamount div
+var allcontent1=allcontent.substring(0, allcontent.indexOf('<')); // get part of string before "<"
+var allcontent2=allcontent1.slice(allcontent1.indexOf('£') + 1);  // get part of string after "£"
+var getminorderamount=document.getElementById("getminorderamount").innerHTML;
+if(parseInt(allcontent2)<=parseInt(getminorderamount)){
+alert("amount is less");
+}else{
+alert("amount is more");
+}
+setTimeout(continuerunner, 4000);
+}
+continuerunner();
+}
+</script>
+________________________________________________________________________________________________________________
