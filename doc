@@ -5133,45 +5133,5 @@ jQuery(document).ready(function($) {
     };
 
 });
-jQuery(document).ready(function($) {
-
-    /* fix iOS touchmove issue */
-    ;
-    (function() {
-        let touchingCarousel = false
-        let startXCoordinate
-
-        document.body.addEventListener('touchstart', e => {
-            if (e.target.closest('.flickity-slider')) {
-                touchingCarousel = true
-            } else {
-                touchingCarousel = false
-                return
-            }
-            startXCoordinate = e.touches[0].pageX
-        })
-
-        document.body.addEventListener('touchmove', e => {
-            if (
-                !touchingCarousel ||
-                !e.cancelable ||
-                Math.abs(e.touches[0].pageX - startXCoordinate) < 8
-            ) return
-            e.preventDefault()
-            e.stopPropagation()
-        }, {
-            passive: false
-        })
-    }())
-
-    /* prevent resize in flickity if still animating */
-    var resize = Flickity.prototype.resize;
-    Flickity.prototype.resize = function() {
-        if (!this.isAnimating) {
-            resize.call(this);
-        }
-    };
-
-});
 </script>
 ____________________________________________________________________________________________________________________________________________________
