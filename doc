@@ -5153,3 +5153,67 @@ width: 100%;
 height: 100%;
 }
 ______________________________________________________________________________________________________________________
+Working code to add collection description or product description with "Read more" and "Read less" functionality.
+
+{% if collection.description %}
+  <div class="collection-hero__inner page-width" style="flex-direction: column; margin-top: -60px; width: 100%;">
+    <div class="collection-hero__description rte">
+      <div class="truncate-container">
+        <div id="truncated-product-description">
+          {{ collection.description | truncate: 400 }}
+          {% if collection.description.size > 0 %}
+            <span id="read-more" class="read-additional">Read more</span>
+          {% endif %}
+        </div>
+        <div id="product-description" style="display:none;">
+          {{ collection.description }} <span id="read-less" class="read-additional">Read less</span>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<script>
+let read_more = document.getElementById('read-more')
+let read_less = document.getElementById('read-less');
+let truncated_description = document.getElementById('truncated-product-description');
+let full_description = document.getElementById('product-description');
+
+read_more.addEventListener('click', showHideDescription)
+read_less.addEventListener('click', showHideDescription)
+
+function showHideDescription(){
+  let ID = this.id
+  if(ID === "read-more"){
+    truncated_description.style.display = "none";
+    full_description.style.display = "block";
+  }else {
+    truncated_description.style.display = "block";
+    full_description.style.display = "none";    
+  }
+}
+</script>
+
+<style>
+.read-additional {
+  color: #1b191a;
+  text-decoration: underline;
+font-weight: bold;
+}
+.read-additional:hover {
+  cursor: pointer;
+}
+#product-description {
+  display: none;
+}
+#read-more {
+  position: relative;
+  z-index: 1;
+}
+
+#truncated-product-description a {
+  position: relative;
+  z-index: 0;
+}
+</style>
+_________________________________________________________________________________________________________________________________________
