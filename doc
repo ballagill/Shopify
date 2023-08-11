@@ -5217,3 +5217,33 @@ font-weight: bold;
 }
 </style>
 _________________________________________________________________________________________________________________________________________
+Add infinite scrolling on collection pages: https://www.huratips.com/tech-tips/how-to-add-infinite-scroll-pagination-to-shopify-collection-pages.html
+
+/* Add this link on theme.liquid file before </head> tag */
+{% if template contains 'collection' %}{{ 'https://cdn.shopify.com/s/files/1/0382/4185/files/ajaxinate.js?937' | script_tag }}{% endif %}
+
+<div id="Huratips-Loop" > /* Add this container div with "Huratips-Loop" id on loop of collecton page, if you have already ul as container then use copy id of ul tag and paste in inplace of "#Huratips-Loop" in bottom javscript and leave to add container div */
+      {% for product in collection.products %}
+        {% include 'product-grid-item' %}
+      {% endfor %}
+</div>
+
+/* Repalce pagination code of collection page with this code */
+<div id="Huratips-Pagination"> 
+    {% if paginate.next %}
+    <a href="{{ paginate.next.url }}">Loading More</a>
+    {% endif %}  
+</div>
+
+/* Add this javascript at bottom of collection page */
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var endlessScroll = new Ajaxinate({
+      container: '#Huratips-Loop', /* repalce it with id of ul if available */
+      pagination: '#Huratips-Pagination'
+    });
+  });
+</script>
+________________________________________________________________________________________________________________________________________________________________
+
+
