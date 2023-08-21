@@ -5245,5 +5245,16 @@ Add infinite scrolling on collection pages: https://www.huratips.com/tech-tips/h
   });
 </script>
 ________________________________________________________________________________________________________________________________________________________________
+Detect or track visitor location:
 
+<script>
+$(document).ready(function(){
+$.get("https://ipinfo.io/json", function (response) { 
+if(response.country == "US"){
+$(".onlyforusa").show();
+}
+}, "jsonp");
+});  
+</script>
+___________________________________________________________________________________________________________________________________________________________
 
