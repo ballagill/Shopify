@@ -5257,7 +5257,7 @@ $(".onlyforusa").show();
 });  
 </script>
 ___________________________________________________________________________________________________________________________________________________________
-Jquery to open close details tag on hover:
+Jquery to open close details tag on hover: Also add the css if sub menu gets hidden when we mouseout the detail tag.
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
@@ -5269,4 +5269,16 @@ $('details').on('mouseover', function() {
   })
   });
 </script>
+<style>
+header details[open] summary:before {
+    content: "";
+    height: 38px;
+    width: 100%;
+    position: absolute;
+    top: 25px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+}
+</style>
 __________________________________________________________________________________________________________
