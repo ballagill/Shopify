@@ -5257,4 +5257,16 @@ $(".onlyforusa").show();
 });  
 </script>
 ___________________________________________________________________________________________________________________________________________________________
+Jquery to open close details tag on hover:
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+$('details').on('mouseover', function() {
+    $(this).attr('open', true);
+  }).on('mouseout', function() {
+    $(this).attr('open', false);
+  })
+  });
+</script>
+__________________________________________________________________________________________________________
