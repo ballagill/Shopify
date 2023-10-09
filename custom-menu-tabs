@@ -1,0 +1,74 @@
+<style>
+.tabsmenu ul {
+    padding: 0;
+    list-style: none;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-between;
+}
+.tabsmenu {
+    margin-top: 4px;
+}
+.tabsdetail {
+    margin-top: 10px;
+}
+.tabsdetail p {
+    margin-top: 0;
+}
+.tabsmenu ul li {
+    cursor: pointer;
+    text-align: center;
+}
+.licommon:hover span,.activeli span {
+    border-color: #333;
+    border-bottom: 1px solid;
+    padding-bottom: 2px;
+}
+.licommon span {
+    font-weight: bold;
+    font-size: 17px;
+    text-transform: uppercase;
+}
+.tabsdetail span.metafield-multi_line_text_field {
+    font-size: 17px!important;
+    letter-spacing: .025em!important;
+    line-height: 1.6!important;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeSpeed;
+    font-weight: 300!important;
+}
+.tabswrapper {
+    border-top: 1px solid #d3d3d3;
+    padding-top: 32px;
+    margin-top: 30px;
+    float: left;
+    width: 100%;
+}  
+</style>
+<script>
+$(document).ready(function(){
+$('.licommon').click(function(e){
+      $('.licommon').removeClass("activeli");
+      $(this).addClass("activeli");
+      var getitsid = $(this).attr("id");
+      $(".detailcommon").hide().removeClass("activedetail");
+      $("."+getitsid).show().addClass("activedetail");
+    });
+});
+</script>
+<div class="tabswrapper">
+<div class="tabsmenu">
+<ul>
+{% if product.description != blank %}<li class="licommon activeli" id="desctab"><span>Description</span></li>{%- endif-%}
+{% if product.metafields.custom.sizes != blank %}<li class="licommon" id="sizetab"><span>Sizes</span></li>{%- endif-%}
+{% if product.metafields.my_fields.specifications != blank %}<li class="licommon" id="spectab"><span>Specs</span></li>{%- endif-%}
+</ul> 
+</div>
+<div class="tabsdetail">
+{% if product.description != blank %}<div class="detailcommon desctab">{{- product.description -}}</div>{%- endif-%}
+{% if product.metafields.custom.sizes != blank %}<div class="detailcommon sizetab" style="display:none">{% assign size_text = product.metafields.custom.sizes | metafield_tag | newline_to_br %}{{ size_text }}</div>{%- endif-%}
+{% if product.metafields.my_fields.specifications != blank %}<div class="detailcommon spectab" style="display:none">{% assign specification_text = product.metafields.my_fields.specifications | metafield_tag | newline_to_br %}{{ specification_text }}</div>{%- endif-%}
+</div>
+</div>
