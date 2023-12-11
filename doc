@@ -4,6 +4,12 @@ We can get any attribute in after or before and display it as follow.
     content: attr(data-header-cart-count);
 }
 ____________________________________________________________________________________________
+if we want to disable the liquid functionality for any js,css or html code in liquid file file, we can wrap that code in {% raw %} ... {% endraw %} tag as below.
+it is useful when we have to fix the conflicts between shopify variables and javascript variables such as handlebars variables which has same variable syntax {{ variable }} as shopify. if we don't use raw tag wrapper on js script, then js variable {{ variable }} will be treated as liquid varialbe and js functionality will not work. 
+{% raw %} 
+Any js,css or html code 
+{% endraw %}
+____________________________________________________________________________________________
 Toppest z index to be used is:-   z-index: 2147483646
 Fix iphone shaking content issue in div with touch: just add "-webkit-overflow-scrolling: touch;" to parent div 
 _______________________________________________________________________________________________
