@@ -1,3 +1,5 @@
+Add class template-{{ template.suffix }} to body tag to have unique class for each template.
+_____________________________________________________________________________________________________________________________
 We can get any attribute in after or before and display it as follow.
 <span class="site-header-cart--count visible" data-header-cart-count="1"></span>
 .site-header-cart--count:after {
