@@ -5318,3 +5318,124 @@ Following is a code to show custom related products for each product instead of 
     {%- endif -%}
   </div>
 ______________________________________________________________________________________________________________________________________________________________
+Custom Recommended products:
+Here is the full code to display related products with priority as below:
+1. If related products are set for particular product using prouct_list meta field, then show them
+2. if related products are not set for product, then show default list of custom products that are set in theme settings using prouct_list schema type.
+3. if both related products are not set for partiular product and theme settings, then show default recommended products.
+
+--------------------------------------------------------------------
+Add this code in theme schema and select products to show in theme customization settings
+,
+	 {
+			"type": "product_list",
+			"id": "productlist",
+			"label": "Select Custom Related Products"
+	}
+--------------------------------------------------------------------
+{%- liquid
+  assign heading = section.settings.product_recommendations_heading
+  assign limit = section.settings.limit
+  assign bg_color = section.settings.bg_color
+-%}
+
+{%- style -%}
+  {%- if bg_color != 'rgba(0,0,0,0)' and bg_color != '' -%}
+		#RelatedProducts--{{ section.id }} { background-color: {{ bg_color }}; }
+    #RelatedProducts--{{ section.id }} .product-grid-item {
+      --bg: {{ bg_color }};
+    }
+  {%- endif -%}
+{%- endstyle -%}
+{%assign related_products = product.metafields.custom.related_products.value %}
+<section
+  id="RelatedProducts--{{ section.id }}"
+  data-section-type="related-products"
+  data-section-id="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+  data-limit="{{ limit }}"
+  data-show-section="{{ section.settings.show_section }}">
+
+  <div class="related-products" data-related-products>
+ {%- if recommendations.performed or related_products or settings.productlist -%}
+      {%- if recommendations.products_count > 0 or related_products != blank or settings.productlist != blank -%}
+        
+          {%- if heading != blank -%}
+            <div class="featured-collection__title">
+              <div class="wrapper">
+                <h2 class="featured-collection__heading section__heading h4">{{ heading }}</h2>
+
+                {%- if settings.show_spacer_lines -%}
+                  <hr>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+          <div class="wrapper">
+            <div class="carousel__container">
+              <div class="carousel" data-collection-slider>
+            {%- if  related_products -%}
+               {% for related_product in related_products %}
+               {%- render 'product-grid-item', product: related_product, carousel: true -%}
+               {% endfor %}
+            {%- elsif settings.productlist != blank -%}
+            {% for productlist in settings.productlist %}
+               {%- render 'product-grid-item', product: productlist, carousel: true -%}
+               {% endfor %}
+            {%- else -%}
+                {%- for product in recommendations.products -%}
+                  {%- render 'product-grid-item', product: product, carousel: true -%}
+                {%- endfor -%}
+            {%- endif -%}
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <div class="related__placeholder"></div>
+    {%- endif -%}
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Product recommendations",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show related products",
+      "info": "Dynamic recommendations change and improve with time. [Learn more](https://help.shopify.com/en/themes/development/recommended-products)",
+      "default": true
+    },
+    {
+			"type":    "range",
+			"id":      "limit",
+			"min":     1,
+			"max":     6,
+			"step":    1,
+			"label":   "Product limit",
+			"default": 4
+		},
+    {
+      "type": "text",
+      "id": "product_recommendations_heading",
+      "label": "Heading",
+      "default": "You May Also Like"
+    },
+    {
+			"type": "header",
+			"content": "Colors"
+		},
+		{
+			"type": "color",
+			"id": "bg_color",
+			"label": "Background"
+        }
+  ]
+}
+{% endschema %}
+________________________________________________________________________________________________________________________________________________________
