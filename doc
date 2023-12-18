@@ -5439,3 +5439,20 @@ Add this code in theme schema and select products to show in theme customization
 }
 {% endschema %}
 ________________________________________________________________________________________________________________________________________________________
+Custom Random Sort:
+
+{% assign randomnizeumber =  product.id | modulo: 5  %}
+             {%- if  randomnizeumber == 0 -%}
+             {% assign selectedproducts = settings.productlist | sort: "title" | reverse %}
+             {%- elsif randomnizeumber == 1 -%}
+             {% assign selectedproducts = settings.productlist | sort: "title" %}
+             {%- elsif randomnizeumber == 2 -%}
+             {% assign selectedproducts = settings.productlist | sort: "price" | reverse %}
+             {%- elsif randomnizeumber == 3 -%}
+             {% assign selectedproducts = settings.productlist | sort: "price" %}
+             {%- elsif randomnizeumber == 4 -%}
+             {% assign selectedproducts = settings.productlist | sort: "price" | reverse %}
+             {%- else -%}
+             {% assign selectedproducts = settings.productlist | sort: "title" %}
+             {%- endif -%}
+_______________________________________________________________________________________________
