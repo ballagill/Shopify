@@ -5456,3 +5456,173 @@ Custom Random Sort:
              {% assign selectedproducts = settings.productlist | sort: "title" %}
              {%- endif -%}
 _______________________________________________________________________________________________
+Dynamic Schema with Blocks:
+
+<section style="display:none;" id="section-id-{{ section.id }}" class="customsection section section-text-columns-with-images {% if section.settings.alternate_bg_color %}use-alt-bg full-width-section{% endif %}" data-cc-animate>
+  {% style %}
+    {%- for block in section.blocks -%}
+    #section-id-{{ section.id }} #block-id-{{ block.id }} .text-column__image {
+      max-width: {{ block.settings.image_width }}px;
+    }
+    {%- endfor -%}
+.customcommon {
+    width: 50%;
+    float: left;
+    padding: 50px 40px;
+}
+.customsection-left {
+    background: yellow;
+}
+.customcommon h2 {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+.customcommon ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+.customcommon ul li {
+    flex: 0 0 25%;
+    margin-bottom: 25px;
+    cursor: pointer;
+}
+.customcommon h3 {
+    font-size: 15px;
+    text-align: center;
+    margin-top: 8px;
+}
+a.btn.btncustom {
+    margin-top: 20px;
+    border-radius: 20px;
+}
+.customsection-right.customcommon {
+    padding-top: 25px;
+}
+.addspace {
+    float: left;
+    width: 100%;
+    padding: 30px 0px;
+}
+@media (max-width: 1200px) {
+.customcommon {
+    width: 100%;
+}
+.customcommon {
+    padding: 50px 20px 20px;
+}
+.customsection-right.customcommon {
+    padding-bottom: 50px;
+}
+.addspace {
+    display: none;
+}
+}
+@media (max-width: 500px) {
+.customcommon ul li {
+    flex: 0 0 50%;
+}
+.customcommon {
+    padding: 50px 10px 20px;
+}
+}
+  {% endstyle %}
+
+<div class="container">
+
+<div class="customsection-container">
+<div class="customsection-left customcommon">
+<ul>
+{% for block in section.blocks %}
+<li title="{{ block.settings.text | strip_html }}">
+{%- if block.settings.image != blank -%}
+<div class="imgclass" style="text-align:center;"><img src="{{ block.settings.image | image_url: width: 50 }}"/></div>
+{%- endif -%} 
+{% if block.settings.title != blank %}
+<h3 class="text-column__title">{{ block.settings.title }}</h3>
+{% endif %}
+</li>     
+{% endfor %}
+</ul>
+</div>
+<div class="customsection-right customcommon">
+<h2>{{ section.settings.title | escape }}</h2>
+<div class="textclass">{{ section.settings.descriptiontext | escape }}</div>
+<a class="btn btncustom" href="{{ block.settings.link }}">Learn More</a>
+</div>
+      
+    </div>
+  </div>
+<div class="addspace"></div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Custom Section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Custom Section"
+    },
+    {
+      "type": "text",
+      "id": "descriptiontext",
+      "label": "Description"
+    },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "icon",
+      "settings": [
+        {
+          "id": "image",
+          "type": "image_picker",
+          "label": "Image",
+          "info": "Select Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Hover text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Section",
+      "settings": {
+      },
+      "blocks": [
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "text_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+_______________________________________________________________________________________________________________________________________________
