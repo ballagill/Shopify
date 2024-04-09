@@ -5626,3 +5626,114 @@ a.btn.btncustom {
 }
 {% endschema %}
 _______________________________________________________________________________________________________________________________________________
+FAQ section:
+------------
+/* FAQ section script, add this script in theme.js file */
+$(document).on("click", ".faqquestion", function (t) {
+          if($(this).parent().hasClass("expanded")){}else{
+          $(".faqblock").removeClass("expanded");
+          }
+          $(this).parent().toggleClass("expanded");
+        });
+------------------------Create FAQ section file and put following code in it---------------------------
+<section style="display:none;" id="section-id-{{ section.id }}" class="faqsection section section-text-columns-with-images {% if section.settings.alternate_bg_color %}use-alt-bg full-width-section{% endif %}" data-cc-animate>
+  {% style %}
+    {%- for block in section.blocks -%}
+    #section-id-{{ section.id }} #block-id-{{ block.id }} .text-column__image {
+      max-width: {{ block.settings.image_width }}px;
+    }
+{%- endfor -%}
+    
+.faqblock .faqanswer {
+    display: none;
+}
+.expanded .faqanswer {
+    display: block!important;
+}
+.expanded span.rotator {
+    transform: rotate(225deg);
+}
+.expanded .faqquestion {
+    padding-bottom: 5px;
+}
+.faqblock {
+    border-bottom: 1px solid #e2e2e2;
+}
+.faqanswer {
+    padding: 5px 20px 20px;
+}
+span.rotator {
+    position: absolute;
+    right: 5px;
+    font-size: 20px;
+}
+.faqquestion {
+    position: relative;
+    font-size: 18px;
+    padding: 20px 5px;
+    padding-right: 30px;
+    cursor: pointer;
+    font-weight: 400;
+}
+.faqsection {
+    margin-top: 50px !important;
+    margin-bottom: 80px !important;
+}
+@media (max-width: 1200px) {
+
+}
+{% endstyle %}
+
+<div class="faqcontainer container">
+{% for block in section.blocks %}
+{% if block.settings.question != blank and block.settings.answer != blank %}
+<div class="faqblock">
+<div id = "question-{{ block.id }}" class="faqquestion">{{ block.settings.question }}<span class="rotator">+</span></div>
+<div class="faqanswer question-{{ block.id }} rte">{{ block.settings.answer }}</h3>
+</div>
+</div>
+{% endif %}
+{% endfor %}
+
+<div class="addspace"></div>
+
+</section>
+
+{% schema %}
+{
+  "name": "FAQ Section",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Custom Section"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Section"
+    }
+  ]
+}
+{% endschema %}
+__________________________________________________________________________________________________________________________________________
