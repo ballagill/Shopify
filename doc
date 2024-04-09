@@ -5636,7 +5636,7 @@ $(document).on("click", ".faqquestion", function (t) {
           $(this).parent().toggleClass("expanded");
         });
 ------------------------Create FAQ section file and put following code in it---------------------------
-<section style="display:none;" id="section-id-{{ section.id }}" class="faqsection section section-text-columns-with-images {% if section.settings.alternate_bg_color %}use-alt-bg full-width-section{% endif %}" data-cc-animate>
+<section id="section-id-{{ section.id }}" class="faqsection section section-text-columns-with-images {% if section.settings.alternate_bg_color %}use-alt-bg full-width-section{% endif %}" data-cc-animate>
   {% style %}
     {%- for block in section.blocks -%}
     #section-id-{{ section.id }} #block-id-{{ block.id }} .text-column__image {
