@@ -5737,3 +5737,15 @@ span.rotator {
 }
 {% endschema %}
 __________________________________________________________________________________________________________________________________________
+/* Sticky header javascript to apear header while scrolling up and hidden while scrolling down */
+var lastScrollTop = 0;
+$(window).scroll(function(event){
+   var st = $(this).scrollTop();
+   if (st > lastScrollTop){
+       $("body").addClass("scollingdown");
+   } else {
+       $("body").removeClass("scollingdown");
+   }
+   lastScrollTop = st;
+})
+________________________________________________________________________________________________________________________________________________
