@@ -4148,7 +4148,14 @@ section code:
 $(document).ready(function () {
 $('.close-popup').click(function(){
     $('#popupcontainer').hide();
-}); 
+    player.pauseVideo()
+    $('#existing-iframe-example').get(0).pauseVideo();
+    }); 
+$('.openpopup').click(function(){
+    $('#popupcontainer').show();
+    player.playVideo()
+    $('#existing-iframe-example').get(0).playVideo();
+    }); 
 /**
  * Determine the mobile operating system.
  * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'unknown'.
