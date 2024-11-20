@@ -1,3 +1,21 @@
+Custom data : meta data
+{{ collection.metafields.custom.logo | file_url }}
+{{ product.metafields.custom.logo | file_url }}
+
+{% if product.metafields.my_fields.product_banner_image != blank %}
+<div class="landscapesection">
+<div class="fullwidthimage bottomimage"><img alt="" src="{{ product.metafields.my_fields.product_banner_image | file_url }}"></div>
+</div>
+{% endif %}
+
+{% if product.metafields.my_fields.product_youtube_video_id != blank %}
+<div class="landscapesection">
+<div class="iframecontainer">
+<iframe src="//www.youtube.com/embed/{{ product.metafields.my_fields.product_youtube_video_id }}?rel=0" frameborder="0" allowfullscreen class="video"></iframe>
+</div>
+</div>
+{% endif %}
+____________________________________________________________________________________________________
 Add class template-{{ template.suffix }} to body tag to have unique class for each template.
 _____________________________________________________________________________________________________________________________
 We can get any attribute in after or before and display it as follow.
