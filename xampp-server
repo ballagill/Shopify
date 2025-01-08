@@ -5,3 +5,12 @@ http://localhost/xampp/
 http://localhost/phpmyadmin/
 
 Then we can create any folder in xampp folder of installed folder such as F:\xamppnew\htdocs\xampp\testphpwebsite and access it in url using http://localhost/phpmyadmin/testphpwebsite
+
+To install wordpress, we need to download wordpress, then extract it in xampp folder, then create database in http://localhost/phpmyadmin/ such as newdatabase , then access wordpress folder
+in http://localhost/xampp/wordpress , then we can 
+
+Database Name:   newdatabase 
+Username:        root
+Password:        keep it blank
+Database Host:   localhost
+Table Prefix:    wp_
