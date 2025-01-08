@@ -1,0 +1,7 @@
+XAMPP is a local server used to test or run php websites such as Wordpress.
+First we have to download XAMPP for window 64 bit and install it on any directory. Once we installed it, then we need to open it and start "Apache" (php server)and "MySql" (database) in it. then we can access both in 
+browser using following urls.
+http://localhost/xampp/ 
+http://localhost/phpmyadmin/
+
+Then we can create any folder in xampp folder of installed folder such as F:\xamppnew\htdocs\xampp\testphpwebsite and access it in url using http://localhost/phpmyadmin/testphpwebsite
