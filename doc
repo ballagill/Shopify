@@ -5816,4 +5816,17 @@ This is how to add overlay on any image.
     opacity: .5;
 }
 ___________________________________________________________________________________________________________
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script><script>
+<script>
+jQuery(document).ready(function(){
+  jQuery(".disabledlinks a").click(function(){
+      event.preventDefault(); // to prevent default clicking action of mouse
+      jQuery('html, body').animate({
+            scrollTop: jQuery(".scrolledposition").offset().top-150
+        }, 1000, function() {
+    jQuery('[name=post_password]').focus();
+});
+});
+});
+</script>
 __________________________________________________________________________________________
