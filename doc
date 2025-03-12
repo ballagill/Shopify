@@ -5832,3 +5832,16 @@ jQuery(document).ready(function(){
 });
 </script>
 __________________________________________________________________________________________
+Badge : To add badge on products of collection page.
+------
+<style>
+.ss-badges-container .ss-left-badges-container{left:-10px}.ss-badges-container .ss-right-badges-container{right:-10px}.ss-badges-container .ss-left-badges-container,.ss-badges-container .ss-right-badges-container{position:absolute;z-index:9;top:-4px}.ss-right-badges-container .ss-badge.ss-badge-cme-exclusive{background:rgba(247,144,34,.8)}.ss-badges-container .ss-badge{width:100px;height:20px;margin:0 0 5px;font-size:12px;text-align:center;padding:0;line-height:20px;position:relative;filter:drop-shadow(2px 2px 2px rgba(42, 42, 42, .3))}.ss-right-badges-container .ss-badge.ss-badge-cme-exclusive:before{border-top:7.5px solid rgba(141,82,19,.86666)}.ss-badges-container .ss-right-badges-container .ss-badge::before{bottom:-7.5px;right:0;border-right:10px inset transparent;border-top:7.5px solid #a56015}.ss-badges-container .ss-right-badges-container .ss-badge .ss-badge-main-text{padding:0 10px 0 0}.ss-badges-container .ss-left-badges-container .ss-badge .ss-badge-main-text,.ss-badges-container .ss-right-badges-container .ss-badge .ss-badge-main-text{white-space:nowrap;position:relative;font-size:10px;font-weight:700;color:#fff;z-index:10}.ss-right-badges-container .ss-badge.ss-badge-cme-exclusive:after{border-right:8px solid rgba(247,144,34,.8);border-top:10px solid rgba(247,144,34,.8);border-bottom:10px solid rgba(247,144,34,.8)}.ss-badges-container .ss-right-badges-container .ss-badge::after{top:0;transform:translateX(-100%);border-left:8px inset transparent}.ss-badges-container .ss-left-badges-container .ss-badge::after,.ss-badges-container .ss-left-badges-container .ss-badge::before,.ss-badges-container .ss-right-badges-container .ss-badge::after,.ss-badges-container .ss-right-badges-container .ss-badge::before{content:"";display:block;width:0;height:0;position:absolute}
+</style>
+<div class="ss-badges-container">
+<div class="ss-left-badges-container"></div>
+<div class="ss-right-badges-container">
+<div class="ss-badge-container">
+<div class="ss-badge ss-badge-cme-exclusive">
+<span class="ss-badge-main-text">CME Exclusive</span>
+</div></div></div></div>
+_____________________________________________________________________________________________________
