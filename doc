@@ -1,3 +1,5 @@
+box-shadow: 0 0 10px #c4c4c4 !important;
+_____________________________________________________________________________________________________
 Custom data : meta data
 {{ collection.metafields.custom.logo | file_url }}
 {{ product.metafields.custom.logo | file_url }}
