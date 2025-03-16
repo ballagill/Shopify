@@ -4548,7 +4548,7 @@ $(window).scroll(function(){
         var divheight = $('.headerclass').innerHeight();
         $('body').css("margin-top",divheight+"px");
 } else{
-        $(body).removeClass("stickyaddtocart");
+        $('body').removeClass("stickyaddtocart");
         $('body').css("margin-top",divheight+"0");
 }
 
