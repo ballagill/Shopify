@@ -3,6 +3,10 @@ we can minus the top header and bottom footer pixel height from 100vh veiwport h
 
  height: calc(100vh - 185px) ;
 ___________________________________________________________________________________________________________
+To print all data in object or an array in javascript.
+JSON.stringify(it.items);
+{{JSON.stringify(it.items)}}
+_____________________________________________________________________________________________________________
 box-shadow: 0 0 10px #c4c4c4 !important;
 _____________________________________________________________________________________________________
 Custom data : meta data
