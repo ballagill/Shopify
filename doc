@@ -1,3 +1,8 @@
+We can apply css based on if page has particular div or class as below:
+body:has(.boost-sd__modal) {
+    overflow: hidden;
+}
+_____________________________________________________________________________________________________________________________
 Very useful css where we want dynamic height of scrollbar respective to the browser height (overlay cart or mobile menu). 
 we can minus the top header and bottom footer pixel height from 100vh veiwport height and rest height will be used for scrolling div.
 
