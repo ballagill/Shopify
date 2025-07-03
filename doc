@@ -39,6 +39,17 @@ We can get any attribute in after or before and display it as follow.
 .site-header-cart--count:after {
     content: attr(data-header-cart-count);
 }
+_______________________________________________________________________________________________________________________
+Show product image on product grid if product has particular tags on collection pages.
+{% for tag in product.tags %}
+{% if tag contains 'bullbar' or tag contains 'Bull bars' or tag contains 'Bull Bars' %}
+{%- assign itisbullbar = true -%}  
+{%- endif -%}
+{% endfor %}
+
+{% if itisbullbar %}
+<img style="width: 100%;" src="https://cdn.shopify.com/s/files/1/0664/0648/2142/files/EOFYS-LAYOVER.jpg?v=1747215759">
+{%- endif -%}
 ____________________________________________________________________________________________________________________
 svg:
 cart:
