@@ -2,6 +2,46 @@ We can apply css based on if page has particular div or class as below:
 body:has(.boost-sd__modal) {
     overflow: hidden;
 }
+_______________________________________________________________________________________________________________________________
+We can add similar addEventlistener scripts in theme.liquid file under </body> tag to override existing code in js file. addeventlistener is just like addon hook in wordpress that add another action to existing event.
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  async function getCart() {
+    const response = await fetch('/cart.js');
+    return await response.json();
+  }
+
+  async function handleAddToCart(e) { 
+    const form = e.target.closest('form[action="/cart/add"]');
+    if (!form) return;
+
+    // Get product info from form
+    const formData = new FormData(form);
+    var addingproductid = formData.get('productid');
+    const addingtagname= formData.get('tagname');
+//alert(addingtagname);  
+
+// Fetch cart and current product data
+ const cart = await getCart();
+ const cartproductIds = cart.items.map(item => item.product_id);
+ const alreadyhasid = cartproductIds.includes(parseInt(addingproductid));
+
+if(alreadyhasid){
+alert("already present");
+ event.preventDefault();  // Stop button default
+ event.stopPropagation(); // Stop other JS handlers
+ exit;
+ return;
+}else{
+alert("already not present");
+};
+
+}
+document.body.addEventListener('submit', handleAddToCart, true);
+});
+</script>
 _____________________________________________________________________________________________________________________________
 Very useful css where we want dynamic height of scrollbar respective to the browser height (overlay cart or mobile menu). 
 we can minus the top header and bottom footer pixel height from 100vh veiwport height and rest height will be used for scrolling div.
