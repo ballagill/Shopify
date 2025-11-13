@@ -5910,3 +5910,35 @@ Badge : To add badge on products of collection page.
 <span class="ss-badge-main-text">CME Exclusive</span>
 </div></div></div></div>
 _____________________________________________________________________________________________________
+Fetch google spreadsheet data in theme file using json code: Put this code anywhere on theme where you want to fetch the data. The spreadsheet should be publically shared for website.
+
+<div id="sheet-data"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Replace with your spreadsheet ID
+  const sheetId = '1Y2zNP3jK45ofuOAiMxudvfLAmq8_3g_oTqYPMPXq2Dw';
+  const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
+
+  fetch(sheetUrl)
+    .then(res => res.text())
+    .then(text => {
+      // Google returns extra characters before and after JSON — clean it
+      const json = JSON.parse(text.substring(47).slice(0, -2));
+      const rows = json.table.rows;
+
+      // Convert to array of arrays
+      const data = rows.map(r => r.c.map(c => (c ? c.v : "")));
+
+      // Example render
+      const container = document.getElementById('sheet-data');
+      data.forEach(row => {
+        const item = document.createElement('div');
+        item.innerHTML = `<strong>${row[0]}</strong>: ${row[1]}`;
+        container.appendChild(item);
+      });
+    })
+    .catch(err => console.error('Error loading sheet:', err));
+});
+</script>
+______________________________________________________________________________________________________________
