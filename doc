@@ -5944,6 +5944,26 @@ document.addEventListener('DOMContentLoaded', function() {
 ------------------------------------------------------------------------------------------------------------------
 Get values for specfic id from spreadsheet:
 
+<div id="sheet-data"> </div>
+<style>
+div#sheet-data>div {
+    display: flex;
+    text-align: center;
+}  
+div#sheet-data {
+    padding-top: 20px;
+}
+.logoprice span {
+    text-align: center;
+    width: 100%;
+    float: left;
+    font-weight: bold;
+    color: #C6563e!important;
+}
+.logoprice img {
+    max-height: 22px;
+}
+</style>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   // Replace with your spreadsheet ID
@@ -5968,8 +5988,23 @@ document.addEventListener('DOMContentLoaded', function() {
   var spreadsheetid = row[4]; //column 4 contains product id in spreadsheet
        if(parseInt(spreadsheetid) == productId){
         const item = document.createElement('div');
-        item.innerHTML = `<strong>${row[5]}</strong>: ${row[1]}`;
-        container.appendChild(item);
+        if(row[5]){
+        item.innerHTML = '<div class="logoprice"><img style="max-width: 80px;" src="https://cdn.shopify.com/s/files/1/0299/3350/2563/files/Tesco_Logo.png?v=1763102820"><span>£'+row[5]+'</span></div>';
+        
+      }
+      if(row[7]){
+        item.innerHTML += '<div class="logoprice"><img style="max-width: 80px;" src="https://cdn.shopify.com/s/files/1/0299/3350/2563/files/Sainsbury.png?v=1763102517"><span>£'+row[7]+'</span></div>';
+        
+      }
+      if(row[9]){
+        item.innerHTML += '<div class="logoprice"><img style="max-width: 80px;" src="https://cdn.shopify.com/s/files/1/0299/3350/2563/files/Asda.png?v=1763102517"><span>£'+row[9]+'</span></div>';
+        
+      }
+      if(row[6]){
+        item.innerHTML += '<div class="logoprice"><img style="max-width: 80px;" src="https://cdn.shopify.com/s/files/1/0299/3350/2563/files/aldi.png?v=1763102517"><span>£'+row[6]+'</span></div>';
+        
+      }
+      container.appendChild(item);
       }
         
       });
