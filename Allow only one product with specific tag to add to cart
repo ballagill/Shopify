@@ -1,3 +1,4 @@
+//Firsly add "main-prduct-form" class on all "Add to cart" forms having "offers" tag
 <style>
   .already .alreadyadded{display:block!important}
  .alreadyadded {
