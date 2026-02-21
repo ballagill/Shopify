@@ -1,0 +1,108 @@
+<style>
+  .already .alreadyadded{display:block!important}
+ .alreadyadded {
+    background: #000000;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 50px;
+    font-size: 12px;
+    position: relative;
+    width: 100%;
+}
+.alreadyadded::after {
+    content: '';
+    width: 0px;
+    height: 0px;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 16px solid #000000;
+    position: absolute;
+    bottom: -10px;
+    transform: translateY(-50%);
+    left: 50%; transform: translateX(-50%);
+}
+.showloadingicon .loading__spinner{
+  display:block!important;
+  opacity:1!important;
+}
+.collection-template .alreadyadded {
+    margin-bottom: 10px;
+}
+</style>
+
+
+{% assign product_ids = "" | split: "," %}
+{% assign target_tag = "offers" %}
+
+{% paginate collections.all.products by 250 %}
+  {% for product in collections.all.products %}
+    {% if product.tags contains target_tag %}
+      {% assign single_id = product.id | split: "," %}
+      {% assign product_ids = product_ids | concat: single_id %}
+    {% endif %}
+  {% endfor %}
+{% endpaginate %}
+
+<p class="listofp" style="display:none;">{{ product_ids | join: "," }}</p>
+
+
+
+<script>
+document.addEventListener('click', function(event) {
+const form = event.target.closest('.main-prduct-form');
+if (!form) {
+    return true;
+}
+const formId = form.getAttribute('id');
+ 
+form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    document.querySelector('body').classList.add('showloadingicon');
+    var value = document.querySelector('.listofp').textContent;
+    const arrayofp = value.split(",").map(Number);
+    //alert(arrayofp);
+
+
+async function checkCart() {
+  try {
+    const response = await fetch('/cart.js');   // wait until fetch is done
+    const cart = await response.json();         // wait until JSON is parsed
+
+    // Now cart is ready — this runs AFTER fetch completes
+    const productIds = cart.items.map(item => item.product_id);
+
+    const set2 = new Set(arrayofp);
+    const hasCommon = productIds.some(value => set2.has(value));
+    if (hasCommon) {
+      document.querySelector('body').classList.add('already');
+      document.querySelector('body').classList.remove('showloadingicon');
+      const alertcontainer = document.querySelector('#'+formId+' .product-form__buttons');
+      document.querySelectorAll('.alreadyadded').forEach(function(el) {
+      el.remove();
+      });
+      alertcontainer.insertAdjacentHTML('beforebegin', '<div class="alreadyadded" id="alreadyadded" role="alert" hidden>ONLY ONE PRODUCT ALLOWED PER ORDER</div>');
+      } else {
+      document.querySelector('body').classList.add('noalready');
+    }
+
+const el = document.querySelector('body');
+if (el.classList.contains('already')) {
+return false;
+}else{
+form.submit();
+return true;
+}
+
+  } catch (error) {
+    console.error('Error fetching cart:', error);
+  }
+}
+
+// Call the function
+checkCart();
+
+});
+});
+</script>
