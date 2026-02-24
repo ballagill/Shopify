@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const isRestrictedProduct = restrictedIds.includes(parseInt(productId));
 
     // If trying to add restricted product
-    if (isRestrictedProduct ) {
+    if (isRestrictedProduct) {
 
       // Block if already one exists
       if (restrictedCount > 0) {
