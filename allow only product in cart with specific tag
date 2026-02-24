@@ -1,0 +1,147 @@
+{% comment %} if this script is not needed, then remove (return;) following lines from theme.js 
+
+balla balla added to run custom script created in offers-product.liquid
+return;
+//balla remove return, if you want to run default theme "Add to cart" functionality.
+
+{% endcomment %}
+
+<style>
+.index-template .alreadyadded {
+    width: auto!important;
+    margin-bottom: 12px!important;
+}
+  .already .alreadyadded{display:block!important}
+ .alreadyadded {
+    background: #000000;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 50px;
+    font-size: 12px;
+    position: relative;
+    width: 100%;
+}
+.alreadyadded::after {
+    content: '';
+    width: 0px;
+    height: 0px;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 16px solid #000000;
+    position: absolute;
+    bottom: -10px;
+    transform: translateY(-50%);
+    left: 50%; transform: translateX(-50%);
+}
+.showloadingicon .loading__spinner{
+  display:block!important;
+  opacity:1!important;
+}
+.collection-template .alreadyadded {
+    margin-bottom: 10px;
+}
+</style>
+
+
+{% assign product_ids = "" | split: "," %}
+{% assign target_tag = "offers" %}
+
+{% paginate collections.all.products by 250 %}
+  {% for product in collections.all.products %}
+    {% if product.tags contains target_tag %}
+      {% assign single_id = product.id | split: "," %}
+      {% assign product_ids = product_ids | concat: single_id %}
+    {% endif %}
+  {% endfor %}
+{% endpaginate %}
+
+<p class="listofp" style="display:none;">{{ product_ids | join: "," }}</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+ 
+   var getidsvalue = document.querySelector('.listofp').textContent;
+    const restrictedIds = getidsvalue.split(",").map(Number);
+
+  async function getCart() {
+    const res = await fetch('/cart.js');
+    return await res.json();
+  }
+
+  async function validateRestriction(productId, quantity) {
+    const cart = await getCart();
+
+    let restrictedCount = 0;
+
+    cart.items.forEach(item => {
+      if (restrictedIds.includes(item.product_id)) {
+        restrictedCount += item.quantity;
+      }
+    });
+
+    
+
+     
+
+    const isRestrictedProduct = restrictedIds.includes(parseInt(productId));
+
+    // If trying to add restricted product
+    if (isRestrictedProduct ) {
+
+      // Block if already one exists
+      if (restrictedCount > 0) {
+        //alert("Only one of these products is allowed per order.");
+        return false;
+      }
+
+      // Block if quantity > 1
+      if (quantity > 1) {
+        //alert("Only 1 quantity allowed.");
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  // Intercept all add-to-cart forms
+  document.querySelectorAll('form[action="/cart/add"]').forEach(form => {
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const productId = formData.get("productid");
+      const quantity = parseInt(formData.get("quantity") || 1);
+      const formId = form.getAttribute('id');
+      document.querySelector('#'+formId+' .product-form__buttons').classList.add('showloadingicon');
+      const allowed = await validateRestriction(productId, quantity);
+
+ if (!allowed) {
+      document.querySelector('body').classList.add('already');
+      document.querySelector('#'+formId+' .product-form__buttons').classList.remove('showloadingicon');
+      const alertcontainer = document.querySelector('#'+formId+' .product-form__buttons');
+      document.querySelectorAll('.alreadyadded').forEach(function(el) {
+      el.remove();
+      });
+      alertcontainer.insertAdjacentHTML('beforebegin', '<div class="alreadyadded" id="alreadyadded" role="alert" hidden>ONLY ONE PRODUCT ALLOWED PER ORDER</div>');
+   }   
+
+  if (allowed) {
+        fetch('/cart/add.js', {
+          method: 'POST',
+          body: formData
+        }).then(() => {
+      const alertcontainer = document.querySelector('#'+formId+' .product-form__buttons');
+      document.querySelectorAll('.alreadyadded').forEach(function(el) {
+      el.remove();
+      });
+      alertcontainer.insertAdjacentHTML('beforebegin', '<div class="alreadyadded" id="alreadyadded" role="alert" hidden>ADDED TO CART</div>');
+      window.location.reload();
+        });
+      }
+    });
+  });
+
+});
+</script>
