@@ -6014,3 +6014,61 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 ______________________________________________________________________________________________________________
+Minimum order script:
+This script will automatically disable checkout button if order total is less than 45 and enable it if exceeds 45.
+The checkout button has "rebuy-cart__checkout-button" class and span element inside it.
+-------------------------------------
+<script>
+const MIN_ORDER = 45;
+let timeout;
+let originalText = null;
+
+async function updateCheckoutState() {
+  try {
+    const cart = await fetch('/cart.js').then(r => r.json());
+    const total = cart.total_price / 100;
+
+    const checkoutBtn = document.querySelector('.rebuy-cart__checkout-button');
+    if (!checkoutBtn) return;
+
+    const textEl = checkoutBtn.querySelector('span');
+
+    // Save original text once
+    if (textEl && !originalText) {
+      originalText = textEl.textContent;
+    }
+
+    const disabled = total < MIN_ORDER;
+
+    checkoutBtn.disabled = disabled;
+    checkoutBtn.classList.toggle('disabled', disabled);
+    checkoutBtn.style.pointerEvents = disabled ? 'none' : '';
+    checkoutBtn.style.opacity = disabled ? '.5' : '';
+    checkoutBtn.title = disabled ? 'Minimum order is £${MIN_ORDER}' : '';
+
+    // Update button text
+    if (textEl) {
+      textEl.textContent = disabled
+        ? `Minimum order is £${MIN_ORDER}`
+        : originalText;
+    }
+
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+updateCheckoutState();
+
+const observer = new MutationObserver(() => {
+  clearTimeout(timeout);
+  timeout = setTimeout(updateCheckoutState, 200);
+});
+
+observer.observe(document.body, {
+  childList: true,
+  subtree: true,
+  characterData: true
+});
+</script>
+__________________________________________________________________________________________________________________________________
